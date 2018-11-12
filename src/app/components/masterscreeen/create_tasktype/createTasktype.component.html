@@ -1,0 +1,68 @@
+<h2>
+
+	Create Task Type
+</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+	<form role="form" #createTasktypeForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Task Type</h3>
+					<div class="row form-field-style">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-5">
+											<label>Activity<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+											<select class="form-control" name="activityId" [(ngModel)] = "tasktypeCreateModel.activityId" >
+												<option value="">--Please Select--</option>
+												<option *ngFor = "let activity of activityList;" [value]="activity.id">{{activity.activityName}}</option>
+											</select>
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-right">
+										<label>Name<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="taskName" required pattern="[a-zA-Z][a-zA-Z ]+" maxlength="25" [(ngModel)] = "tasktypeCreateModel.taskName" class="form-control">
+									</div>
+							</div>
+					</div>
+				
+					<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "!createTasktypeForm.form.valid" (click) = "createTasktypemaster()"> Create</button>
+						</div>
+					
+					
+					
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Task Type's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="tasktypeList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

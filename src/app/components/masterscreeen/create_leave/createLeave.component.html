@@ -1,0 +1,120 @@
+
+<h2>Create Leave</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+<div *ngIf="errorMsg" class="form-group">
+	<div class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		{{ errorMsg }}
+	</div>
+</div>
+<p *ngIf="successMsg">&nbsp;</p>
+<div *ngIf="successMsg" class="form-group">
+	<div class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		{{ successMsg }}
+	</div>
+</div>
+
+
+<form role="form" #createLeaveForm="ngForm" >
+			<div class="content-heading-box">
+				<h3>Create Leave</h3>
+
+				<div class="row form-field-style text-center">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>Location</label>
+										</div>
+										<div class="col-md-8">
+											<select class="form-control" name="locationId" [(ngModel)] = "masterleaveCreateModel.locationId" >
+												<option value="">--Please Select--</option>
+											<option *ngFor = "let location of locationList;" [value]="location.id">{{location.locationArea}}</option>
+												   
+										</select>								
+										</div>
+								</div>
+							</div>
+					<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-left">
+										<label>Type<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="leaveType" required pattern="[a-zA-Z ]*" maxlength="25" [(ngModel)] = "masterleaveCreateModel.leaveType" class="form-control">
+										
+									</div>
+								</div>
+					</div>
+			
+				<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Max Leave in Year</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" name="maxNumInAYear" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="25" [(ngModel)] = "masterleaveCreateModel.maxNumInAYear" class="form-control">
+							</div>
+					</div>
+			</div>
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Carry Forward</label>
+							</div>
+							<div class="col-md-8">
+									<select class="form-control" name="isCarryFwd" [(ngModel)] = "masterleaveCreateModel.isCarryFwd">
+											<option value="">--Please Select--</option>
+											<option value="y">Yes</option>
+											<option value="n">No</option>
+											   
+										</select>
+							</div>
+					</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group row">
+						<div class="col-md-4 text-left">
+							<label>Max Forword Limit</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" name="carrayFwdLimit" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="25" [(ngModel)] = "masterleaveCreateModel.carrayFwdLimit" class="form-control">							
+						</div>
+				</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group row">
+					<div class="col-md-4 text-left">
+						<label>validity</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" name="validity" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="25" [(ngModel)] = "masterleaveCreateModel.validity" class="form-control">								
+					</div>
+			</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group row">
+				<div class="col-md-4 text-left">
+					<label>Status</label>
+				</div>
+				<div class="col-md-8">
+					<input type="text" name="status" pattern="[a-zA-Z ]*" maxlength="25" [(ngModel)] = "masterleaveCreateModel.status" class="form-control">							
+				</div>
+		</div>
+</div>
+
+
+<div class="col-md-12 text-center">
+	<button class="btn btn-primary" [disabled] = "!createLeaveForm.form.valid" (click) = "createLeavemaster()"> Create</button>
+</div>
+</div>
+	</div>
+	<div class="content-heading-box">
+		<h3>Leave's List</h3>
+		<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="leaveList"></ag-grid-angular>
+	</div>
+</form>
+
+			
+	

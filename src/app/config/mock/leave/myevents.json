@@ -1,0 +1,56 @@
+[
+	{
+		"title" : "New Year",
+		"start": "2018-01-01",
+		"end": "2018-01-02",
+		"color" : "green",
+        "textColor" : "white",
+		"rendering": "background",
+		"overlap": false
+   },
+   {
+		"title" : "Sick Leave",
+		"start": "2018-01-03",
+		"end": "2018-01-05",
+		"color" : "red",
+        "textColor" : "white",
+		"rendering": "background",
+		"overlap": false
+   },
+   {
+		"title" : "Netaji Birth Day",
+		"start": "2018-01-23",
+		"end": "2018-01-24",
+		"color" : "green",
+        "textColor" : "white",
+		"rendering": "background",
+		"overlap": false
+   },
+   {
+		"title" : "Sick Leave",
+		"start": "2018-01-24",
+		"end": "2018-01-25",
+		"color" : "red",
+        "textColor" : "white",
+		"rendering": "background",
+		"overlap": false
+   },
+   {
+		"title" : "Republic Day",
+		"start": "2018-01-26",
+		"end": "2018-01-27",
+		"color" : "green",
+        "textColor" : "white",
+		"rendering": "background",
+		"overlap": false
+   },
+   {
+		"title" : "Comp Off",
+		"start": "2018-02-15",
+		"end": "2018-02-16",
+		"color" : "blue",
+        "textColor" : "white",
+		"rendering": "background",
+		"overlap": false
+   }
+]

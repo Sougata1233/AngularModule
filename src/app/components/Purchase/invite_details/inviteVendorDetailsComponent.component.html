@@ -1,0 +1,126 @@
+				<h2>
+				<a [routerLink]="['/purchase']" title='Purchase' >Purchase</a>
+				> 
+				<a [routerLink]="['/purchase/requestprice']" title='Request Price' >Request Price</a>
+				>
+				Select Vendors
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "indentDetailData && indentDetailData !='undefined'">
+					<!--<h3>Added Items</h3>-->
+					<div class="row">
+						<div class="col col-sm-4">
+							<div class="form-group">
+								<label>Indent Number<span class="start">*</span></label>
+								<span class="form-control">{{prefix+"/Indent/" + indentDetailData.indentHeader.id }}</span>
+							</div>
+						</div>
+						<div class="col col-sm-4">
+							<div class="form-group">
+								<label>Raised By<span class="start">*</span></label>
+								<span class="form-control">{{indentDetailData.indentHeader.submitter}}</span>
+							</div>
+						</div>
+						<div class="col col-sm-4">
+							<div class="form-group">
+								<label>Raised On<span class="start">*</span></label>
+								<span class="form-control">{{indentDetailData.indentHeader.createDate  | date:'mediumDate'}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf = "indentDetailData && indentDetailData !=undefined && indentDetailData.indentList.length > 0">
+					<h3>Indent Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="indentDetailData.indentList"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive approval">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>Item Group</th>
+									<th>Item Descrption</th>
+									<th *ngIf = "indentDetailData.indentHeader.type == 'J'">Quality</th>
+									<th>Department</th>
+									<th>Stock</th>
+									<th>Quantity</th>
+									<th>Unit</th>
+								</tr>
+                            </thead>
+							<tbody *ngFor = "let eachItem of indentDetailData.indentList; let i = index">
+                                <tr *ngIf="eachItem.status == '1'">
+									<td>{{eachItem.itemGroup.name}}</td>
+									<td>{{eachItem.item.name}}</td>
+									<td *ngIf = "indentDetailData.indentHeader.type == 'J'">{{eachItem.quality.name}}</td>
+									<td>{{eachItem.department.name}}</td>
+									<td>{{eachItem.item.stock}}</td>
+									<td>{{eachItem.indentQuantity}}</td>
+									<td>{{eachItem.quantityUnit.name}}</td>
+								</tr>
+                            </tbody>
+						</table>
+					</div>-->
+					<p *ngIf="vendorAllData.length == 0">&nbsp;</p>
+					<div *ngIf="vendorAllData.length == 0" class="form-group">
+						<div class="alert alert-info alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							Please Wait....Supplier List is Loading...
+						</div>
+					</div>
+					<div class="mapping-area" *ngIf="vendorAllData.length > 0">
+						<div class="bodypart-dwidthone width4">
+							<div class="col-sm-5">
+								<div id="scrollAreaOne" class="clusterize-scroll list-menu">
+									<h3>All Vendor List</h3>
+									<ul id="contentAreaOne" class="clusterize-content">
+										<li *ngFor = "let vendor of vendorAllData; let i = index" (click) = "selectFromAll($event, i)" class="{{'type'+vendor.type}}">{{vendor.name}}</li>
+									</ul>
+								</div>
+							 </div>
+							 <div class="col-sm-2">
+								<div class="list-menu-button">
+								   <button class="bt-one" id="addtoselect" (click)="addToSelected()"><img src="assets/images/icon-5.png" alt="img"></button>
+								   <button class="bt-two" id="cancelselection" (click)="deleteFromSelected()"><img src="assets/images/icon-6.png" alt="img"></button>
+								</div>
+							 </div>
+							 <div class="col-sm-5">
+								<div id="scrollAreaTwo" class="clusterize-scroll list-menu">
+									<h3>Selected  Vendor</h3>
+									<ul id="contentAreaOne" class="clusterize-content">
+										<li *ngFor = "let vendor of vendorSelectedData; let i = index" (click) = "selectFromSelected($event, i)">
+											{{vendor.name}}
+										</li>
+									</ul>
+								</div>
+							 </div>
+						  </div>
+					   </div>
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" (click) = "sendInvite()" [disabled]="vendorSelectedData.length == 0">Send Invite</button>
+						</div>
+					</div>
+				</div>
+				
+				

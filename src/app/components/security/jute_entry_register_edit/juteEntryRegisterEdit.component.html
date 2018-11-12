@@ -1,0 +1,203 @@
+				<h2>
+				<a routerLink="/security/storeentryregister" title="Security">Security</a> > 
+				<a routerLink="/security/juteentryregister" title="Security">Jute Entry Register</a> >
+				{{requestedId}}
+				</h2>
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				<form role="form" #createEntryForm="ngForm">
+				<div class="content-heading-box">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="challanNo" required maxlength="10" [(ngModel)] = "challanData.chalanNo" class="form-control" pattern="^[0-9]*$">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Vehicle No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="vehicleNo" required [(ngModel)] = "challanData.vehicleNo" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Transporter <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="driverName" required maxlength="50" [(ngModel)] = "challanData.transporter" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">PO <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{(challanData.poNo)?challanData.poNo:"--NA--"}}</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Mukam <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{challanData.mukam}}</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Tare Weight</label></div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<input type="text" name="reqquan" [(ngModel)] = "challanData.tareWeight" class="form-control" pattern="^\d+(\.\d{1,2})?$" (change)="validateTare($event)">
+										<span class="input-group-addon unit">
+											Kg
+										</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{challanData.tareWeight/100}}</span>
+										<span class="input-group-addon unit">
+											QUINTAL
+										</span>
+									</div>
+								</div>
+							</div>
+							
+							
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="challanDate" [options]="myDatePickerOptions" required [(ngModel)] = "storeCreateModel.challandate"></my-date-picker>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Driver Name <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="driverName" required maxlength="50" [(ngModel)] = "challanData.driverName" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Supplier <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{challanData.supplierName +"["+challanData.suppCode+"]"}}</span>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="storeCreateModel.supplier != undefined">
+								<div class="col-md-4"><label for="makerSelection">Supplier Address</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{challanData.suppAddress}}</span>
+								</div>
+							</div>
+							
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Gross Weight <span class="start">*</span></label></div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{challanData.grossWeight}}</span>
+										<span class="input-group-addon unit">
+											Kg
+										</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{challanData.grossWeight/100}}</span>
+										<span class="input-group-addon unit">
+											QUINTAL
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan Weight <span class="start">*</span></label></div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{challanData.challanWeight}}</span>
+										<span class="input-group-addon unit">
+											Kg
+										</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{challanData.challanWeight/100}}</span>
+										<span class="input-group-addon unit">
+											QUINTAL
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Actual Weight <span class="start">*</span></label></div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{(1*challanData.grossWeight) - (1*challanData.tareWeight)}}</span>
+										<span class="input-group-addon unit">
+											Kg
+										</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{((1*challanData.grossWeight) - (1*challanData.tareWeight))/100}}</span>
+										<span class="input-group-addon unit">
+											QUINTAL
+										</span>
+									</div>
+								</div>
+							</div>
+							<!-- <div class="row form-group"> -->
+								<!-- <div class="col-md-4"><label for="makerSelection">Remarks</label></div> -->
+								<!-- <div class="col-md-8"> -->
+								<!-- <textarea name="challanremarks" [(ngModel)] = "storeCreateModel.remarks" class="form-control"></textarea> -->
+								<!-- </div> -->
+							<!-- </div> -->
+						</div>
+					</div>
+				</div>
+				</form>
+				
+				<div class="content-heading-box" *ngIf="allPOLineItems.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group" *ngFor ="let eachPOData of allPOLineItems; let i = index">
+						<div class="row form-group">
+							<div class="col-md-6">
+							</div>
+							<div class="col-md-6 text-right">
+							</div>
+						</div>
+						<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="eachPOData.polineitems"></ag-grid-angular>
+					</div>
+				</div>
+				<p>&nbsp;</p>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<!-- <button class="btn btn-primary" [disabled] = "!createEntryForm.form.valid || challanData.tareWeight>challanData.grossWeight" (click)="updateEntry()">Update</button> -->
+						<button class="btn btn-primary" [disabled] = "!createEntryForm.form.valid || challanData.tareWeight>challanData.grossWeight" (click)="outEntry()" *ngIf="challanData.outTime == null">Out</button>
+					</div>
+				</div>
+				
+				<div class="readingArea" *ngIf = "actualQualityEdit != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Select Actual Quality</h2></div>
+						<div class="popupcontent">
+						<form #actualQualityForm ="ngForm">
+							<select class="form-control"  name="quality" [(ngModel)] = "storeCreateModel.selectedActualQuality" required>
+								<option value="">--Please Select--</option>
+								<option *ngFor = "let quality of itemQuality; let i = index;" value="{{i}}">{{quality.name}}</option>
+							</select>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeQuzlityDialog()">CANCEL</button> <button type="button" class="btn btn-sm btn-success" (click)="updateActualQuality()" [disabled]="!actualQualityForm.form.valid">OK</button></div>
+					</div>
+				</div>

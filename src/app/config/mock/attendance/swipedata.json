@@ -1,0 +1,93 @@
+[
+{
+	"day" : "MON",
+	"date" : "26",
+	"month" : "FEB",
+	"year" : "2018",
+	"plannedWork" : "8:30-18:00",
+	"swipein" : "8:00",
+	"swipeout" : "19:00",
+	"swipeinLoc" : "GTP",
+	"swipeoutLoc" : "GTP",
+	"totalHr" : "10:00",
+	"reason" : ""
+},
+{
+	"day" : "TUE",
+	"date" : "27",
+	"month" : "FEB",
+	"year" : "2018",
+	"plannedWork" : "8:30-18:00",
+	"swipein" : "9:00",
+	"swipeout" : "20:00",
+	"swipeinLoc" : "ITP",
+	"swipeoutLoc" : "GTP",
+	"totalHr" : "10:00",
+	"reason" : ""
+},
+{
+	"day" : "WED",
+	"date" : "28",
+	"month" : "FEB",
+	"year" : "2018",
+	"plannedWork" : "8:30-18:00",
+	"swipein" : "8:00",
+	"swipeout" : "16:00",
+	"swipeinLoc" : "GTP",
+	"swipeoutLoc" : "TCPX",
+	"totalHr" : "08:00",
+	"reason" : ""
+},
+{
+	"day" : "THU",
+	"date" : "01",
+	"month" : "MAR",
+	"year" : "2018",
+	"plannedWork" : "8:30-18:00",
+	"swipein" : "8:00",
+	"swipeout" : "19:00",
+	"swipeinLoc" : "GTP",
+	"swipeoutLoc" : "GTP",
+	"totalHr" : "10:00",
+	"reason" : ""
+},
+{
+	"day" : "FRI",
+	"date" : "02",
+	"month" : "MAR",
+	"year" : "2018",
+	"plannedWork" : "8:30-18:00",
+	"swipein" : "8:00",
+	"swipeout" : "19:00",
+	"swipeinLoc" : "GTP",
+	"swipeoutLoc" : "GTP",
+	"totalHr" : "10:00",
+	"reason" : ""
+},
+{
+	"day" : "SAT",
+	"date" : "03",
+	"month" : "MAR",
+	"year" : "2018",
+	"plannedWork" : "8:30-18:00",
+	"swipein" : "8:00",
+	"swipeout" : "19:00",
+	"swipeinLoc" : "GTP",
+	"swipeoutLoc" : "GTP",
+	"totalHr" : "10:00",
+	"reason" : ""
+},
+{
+	"day" : "SUN",
+	"date" : "04",
+	"month" : "MAR",
+	"year" : "2018",
+	"plannedWork" : "8:30-18:00",
+	"swipein" : "8:00",
+	"swipeout" : "19:00",
+	"swipeinLoc" : "GTP",
+	"swipeoutLoc" : "GTP",
+	"totalHr" : "10:00",
+	"reason" : ""
+}
+]

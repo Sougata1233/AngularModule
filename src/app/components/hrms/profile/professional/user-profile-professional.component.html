@@ -1,0 +1,128 @@
+				<h2><a routerLink="/hrms">HRMS</a> > <a routerLink="/hrms/profile">My Profile</a> > Professional Details</h2>
+				
+				<p *ngIf="exp == 0 || exp < 0">&nbsp;</p>
+				<div *ngIf="exp == 0 || exp < 0" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						Experience must be greater than zero.
+					</div>
+				</div>
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf="!addmodeOn && editModeOn == ''">
+					<h3>Proffesional Records</h3>
+					<div class="row form-group">
+								<div class="col col-xs-12 text-right">
+									<button title="Add academic" class="btn btn-primary" (click)="addRecordOpen()">Add Record</button>
+								</div>
+					</div>
+					<div class="row" *ngIf="userProfessionData && userProfessionData.length > 0">
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="userProfessionData"></ag-grid-angular>	
+					</div>
+					<div *ngIf="!userProfessionData || userProfessionData.length == 0" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						No record found.
+					</div>
+				</div>
+				</div>
+				
+				
+				
+				
+				<div class="content-heading-box" *ngIf="addmodeOn || editModeOn != ''">
+					<!--<h3>Added Items</h3>-->
+					<form role="form" #addeditProffessiondata ="ngForm">
+					<div class="row">
+						
+					<div class="col-md-12 form-field-style">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="row form-group">
+										<div class="col-md-4"><label>Organization<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="Organization Name" name="organization" [(ngModel)]="userProffesionalModel.organization" required>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Description</label></div>
+										<div class="col-md-8">
+										<textarea class="form-control" placeholder="Project Description" name="projectdesc" [(ngModel)]="userProffesionalModel.projectdesc"></textarea>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Primary Skills<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="Primary Skills" name="primaryskills" [(ngModel)]="userProffesionalModel.primaryskills" required>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Start Date<span class="start">*</span></label></div>
+										<div class="col-md-8">
+											<my-date-picker name="startdate" [options]="myDatePickerOptions" [(ngModel)]="userProffesionalModel.startdate" (dateChanged)="onDateChanged($event, 'startdate')" required></my-date-picker>
+										</div>
+									</div>
+									<div class="row form-group" *ngIf="exp">
+										<div class="col-md-4"><label>Experience</label></div>
+										<div class="col-md-8">
+											<div class="input-group col-md-12">
+												<span class="form-control">{{exp}}</span>
+												<span class="input-group-addon unit">
+													Month(s)
+												</span>
+											</div>
+										</div>
+									</div>
+									
+									
+								</div>
+								<div class="col-md-6">
+									<div class="row form-group">
+										<div class="col-md-4"><label>Project<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" name="project" placeholder="project Name" [(ngModel)]="userProffesionalModel.project" required>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Role<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" name="role" placeholder="Your Role" [(ngModel)]="userProffesionalModel.role" required>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<div class="col-md-4"><label>Other Skills</label></div>
+										<div class="col-md-8">
+											<textarea class="form-control" placeholder="Other Skills" name="otherskills" [(ngModel)]="userProffesionalModel.otherskills"></textarea>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>End date<span class="start">*</span></label></div>
+										<div class="col-md-8">
+											<my-date-picker name="enddate" [options]="myDatePickerOptions" [(ngModel)]="userProffesionalModel.enddate" required (dateChanged)="onDateChanged($event, 'endDate')"></my-date-picker>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<button class="btn btn-secondary" (click) = "gotoback()">Back</button> 
+							<button class="btn btn-success" (click) = "addrecord()" [disabled]="!addeditProffessiondata.valid || exp == 0 || exp < 0" *ngIf="addmodeOn">Add</button> 
+							<button class="btn btn-success" (click) = "saveDetails()" [disabled]="!addeditProffessiondata.valid || exp == 0 || exp < 0" *ngIf="editModeOn != ''">Save</button>
+						</div>
+					</div>
+					</form>
+				</div>
+					
+				

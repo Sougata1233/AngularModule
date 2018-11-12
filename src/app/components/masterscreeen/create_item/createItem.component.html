@@ -1,0 +1,263 @@
+<h2>
+	<!-- <a href="/payroll" ng-reflect-router-link="/payroll" routerlink="/payroll">Payroll</a>
+	> Create Parameter -->
+	Create Item
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+	<form role="form" #createItemForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Item</h3>
+					<div class="row form-field-style text-center">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>Group Code<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+											<select class="form-control" name="grpCode" required [(ngModel)] = "itemCreateModel.grpCode" >
+												<option value="">--Please Select--</option>
+											<option *ngFor = "let itemgroups of itemgroupList;" [value]="itemgroups.id">{{itemgroups.id}}_{{itemgroups.grpDsc}}</option>
+											</select>
+										</div>
+								</div>
+						</div>
+						<!-- <div class="col-md-4">
+							<div class="form-group row">
+									<div class="col-md-4 text-left">
+										<label>Code<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="itemcode" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="25" [(ngModel)] = "itemCreateModel.id" class="form-control">
+									</div>
+							</div>
+					</div> -->
+					<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Old Item Code<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" name="legacyItemCode" required pattern="[a-zA-Z0-9 ]*" maxlength="10" [(ngModel)] = "itemCreateModel.legacyItemCode" class="form-control">
+								</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group row">
+								<div class="col-md-2 text-left">
+									<label>Description<span class="start">*</span></label>
+								</div>
+								<div class="col-md-10">
+									<input type="text" name="itemDsc" required maxlength="90" [(ngModel)] = "itemCreateModel.itemDsc" class="form-control">
+								</div>
+						</div>
+				</div>
+
+				<!-- <div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Organization<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+									<select class="form-control" name="orgId" required (change) = "loaddepartmentList($event.target.value)"[(ngModel)] = "orgId">
+										<option value="">--Please Select--</option>
+									<option *ngFor = "let organization of organizationList;" [value]="organization.id">{{organization.orgName}}</option>
+										   
+								</select>
+								</div>
+						</div>
+				</div> -->
+				<!-- <div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Department<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+								
+									<select class="form-control" name="departmentName" required [(ngModel)] = "itemCreateModel.deptId" >
+										<option value="">--Please Select--</option>
+									<option *ngFor = "let department of departmentList;" [value]="department.id">{{department.departmentName}}</option>
+									</select>
+								</div>
+						</div>
+					</div> -->
+
+			
+			
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>HSN Code<span class="start">*</span></label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" name="hsnCode" required pattern="[0-9 -]*" maxlength="6" [(ngModel)] = "itemCreateModel.hsnCode" class="form-control">
+							</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Uom<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+									<select class="form-control" name="uomCode" required [(ngModel)] = "itemCreateModel.uomCode" >
+										<option value="">--Please Select--</option>
+									<option *ngFor = "let uom of uomList;" [value]="uom.id">{{uom.uomDsc}}</option>
+									</select>
+								</div>
+						</div>
+				</div>
+				<!-- <div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Direct<span class="start">*</span></label>
+							</div>
+							<div class="col-md-8">
+									<input type="text" name="directIndirectTag" required pattern="[a-zA-Z0-9]" value="d" disabled = "itemCreateModel.directIndirectTag"  class="form-control">
+									<!-- <select class="form-control" name="directIndirectTag" [(ngModel)] = "itemCreateModel.directIndirectTag">
+											<option value="">--Please Select--</option>
+											<option value="d">Direct</option>
+											<option value="i">Indirect</option>
+										  
+										</select> 
+							
+								
+							</div>
+					</div>
+				</div> -->
+				<!-- <div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Location</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" name="location" pattern="[a-zA-Z0-9][a-zA-Z0-9]+" maxlength="10" [(ngModel)] = "itemCreateModel.location" class="form-control">
+								</div>
+						</div>
+				</div> -->
+
+<!-- 
+<div class="col-md-6">
+	<div class="form-group row">
+			<div class="col-md-4 text-left">
+				<label>Active Flag</label>
+			</div>
+			<div class="col-md-8">
+					<!-- <select class="form-control" name="activeFlag" [(ngModel)] = "itemCreateModel.activeFlag">
+							<option value="">--Please Select--</option>
+							<option value="y">Yes</option>
+							<option value="n">No</option>
+						  
+						</select> 
+						<input type="text" name="activeFlag" required pattern="[a-zA-Z0-9]" maxlength="1"  value="Y" disabled = "itemCreateModel.activeFlag"  class="form-control">
+			
+			</div>
+	</div>
+</div> -->
+
+
+<div class="col-md-6">
+	<div class="form-group row">
+			<div class="col-md-4 text-left">
+				<label>Make</label>
+			</div>
+			<div class="col-md-8">
+				<input type="text" pattern="[a-zA-Z0-9 () ~ , / @ . &  ^ ]*" maxlength="150" name="make" [(ngModel)] = "itemCreateModel.make" class="form-control">
+			</div>
+	</div>
+</div>
+
+<div class="col-md-6">
+	<div class="form-group row">
+			<div class="col-md-4 text-left">
+				<label>Min Value</label>
+			</div>
+			<div class="col-md-8">
+				<input type="text" name="MinValue" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="12" [(ngModel)] = "itemCreateModel.threshold" class="form-control">
+			</div>
+	</div>
+</div>
+<div class="col-md-6">
+		<div class="form-group row">
+				<div class="col-md-4 text-left">
+					<label>Max Value</label>
+				</div>
+				<div class="col-md-8">
+					<input type="text" name="MaxValue" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="12" [(ngModel)] = "itemCreateModel.max" class="form-control">
+				</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+			<div class="form-group row">
+					<div class="col-md-4 text-left">
+						<label>Opening Stock</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" name="OpeningStock" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="12" [(ngModel)] = "itemCreateModel.centralStock" class="form-control">
+					</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group row">
+					<div class="col-md-4 text-left">
+						<label>Max Order Value</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" name="maxOrderValue" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="12" [(ngModel)] = "itemCreateModel.maxOrderValue" class="form-control">
+					</div>
+			</div>
+		</div>
+
+
+
+<div class="col-md-12 text-center">
+		<button class="btn btn-primary" [disabled] = "!createItemForm.form.valid" (click) = "createItemmaster()"> Create</button>
+</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Item's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="itemList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				<div class="readingArea" *ngIf = "conditionClicked != ''">
+					<div class="reading-popup">
+
+							<div class="popupcontent">
+								
+
+								<select class="form-control" name="uomCode" required [(ngModel)] = "itemCreateModel.uomCode" >
+										<option value="">--Please Select--</option>
+										<option *ngFor = "let uoms of itemListid.uom; let i = index;" value={{uoms.id}}>{{uoms.uomDsc}}</option>
+								</select>
+						
+							</div>
+					
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeConditionDialog()">Cancel</button> <button type="button" class="btn btn-sm btn-success" (click)="updateCondition(conditionClicked)">Save</button></div>
+					</div>
+					
+				</div>
+			
+				
+		

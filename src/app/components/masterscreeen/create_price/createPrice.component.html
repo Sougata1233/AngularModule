@@ -1,0 +1,91 @@
+<h2>Create Price</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+	<form role="form" #createPriceForm="ngForm" >
+			<div class="content-heading-box">
+					<h3>Create Price</h3>
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<div class="col-md-5">
+									<label>Item Group<span class="start">*</span></label>
+								</div>
+								<div class="col-md-7">
+									<select class="form-control" name="itemGroup" required [(ngModel)] = "priceCreateModel.itemGroupCode" (change) = "loaditemListid($event.target.value)" >
+										<option value="">--Please Select--</option>
+										<option *ngFor = "let filteritemgroup of filteritemgroupList;" [value]="filteritemgroup.id">{{filteritemgroup.grpDsc}}</option>
+										   
+									</select>
+								</div>
+						</div>
+						</div>
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-5">
+											<label>Item<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+											<select class="form-control" name="item" required [(ngModel)] = "priceCreateModel.itemCode">
+												<option value="">--Please Select--</option>
+												<option *ngFor = "let item of itemList;" [value]="item.id">{{item.itemDsc}}</option>
+											</select>
+										</div>
+								</div>
+						
+						</div>
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-5">
+											<label>Rate<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+											<input type="text" name="rate" class="form-control" required pattern="[0-9][0-9]*" minlength="1" maxlength="10" [(ngModel)] = "priceCreateModel.rate">
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-5">
+											<label>Receivd Quantity<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+											<input type="text" name="Receivd Quantity" class="form-control" required pattern="[0-9][0-9]*" minlength="1" maxlength="10" [(ngModel)] = "priceCreateModel.receivedQty">
+										</div>
+								</div>
+						</div>
+					
+					
+						
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "!createPriceForm.form.valid" (click) = "createPrice()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Price's List</h3>
+					
+					<div class="text-center">
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="priceList"></ag-grid-angular>
+					</div>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

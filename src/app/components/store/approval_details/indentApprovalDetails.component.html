@@ -1,0 +1,126 @@
+				<h2 *ngIf = "indentDetailData && indentDetailData !='undefined'">
+				<a [routerLink]="['/store']" title='Store' *ngIf="indentDetailData.indentHeader.type != 'J'">Store</a>
+				<a [routerLink]="['/jute/mrindent']" title='Jute' *ngIf="indentDetailData.indentHeader.type == 'J'">Jute</a>
+				> 
+				<a [routerLink]="['/store/worklist']" title='Indent Worklist'  *ngIf="indentDetailData.indentHeader.type != 'J'">Indent Worklist</a>
+				<a [routerLink]="['/jute/juteworklist']" title='Jute Indent Worklist'  *ngIf="indentDetailData.indentHeader.type == 'J'">Jute Indent Worklist</a>
+				>
+				Indent Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<div *ngIf = "indentDetailData == 'notauth'" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						Sorry. You are not authorized to view this page.
+					</div>
+				</div>
+				<div class="content-heading-box" *ngIf = "indentDetailData != 'notauth' && indentDetailData && indentDetailData !='undefined'">
+					<!--<h3>Added Items</h3>-->
+					<div class="row">
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>Indent Number<span class="start">*</span></label>
+								<span class="form-control">{{prefix+"/Indent/"+ indentDetailData.indentHeader.id }}</span>
+							</div>
+						</div>
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>Indent Type<span class="start">*</span></label>
+								<span class="form-control">{{indentDetailData.indentHeader.type}}</span>
+							</div>
+						</div>
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>Raised By<span class="start">*</span></label>
+								<span class="form-control">{{indentDetailData.indentHeader.submitter}}</span>
+							</div>
+						</div>
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>Raised On<span class="start">*</span></label>
+								<span class="form-control">{{indentDetailData.indentHeader.createDate  | date:'mediumDate'}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf = "indentDetailData && indentDetailData !=undefined && indentDetailData.indentList.length > 0">
+					<form role="form" #indentApproveForm ="ngForm">
+					<h3>Indent Items</h3>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="indentDetailData.indentList"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive approval">
+					
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>Item Group</th>
+									<th>Item Descrption</th>
+									<th *ngIf = "indentDetailData.indentHeader.type == 'J'">Quality</th>
+									<th>Department</th>
+									<th>Stock</th>
+									<th>Quantity</th>
+									<th>Unit</th>
+									<th>Delete</th>
+                                </tr>
+                            </thead>
+							<tbody *ngFor = "let eachItem of indentDetailData.indentList; let i = index">
+                                <tr *ngIf = "eachItem.status == '1'">
+									<td>{{eachItem.itemGroup.name}}</td>
+									<td>{{eachItem.item.name}}</td>
+									<td *ngIf = "indentDetailData.indentHeader.type == 'J'">{{eachItem.quality.name}}</td>
+									<td>{{eachItem.department.name}}</td>
+									<td>{{eachItem.item.stock}}</td>
+									<td>{{eachItem.indentQuantity}}</td>
+									<td>{{eachItem.quantityUnit.name}}</td>
+									<td class="text-center">
+										<button *ngIf = "indentDetailData.indentList.length > 1" (click)= "deleteItem(i)" class="btn ntn-danger"><span class="glyphicon glyphicon-minus"></span></button>
+									</td>
+                                </tr>
+                            </tbody>
+						</table>
+						
+					</div>-->
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-danger" data-toggle="modal" data-target="#rejectionReason">Reject</button>
+							<button class="btn btn-primary" (click) = "statusChange(stat)">Approve</button>
+						</div>
+					</div>
+					</form>
+				</div>
+				
+				
+				<!-- Modal -->
+				<div class="modal fade" id="rejectionReason" tabindex="-1" role="dialog">
+					<div class="modal-dialog" role="document" style="margin:100px auto">
+						<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Reason For Rejection</h4>
+							  </div>
+						  <div class="modal-body">
+							<textarea class="form-control" [(ngModel)] = "indentCreateModel.rejectionReason"></textarea>
+						  </div>
+						  <div class="modal-footer">
+								<button type="button" class="btn btn-default closeDialog" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary" (click) = "statusChange(4)">Confirm</button>
+						  </div>
+						</div>
+					</div>
+				</div>

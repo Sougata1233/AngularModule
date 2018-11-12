@@ -1,0 +1,62 @@
+<h2>
+	<!-- <a href="/payroll" ng-reflect-router-link="/payroll" routerlink="/payroll">Payroll</a>
+	> Create Parameter -->
+	Create SCM Indent Type
+</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+	<form role="form" #createUomForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create SCM Indent Type</h3>
+					<div class="row form-field-style text-center">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-right">
+											<label>Code<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+											<input type="text" name="code" required pattern="[a-zA-Z]" maxlength="1" [(ngModel)] = "scmindenttypeCreateModel.indentTypeCode" class="form-control">
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-right">
+										<label>Description<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="description" required pattern="[a-zA-Z][a-zA-Z ]+" maxlength="25" [(ngModel)] = "scmindenttypeCreateModel.indentTypeDsc" class="form-control">
+									</div>
+							</div>
+					</div>
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "scmindenttypeCreateModel.indentTypeCode == '' || scmindenttypeCreateModel.indentTypeDsc == '' || !createUomForm.form.valid" (click) = "createScmindenttype()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>SCM Indent Type's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="scmindenttypeList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

@@ -1,0 +1,172 @@
+				<h2>
+				<a [routerLink]="['/jute']" title='Reports'>Reports</a>
+				>
+				<a [routerLink]="['/reports/jute']" title='Jute Reports'>Jute Reports</a>
+				>
+				Issue Register
+				</h2>
+				<p>&nbsp;</p>
+				
+				<div class="content-heading-box nonprintableContent">
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Select Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "reportModel.reportdate"></my-date-picker>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<button class="btn btn-primary" [disabled] = "!reportModel.reportdate" (click) = "searchReport()">Get Report</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				<p>&nbsp;</p>
+				<div class="form-group nonprintableContent" *ngIf="reportdata ==''">
+					<div class="alert alert-info alert-dismissable">
+						No report to show.
+					</div>
+				</div>
+				<div class="row form-group printableContent" *ngIf="reportdata !=''">
+					<table class="print-table-show">
+							<tr>
+								<td style="width:50%">
+									{{company}}
+								</td>
+								<td>
+									
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td style="width:40%">
+									Issue Register For The    :
+								</td>
+								<td style="width:40%">
+								</td>
+								<td>
+									{{reportModel.reportdate.formatted}}
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td>
+									Issue No.
+								</td>
+								<td>
+									Issue Date 
+								</td>
+								<td>
+									Lot No 
+								</td>
+								<td>
+									Quality 
+								</td>
+								<td>
+									Godown No. 
+								</td>
+								<td>
+									Bales
+								</td>
+								<td>
+									H/Bales 
+								</td>
+								<td>
+									Loose
+								</td>
+								<td>
+									P/Bales 
+								</td>
+								<td>
+									Weight
+								</td>
+							</tr>
+							<tbody *ngFor = "let eachissue of reportdata">
+							<tr *ngFor = "let item of eachissue.lineitems; let i = index">
+								<td>
+									{{(i==0)?eachissue.issueNo:''}}
+								</td>
+								<td>
+									<span *ngIf="i==0">{{eachissue.issueDate | date:'mediumDate'}}</span>
+									<span *ngIf="i>0">&nbsp;</span>
+								</td>
+								<td>
+									{{(i==0)?eachissue.lotNo:''}}
+								</td>
+								<td>
+									{{item.quality}}
+								</td>
+								<td>
+									{{item.warehouseNo}}
+								</td>
+								<td>
+									{{item.bales}}
+								</td>
+								<td>
+									
+								</td>
+								<td>
+									{{item.loose}}
+								</td>
+								<td>
+									
+								</td>
+								<td>
+									{{item.weight}}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="10"></td>
+							</tr>
+							</tbody>
+							<tr>
+								<td>
+									<strong>Grand Total</strong>
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									<strong>{{reportdata[0].issuegrnadtotal.bales}}</strong>
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									<strong>{{reportdata[0].issuegrnadtotal.loose}}</strong>
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									<strong>{{reportdata[0].issuegrnadtotal.weight}}</strong>
+								</td>
+							</tr>
+						</table>
+				</div>
+				<p>&nbsp;</p>
+					<div class="row nonprintableContent" *ngIf="reportdata !=''">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" title="Print Report" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+				
+				
+				

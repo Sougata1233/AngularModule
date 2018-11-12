@@ -1,0 +1,158 @@
+
+<h2>Create Project</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+	<div *ngIf="errorMsg" class="form-group">
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ errorMsg }}
+		</div>
+	</div>
+	<p *ngIf="successMsg">&nbsp;</p>
+	<div *ngIf="successMsg" class="form-group">
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ successMsg }}
+		</div>
+	</div>
+	<form role="form" #createProjectmasterForm="ngForm" >
+				<div class="content-heading-box">
+					<h3>Create Project</h3>
+					<div class="row form-field-style text-center">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>Name<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+											<input type="text" name="prjName" required pattern="[a-zA-Z0-9 ]*" maxlength="25" [(ngModel)] = "projectCreateModel.prjName" class="form-control">
+										
+										</div>
+									</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-left">
+										<label>Status</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="prjStatus" maxlength="25" [(ngModel)] = "projectCreateModel.prjStatus" class="form-control">
+									</div>
+								</div>
+					</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-left">
+										<label>Start Date<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+											<my-date-picker name="prjStartDt" [options]="myDatePickerOptions" required [(ngModel)] = "projectCreateModel.prjStartDt"></my-date-picker>
+									</div>
+							</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>End Date</label>
+								</div>
+								<div class="col-md-8">
+									<my-date-picker name="prjEndDt" [options]="myDatePickerOptions" [(ngModel)] = "projectCreateModel.prjEndDt"></my-date-picker>
+									
+								</div>
+						</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Actual Start Date</label>
+							</div>
+							<div class="col-md-8">
+								<my-date-picker name="prjActualStartDt" [options]="myDatePickerOptions" [(ngModel)] = "projectCreateModel.prjActualStartDt"></my-date-picker>
+								
+							</div>
+					</div>
+			</div>
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Actual End Date</label>
+							</div>
+							<div class="col-md-8">
+								<my-date-picker name="prjActualEndDt" [options]="myDatePickerOptions" [(ngModel)] = "projectCreateModel.prjActualEndDt"></my-date-picker>
+								
+							</div>
+					</div>
+			</div>
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Planned Duration</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" name="plannedDuration" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="10" [(ngModel)] = "projectCreateModel.plannedDuration" class="form-control">
+								
+							</div>
+						</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group row">
+						<div class="col-md-4 text-left">
+							<label>Actual Duration</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" name="actualDuration" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="10" [(ngModel)] = "projectCreateModel.actualDuration" class="form-control" >
+							
+						</div>
+					</div>
+		</div>
+			</div>
+			<div class="row form-field-style text-center">
+		
+			
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>AllocBudget</label>
+							</div>
+							<div class="col-md-8">
+								<input name="prjAllocBudget" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="10" type="text" class="form-control" [(ngModel)] = "projectCreateModel.prjAllocBudget">
+							
+							</div>
+						</div>
+			</div>
+				
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Avl Budget</label>
+							</div>
+							<div class="col-md-8">
+								<input name="prjAvlBudget" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="10" type="text" class="form-control" [(ngModel)] = "projectCreateModel.prjAvlBudget">
+							
+							</div>
+						</div>
+			</div>
+		
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Description<span class="start">*</span></label>
+							</div>
+							<div class="col-md-8">
+								<textarea type="text" name="prjDsc" required pattern="[a-zA-Z0-9 ]*" maxlength="100" [(ngModel)] = "projectCreateModel.prjDsc" class="form-control"></textarea>
+							
+							</div>
+						</div>
+			</div>
+			<div class="col-md-12 text-center">
+					<button class="btn btn-primary" [disabled] = "!createProjectmasterForm.form.valid" (click) = "createProjectmaster()"> Create</button>
+			</div>
+			</div>
+		</div>
+		<div class="content-heading-box">
+			<h3>Project's List</h3>
+			<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="projectList"></ag-grid-angular>
+		</div>
+	</form>
+	
+				
+		

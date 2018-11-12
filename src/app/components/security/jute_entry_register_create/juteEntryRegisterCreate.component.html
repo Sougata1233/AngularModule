@@ -1,0 +1,311 @@
+				<h2>
+				<a routerLink="/security/storeentryregister" title="Security">Security</a> > 
+				<a routerLink="/security/juteentryregister" title="Security">Jute Entry Register</a> >
+				Create New
+				</h2>
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				<form role="form" #createEntryForm="ngForm">
+				<div class="content-heading-box">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Create Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="createDate" [options]="myDatePickerOptions" required [(ngModel)] = "storeCreateModel.createDate"></my-date-picker>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="challanNo" required maxlength="10" [(ngModel)] = "storeCreateModel.challanNo" class="form-control" pattern="^[0-9]*$">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Vehicle No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="vehicleNo" required [(ngModel)] = "storeCreateModel.vehicleNo" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Transporter <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="driverName" required maxlength="50" [(ngModel)] = "storeCreateModel.transporter" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="mukamOptions.length > 0 && storeCreateModel.chaalantype == 'WPO'">
+								<div class="col-md-4"><label for="makerSelection">Mukam <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.mukam" placeholder="Please Select"
+													 [multiple]="false" [(options)]="mukamOptions" name="mukamselect" (selected)="loadJuteType($event)" (deselected)="loadJuteType($event)" required></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="myPOOptions.length > 0 && storeCreateModel.chaalantype == 'PO'">
+								<div class="col-md-4"><label for="makerSelection">Select PO <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.po" placeholder="Please Select"
+													 [multiple]="false" [(options)]="myPOOptions" name="poselect" 
+													 (selected)="loadPODetails($event)" (deselected)="loadPODetails($event)" required></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="allPoData[storeCreateModel.po] != undefined && storeCreateModel.chaalantype == 'PO'">
+								<div class="col-md-4"><label for="makerSelection">Mukam <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{allPoData[storeCreateModel.po].mukam}}</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Tare Weight</label></div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<input type="text" name="reqquan" [(ngModel)] = "storeCreateModel.tareweight" class="form-control" pattern="^\d+(\.\d{1,2})?$" disabled>
+										<span class="input-group-addon unit">
+											Kg
+										</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{storeCreateModel.tareweight/100}}</span>
+										<span class="input-group-addon unit">
+											QUINTAL
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Actual Weight <span class="start">*</span></label></div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{(1*storeCreateModel.grossweight)-(1*storeCreateModel.tareweight)}}</span>
+										<span class="input-group-addon unit">
+											Kg
+										</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{((1*storeCreateModel.grossweight)-(1*storeCreateModel.tareweight))/100}}</span>
+										<span class="input-group-addon unit">
+											QUINTAL
+										</span>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Create Time<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<input [owlDateTimeTrigger]="time" [owlDateTime]="time" class="form-control custom-height" required>
+									<owl-date-time [pickerType]="'timer'" #time></owl-date-time>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="challanDate" [options]="myDatePickerOptions" required [(ngModel)] = "storeCreateModel.challandate"></my-date-picker>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Driver Name <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="driverName" required maxlength="50" [(ngModel)] = "storeCreateModel.driverName" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="myOptions.length > 0">
+								<div class="col-md-4"><label for="makerSelection">Supplier <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.supplier" placeholder="Please Select"
+													 [multiple]="false" [(options)]="myOptions" name="supplierSelect" (selected)="generatePO($event)" (deselected)="generatePO($event)" required></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="storeCreateModel.supplier != undefined">
+								<div class="col-md-4"><label for="makerSelection">Supplier Address</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{((vendorAllData[storeCreateModel.supplier].address1)?vendorAllData[storeCreateModel.supplier].address1:"")+" "+((vendorAllData[storeCreateModel.supplier].address2)?vendorAllData[storeCreateModel.supplier].address2:"")+" "+((vendorAllData[storeCreateModel.supplier].address3)?vendorAllData[storeCreateModel.supplier].address3:"")}}</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan Type <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<select name="challantype" [(ngModel)] = "storeCreateModel.chaalantype" class="form-control" required (change)="refreshVal($event)">
+									<option value="">--Please Select--</option>
+									<option value="WPO">Without PO</option>
+									<option value="PO">With PO</option>
+								</select>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Gross Weight <span class="start">*</span></label></div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<input type="text" name="grossweight" required [(ngModel)] = "storeCreateModel.grossweight" class="form-control" pattern="^\d+(\.\d{1,2})?$">
+										<span class="input-group-addon unit">
+											Kg
+										</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{storeCreateModel.grossweight/100}}</span>
+										<span class="input-group-addon unit">
+											QUINTAL
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan Weight <span class="start">*</span></label></div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<input type="text" name="challanweight" required [(ngModel)] = "storeCreateModel.challanweight" class="form-control" pattern="^\d+(\.\d{1,2})?$">
+										<span class="input-group-addon unit">
+											Kg
+										</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{storeCreateModel.challanweight/100}}</span>
+										<span class="input-group-addon unit">
+											QUINTAL
+										</span>
+									</div>
+								</div>
+							</div>
+							<!-- <div class="row form-group"> -->
+								<!-- <div class="col-md-4"><label for="makerSelection">Remarks</label></div> -->
+								<!-- <div class="col-md-8"> -->
+								<!-- <textarea name="challanremarks" [(ngModel)] = "storeCreateModel.remarks" class="form-control"></textarea> -->
+								<!-- </div> -->
+							<!-- </div> -->
+						</div>
+					</div>
+				</div>
+				</form>
+				<form role="form" #addNewItemform="ngForm">
+				<div class="content-heading-box" *ngIf="(storeCreateModel.chaalantype == 'WPO' && vendorAllData[storeCreateModel.supplier] != undefined && allMukamData[storeCreateModel.mukam] != undefined) || appendModeOn">
+					<h3>Add Line Item</h3>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="row form-group" *ngIf="allVehiclesoptions.length > 0 && storeCreateModel.chaalantype == 'WPO'">
+								<div class="col-md-4"><label for="makerSelection">Vehicle Type <span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.vehicletype" placeholder="Please Select"
+													 [multiple]="false" [(options)]="allVehiclesoptions" name="vehicletype" required (selected)="vehiclechange($event)" (deselected)="vehiclechange($event)"></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="allVehicles[storeCreateModel.vehicletype]!= undefined && storeCreateModel.chaalantype == 'WPO'">
+								<div class="col-md-4"><label for="makerSelection">Conversion Type <span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<select name="convtyp" [(ngModel)] = "storeCreateModel.cnvtp" class="form-control" required (change)="contypechange($event)">
+										<option value="LOOSE">LOOSE</option>
+										<option value="BALE">BALE</option>
+									</select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="itemOtions.length > 0 && storeCreateModel.chaalantype != 'WPO'">
+								<div class="col-md-4"><label for="makerSelection">Conversion Type <span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<span class="form-control">{{allPOLineItems[0].polineitems[0].receivedIn}}</span>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="qualityoptions.length > 0 && AllJuteTypes[storeCreateModel.selectrdItem] != undefined">
+								<div class="col-md-4"><label for="makerSelection">Jute Quality <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.selectedQuality" placeholder="Please Select"
+													 [multiple]="false" [(options)]="qualityoptions" name="itemquality" required></ng-select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group" *ngIf="allVehicles[storeCreateModel.vehicletype] != undefined && storeCreateModel.chaalantype == 'WPO'">
+								<div class="col-md-4"><label for="makerSelection">Chalan Quantity <span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<div class="input-group col-md-12">
+									<span class="form-control">{{allVehicles[storeCreateModel.vehicletype].weight}}</span>
+									<span class="input-group-addon unit">QUINTAL</span>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="itemOtions.length > 0">
+								<div class="col-md-4"><label for="makerSelection">Jute Type <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.selectrdItem" placeholder="Please Select"
+													 [multiple]="false" [(options)]="itemOtions" name="jutetypeselect" (selected)="loadJuteQuality($event)" (deselected)="loadJuteQuality($event)" required></ng-select>
+								</div>
+							</div>
+							
+							
+							<div class="row form-group" *ngIf="AllJuteTypes[storeCreateModel.selectrdItem] != undefined">
+								<div class="col-md-4"><label for="makerSelection">Quantity <span class="start">*</span></label></div>
+								<div class="col-md-4">
+								<input type="text" name="reqquan" required [(ngModel)] = "storeCreateModel.reqquan" class="form-control" pattern="^[0-9]*$">
+								</div>
+								<div class="col-md-4" *ngIf="storeCreateModel.chaalantype != 'WPO' && AllJuteTypes[storeCreateModel.selectrdItem] != undefined">
+								<span class="form-control">{{(allPOLineItems[0].polineitems[0].receivedIn == 'BALE')?allPOLineItems[0].polineitems[0].receivedIn:AllJuteTypes[storeCreateModel.selectrdItem].quantityUnit.name}}</span>
+								</div>
+								<div class="col-md-4" *ngIf="storeCreateModel.chaalantype == 'WPO' && AllJuteTypes[storeCreateModel.selectrdItem] != undefined">
+								<span class="form-control">{{(storeCreateModel.cnvtp == 'BALE')?storeCreateModel.cnvtp:'%'}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+					<div class="col-md-12 text-center">
+						<button class="btn btn-secondary" (click)="cancelAmmend()" *ngIf="appendModeOn">Cancel</button>
+						<button class="btn btn-primary" [disabled] = "!addNewItemform.form.valid" (click)="appendtoPO()" *ngIf="appendModeOn">Add Item</button>
+						<button class="btn btn-primary" [disabled] = "!addNewItemform.form.valid || (storeCreateModel.cnvtp == 'LOOSE' && maxPer < storeCreateModel.reqquan) || (storeCreateModel.cnvtp == 'BALE' && maxBale < storeCreateModel.reqquan)" (click)="addItemToEntry()" *ngIf="!appendModeOn">Add Item</button>
+					</div>
+				</div>
+				</div>
+				</form>
+				<div class="content-heading-box" *ngIf="allPOLineItems.length > 0 && !appendModeOn">
+					<h3>Line Items</h3>
+					<div class="row form-group" *ngFor ="let eachPOData of allPOLineItems; let i = index">
+						<div class="row form-group">
+							<div class="col-md-6">
+								<strong *ngIf="eachPOData.polineitems[0].poId != undefined">PO No. : {{eachPOData.polineitems[0].poId}}</strong>
+							</div>
+							<div class="col-md-6 text-right">
+								<button class="btn btn-primary" (click)="startAppend()" *ngIf="storeCreateModel.chaalantype == 'PO'">Add Item to PO</button>
+							</div>
+						</div>
+						<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="eachPOData.polineitems"></ag-grid-angular>
+					</div>
+				</div>
+				<p>&nbsp;</p>
+				<div class="row" *ngIf="!appendModeOn">
+					<div class="col-md-12 text-center">
+						<button class="btn btn-primary" [disabled] = "allPOLineItems.length == 0 || !createEntryForm.form.valid || storeCreateModel.challanweight == 0 || storeCreateModel.grossweight == 0" (click)="createStoreEntry()">In</button>
+					</div>
+				</div>
+				
+				<div class="readingArea" *ngIf = "actualQualityEdit != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Select Actual Quality</h2></div>
+						<div class="popupcontent">
+						<form #actualQualityForm ="ngForm">
+							<select class="form-control"  name="quality" [(ngModel)] = "storeCreateModel.selectedActualQuality" required>
+								<option value="">--Please Select--</option>
+								<option *ngFor = "let quality of itemQuality; let i = index;" value="{{i}}">{{quality.name}}</option>
+							</select>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeQuzlityDialog()">CANCEL</button> <button type="button" class="btn btn-sm btn-success" (click)="updateActualQuality()" [disabled]="!actualQualityForm.form.valid">OK</button></div>
+					</div>
+				</div>

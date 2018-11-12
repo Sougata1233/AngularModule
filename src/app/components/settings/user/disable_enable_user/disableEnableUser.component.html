@@ -1,0 +1,123 @@
+				<h2>
+				<a [routerLink]="['/settings/user']" title='Store' >Settings</a>
+				> 
+				User Details</h2>
+				
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>		
+			
+				
+				<div class="content-heading-box">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="profile-image">
+								<img alt="images" src="assets/images/img-2.png" *ngIf = "!userData.userImg || userData.userImg == ''">
+								<img alt="images" src="{{'data:image/gif;base64,'+userData.userImg}}" *ngIf = "userData.userImg && userData.userImg != ''">
+							</div>
+						</div>
+						<div class="col-md-9 form-field-style">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="row form-group">
+										<div class="col-md-4"><label>First Name :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.firstName  || '...'}}</strong></p></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Address :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.permAddr || '...'}}</strong></p></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Country :</label></div>
+										<div class="col-md-8">
+											<p><strong>{{userData.country  || '...'}}</strong></p>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>City :</label></div>
+										<div class="col-md-8">
+											<p><strong>{{userData.city  || '...'}}</strong></p>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Mobile No. :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.mobile  || '...'}}</strong></p></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Father's Name :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.fatherName  || '...'}}</strong></p></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Passport :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.passport  || '...'}}</strong></p></div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="row form-group">
+										<div class="col-md-4"><label>Last Name :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.lastName  || '...'}}</strong></p></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Zip Code :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.zip  || '...'}}</strong></p></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>State :</label></div>
+										<div class="col-md-8">
+											<p><strong>{{userData.state  || '...'}}</strong></p>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Email :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.email  || '...'}}</strong></p></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Date of birth :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.dateOfBirth  || '...'}}</strong></p></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Spouse Name :</label></div>
+										<div class="col-md-8"><p><strong>{{userData.spouseName  || '...'}}</strong></p></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>ID Proof :</label></div>
+										<div class="col-md-8"><p><strong>...</strong></p></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-sm-12 text-center">
+							<button *ngIf="userData.isEnabled == 1" class="btn btn-danger" (click)="userStatus(0)">Disable User</button>
+							<button *ngIf="userData.isEnabled == 0" class="btn btn-success" (click)="userStatus(1)">Enable User</button>
+						</div>
+					</div>
+				</div>
+
+				
+					
+				
+				
+					
+			
+				
+				
+				
+				
+				
+			
+				

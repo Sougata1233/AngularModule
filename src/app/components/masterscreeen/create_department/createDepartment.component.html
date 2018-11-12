@@ -1,0 +1,74 @@
+<h2>
+	<!-- <a href="/payroll" ng-reflect-router-link="/payroll" routerlink="/payroll">Payroll</a>
+	> Create Parameter -->
+	Create Department
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+
+	<form role="form" #createDepartmentForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Department</h3>
+					<div class="row form-field-style">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-5">
+											<label>Organization<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+											<select class="form-control" name="orgId" [(ngModel)] = "departmentCreateModel.orgId" >
+												<option value="">--Please Select--</option>
+											<option *ngFor = "let organization of organizationList;" [value]="organization.id">{{organization.orgName}}</option>
+												   
+										</select>
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							
+							<div class="form-group row">
+								<div class="col-md-5">
+									<label>Department Name<span class="start">*</span></label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" name="departmentName" [(ngModel)] = "departmentCreateModel.departmentName" class="form-control" required pattern="[a-zA-Z ]*" maxlength="20">
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "departmentCreateModel.departmentName == '' || !createDepartmentForm.form.valid" (click) = "createDepartmentmaster()"> Create</button>
+
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Department's List</h3>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="departmentList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

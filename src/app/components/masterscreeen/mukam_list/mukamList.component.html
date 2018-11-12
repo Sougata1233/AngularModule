@@ -1,0 +1,54 @@
+<h2>
+Mukam's List
+</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+	<form role="form">
+			
+				<div class="content-heading-box">
+					<h3>Mukam's List</h3>
+					<div class="row form-group">
+						<div class="col col-xs-8">
+							<a routerLink="/masterscreen/createMukam" class="btn btn-primary">Create New</a>
+						</div>
+						<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+					</div>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="mukamList"></ag-grid-angular>
+				</div>
+		
+			
+				</form>
+				
+				
+				
+				<div class="readingArea" *ngIf = "conditionClicked != ''">
+					<div class="reading-popup reading-popup-master">
+						<div class="popupcontent">
+								<div class="list-menu mukam-master">
+								<ul class="all-menus">
+									<span>
+										<li *ngFor = "let mukamLists of mukamListid.itemJuteCode;">
+										<input type="checkbox" [value]="mukamLists.id"  [checked]="mukamLists.isMapped == 'true'" (change)="onCheckboxChange($event)">
+												{{mukamLists.itemDsc}}
+												
+										 </li>
+										</span>
+									</ul>
+									</div>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeConditionDialog()">Cancel</button> <button type="button" class="btn btn-sm btn-success" (click)="updateCondition()">Save</button></div>
+					</div>
+					
+				</div>

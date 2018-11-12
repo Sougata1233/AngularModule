@@ -1,0 +1,33 @@
+{
+	"mukamitem": [{
+		"id": "001",
+		"name": "Mukam One",
+		"items": [{
+				"id": "i001",
+				"name": "Assam Jute",
+				"Quality": ["D5", "M5", "DL"]
+			},
+			{
+				"id": "i002",
+				"name": "Delhi Jute",
+				"Quality": ["D4", "DL2"]
+			}
+		]
+	}],
+	"vehicle": [{
+			"id": "001",
+			"name": "Big Lori",
+			"unitweight": "250"
+		},
+		{
+			"id": "002",
+			"name": "Medium Lori",
+			"unitweight": "175"
+		},
+		{
+			"id": "003",
+			"name": "Small Lori",
+			"unitweight": "100"
+		}
+	]
+}

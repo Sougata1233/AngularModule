@@ -1,0 +1,65 @@
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				SR Worklist
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<div *ngIf = "allOpenSrList != 'notauth' && allOpenSrList.length == 0" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						No MR Created.
+					</div>
+				</div>
+				<div *ngIf = "allOpenSrList == 'notauth'" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						Sorry. You are not authorized to view this page.
+					</div>
+				</div>
+				<div class="content-heading-box" *ngIf = "allOpenSrList != 'notauth' && allOpenSrList != undefined && allOpenSrList != '' && allOpenSrList.length > 0">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-group">
+								<div class="col col-xs-6">
+								</div>
+								<div class="col col-xs-6 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+					</div>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="allOpenSrList"></ag-grid-angular>
+					
+					<!--<div class="datagrid table-responsive approval">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>SR Id</th>
+									<th>SR Date</th>
+									<th>PO No.</th>
+									<th>Supplier Code</th>
+									<th>Submitter</th>
+								</tr>
+                            </thead>
+							<tbody *ngFor = "let SRitem of allOpenSrList">
+                                <tr *ngIf="grnReceiveModel.searchMr == '' || (SRitem.storeGoodReceiveHeader.id).toString().indexOf(grnReceiveModel.searchMr) > -1 " [routerLink]="['/store/srworklist/', SRitem.storeGoodReceiveHeader.id]">
+									<td><a [routerLink]="['/store/srworklist/', SRitem.storeGoodReceiveHeader.id]" title="View Details">{{SRitem.storeGoodReceiveHeader.id}}</a></td>
+									<td>{{SRitem.storeGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}}</td>
+									<td><a [routerLink]="['/purchase/list/', SRitem.storeGoodReceiveHeader.poId]" title="View Details">{{SRitem.storeGoodReceiveHeader.poId}}</a></td>
+									<td>{{SRitem.storeGoodReceiveHeader.supplierId}}</td>
+									<td>{{SRitem.storeGoodReceiveHeader.submitter }}</td>
+								</tr>
+                            </tbody>
+						</table>
+					</div>-->
+				</div>
+				

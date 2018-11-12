@@ -1,0 +1,7 @@
+{
+	"projects" : ["123456789", "234567890", "345678901", "456789012"],
+	"types" : ["Project","Support","Admin","Finance","Misc","HR"],
+	"task" : ["Requirement Analysis", "Development","Unit Testing","SIT Fix", "UAT Fix", "Support"],
+	"locations" : ["GTP", "ITP", "TCPX", "UNITECH"],
+	"billability" : ["Yes", "No"]
+}

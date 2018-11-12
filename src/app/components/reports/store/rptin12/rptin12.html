@@ -1,0 +1,132 @@
+				<h2>
+				<a [routerLink]="['/jute']" title='Reports'>Reports</a>
+				>
+				<a [routerLink]="['/reports/store']" title='Store Reports'>Store Reports</a>
+				>
+				RPTIN12
+				</h2>
+				<p>&nbsp;</p>
+				
+				<div class="content-heading-box nonprintableContent">
+					<div class="row form-field-style">
+						<div class="col-md-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "reportModel.reportdate"></my-date-picker>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-md-4"> -->
+							<!-- <div class="row form-group"> -->
+								<!-- <div class="col-md-4"><label for="makerSelection">To Date<span class="start">*</span></label></div> -->
+								<!-- <div class="col-md-8"> -->
+								<!-- <my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "reportModel.reportTodate"></my-date-picker> -->
+								<!-- </div> -->
+							<!-- </div> -->
+						<!-- </div> -->
+						<div class="col-md-4">
+							<div class="row form-group">
+								<button class="btn btn-primary" [disabled] = "!reportModel.reportdate" (click) = "searchReport()">Get Report</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p>&nbsp;</p>
+				<div class="form-group nonprintableContent" *ngIf="reportdata ==''">
+					<div class="alert alert-info alert-dismissable">
+						No report to show.
+					</div>
+				</div>
+				<div class="row form-group printableContent" *ngIf="reportdata !=''">
+					<table class="print-table-show">
+
+							<tr>
+								<td>
+									{{company}}<br/>
+									{{companyaddress}}
+									<p>&nbsp;</p>
+									<p>
+										To,<br/>
+										Store Purchase Department<br/>
+										{{company}}
+									</p>
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td style="width:40%">
+									Dear Sir,<br/>
+									We have canceled the following indent/s.
+								</td>
+								<td style="width:40%">
+									Cancel No. : <br/>
+									Date : {{reportdate}}
+								</td>
+								<td>
+									Report No : [IN/12]
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td>
+									Indent No/s
+								</td>
+								<td>
+									Date
+								</td>
+								<td>
+									Item Code
+								</td>
+								<td>
+									Description
+								</td>
+								<td>
+									Quantity
+								</td>
+								<td>
+									Reason for Cancellation
+								</td>
+							</tr>
+							<tbody>
+								<tr *ngFor = "let eachindnt of reportdata">
+									<td>
+										{{eachindnt.indentNO}}
+									</td>
+									<td>
+										{{eachindnt.date}}
+									</td>
+									<td>
+										{{eachline.itemCode}}
+									</td>
+									<td>
+										 {{eachindnt.description}}
+									</td>
+									<td>
+										 {{eachline.quantity}} {{eachline.unit}}
+									</td>
+									<td>
+										{{eachline.reason}}
+									</td>
+								</tr>
+								<tr>
+									<td colspan="6">&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="3">(Stores Authority)<br/>&nbsp;&nbsp;</td>
+									<td colspan="3">(Authorised Sign)<br/>&nbsp;&nbsp;</td>
+								</tr>
+							</tbody>
+						</table>
+				</div>
+				<p>&nbsp;</p>
+					<div class="row nonprintableContent" *ngIf="reportdata !=''">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" title="Print Report" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+				
+				
+				

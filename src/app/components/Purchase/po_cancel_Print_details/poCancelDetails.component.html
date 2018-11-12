@@ -1,0 +1,297 @@
+			<h2 *ngIf = "poDetailData && poDetailData !='undefined'">
+				<a [routerLink]="['/purchase']" title='Purchase' *ngIf = "poDetailData.poHeader.type != 'J'" >Purchase</a>
+				<a [routerLink]="['/jute/purchase']" title='Purchase' *ngIf = "poDetailData.poHeader.type == 'J'">Purchase</a>
+				>
+				Purchase Order Details
+				</h2>
+				
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "poDetailData && poDetailData !='undefined' && poDetailData.poItemList.length > 0">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-field-style">
+						<div class="col-sm-6">
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Purchase Order Number</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{prefix+"/PO/"+poDetailData.poHeader.id}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Purchase Order Type</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.type}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Broaker</label></div>
+								<div class="col col-sm-8">
+									<!-- <span class="form-control">{{poDetailData.poHeader.supplierId}}</span> -->
+									<span class="form-control" *ngIf = "poDetailData.poHeader.brokerId">{{poDetailData.poHeader.brokerName}} [ {{poDetailData.poHeader.brokerId}} ]</span>
+									<span class="form-control" *ngIf = "!poDetailData.poHeader.brokerId">NA</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Supplier</label></div>
+								<div class="col col-sm-8">
+								<span class="form-control" *ngIf = "printableSupplierData != ''">{{printableSupplierData.name}} [ {{printableSupplierData.id}} ]</span>
+								<span class="form-control" *ngIf = "printableSupplierData == ''">{{poDetailData.poHeader.supplierId}}</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Status</label></div>
+								<div class="col col-sm-8">
+									<span class="btn btn-block  btn-info" *ngIf="poDetailData.poHeader.status == '1'">OPEN</span>
+										<span class="btn btn-block  btn-primary" *ngIf="poDetailData.poHeader.status == '2'">IN-PROGRESS</span>
+										<span class="btn btn-block  btn-success" *ngIf="poDetailData.poHeader.status == '3'">APPROVED</span>
+										<span class="btn btn-block  btn-danger" *ngIf="poDetailData.poHeader.status == '4'">REJECTED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="poDetailData.poHeader.status == '5'">CLOSED</span>
+										<span class="btn btn-block  btn-danger" *ngIf="poDetailData.poHeader.status == '6'">CANCELED</span>
+										<span class="btn btn-block  btn-success" *ngIf="poDetailData.poHeader.status == '7'">BOOKED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="poDetailData.poHeader.status == '8'">RAISE PENDING</span>
+										<span class="btn btn-block  btn-danger" *ngIf="poDetailData.poHeader.status == '9'">RAISE REJECTED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="poDetailData.poHeader.status == '10'">MODIFY PENDING</span>
+										<span class="btn btn-block  btn-success" *ngIf="poDetailData.poHeader.status == '11'">AVAILABLE</span>
+										<span class="btn btn-block  btn-danger" *ngIf="poDetailData.poHeader.status == '12'">LAPSED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="poDetailData.poHeader.status == '13'">PENDING</span>
+										<span class="btn btn-block  btn-primary" *ngIf="poDetailData.poHeader.status == '14'">INVITED</span>
+										<span class="btn btn-block  btn-info" *ngIf="poDetailData.poHeader.status == '15'">READY</span>
+										<span class="btn btn-block  btn-warning" *ngIf="poDetailData.poHeader.status == '17'">APPROVED(LEVEL 1)</span>
+										<span class="btn btn-block  btn-warning" *ngIf="poDetailData.poHeader.status == '18'">APPROVED(LEVEL 2)</span>
+										<span class="btn btn-block  btn-warning" *ngIf="poDetailData.poHeader.status == '19'">APPROVED(LEVEL 3)</span>
+										<span class="btn btn-block  btn-warning" *ngIf="poDetailData.poHeader.status == '20'">APPROVED(LEVEL 5)</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Credit Term</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.deliveryAddress}}</span></div>
+							</div>
+							<div class="row form-group" *ngIf = "poDetailData.poHeader.type == 'J'">
+								<div class="col col-sm-4"><label>Vehicle Type</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{printableVehicle.vehicleType}} [{{printableVehicle.weight+"/"+printableVehicle.weight/10}} QUINTAL/TON]</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Discount</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.discount}}</span></div>
+							</div>
+						</div>
+						
+						<div class="col-sm-6">
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Raised By</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.submitter}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Raised On</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.createDate  | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Purchase Order Value</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.valueWithTax | number : '1.0-2'}} INR</span></div>
+							</div>
+							<div class="row form-group" *ngIf = "poDetailData.poHeader.type == 'J' && printableMukam != ''">
+								<div class="col col-sm-4"><label>Mukam</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{printableMukam.mukamName}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Delivery Timeline</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.deliveryTimeline}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Freight Charge</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.frieghtCharge}}</span></div>
+							</div>
+							<div class="row form-group" *ngIf = "poDetailData.poHeader.type == 'J'">
+								<div class="col col-sm-4"><label>Vehicle Quantity</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.vehicleQuantity}}</span></div>
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf = "poDetailData && poDetailData !='undefined' && poDetailData.poItemList.length > 0">
+					<h3>Purchase Order Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<form role="form" #poapprovalform ="ngForm">
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="poDetailData.poItemList"></ag-grid-angular>
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button *ngIf = "poDetailData.poHeader.status == '1' || poDetailData.poHeader.status == '2' || poDetailData.poHeader.status == '3' || poDetailData.poHeader.status == '4' || poDetailData.poHeader.status == '7'" class="btn btn-danger" title="Cancel Purchase Order" (click)="cancelIt()"><span class="glyphicon glyphicon-trash"></span></button>
+							<button  *ngIf = "poDetailData.poHeader.status == '3' && printableSupplierData != ''" class="btn btn-primary" title="Print Purchase Order" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+					</form>
+				</div>
+				
+				
+				
+				
+				 <div class="printable" *ngIf = "poDetailData && poDetailData !='undefined' && poDetailData.poItemList.length > 0 && printableSupplierData && printableSupplierData != ''">
+							<table class="print-table">
+								<tr>
+									<td style="text-align:right;">
+										<h1 style="font-size: 24px;text-align: right;margin: 0; color:#909090">PURCHASE ORDER</h1>
+										<h3 style="font-size: 15px;text-align: right;margin: 0; color:#cdcdcd">
+											<span *ngIf="printResponsedata == ''">1st Copy</span>
+											<span *ngIf="printResponsedata != ''">Copy No. : {{printResponsedata.counter}}</span>
+										</h3>
+									</td>
+								</tr>
+							</table>
+							<table class="print-table" style="border:1px solid #000 !important">
+								<tr>
+									<td style="width:20%; border:1px solid #000 !important"><strong>PURCHASE ORDER No.</strong></td>
+									<td style="width:30%; border:1px solid #000 !important">{{prefix+"/PO/"+poDetailData.poHeader.id}}</td>
+									<td style="width:20%; border:1px solid #000 !important"><strong>EXPECTED DATE</strong></td>
+									<td style="width:30%; border:1px solid #000 !important">&nbsp;</td>
+								</tr>
+								<tr>
+									<td style="width:20%; border:1px solid #000 !important"><strong>ORDERED DATE</strong></td>
+									<td style="width:30%; border:1px solid #000 !important"><strong>{{poDetailData.poHeader.createDate  | date:'mediumDate'}}</strong></td>
+									<td style="width:20%; border:1px solid #000 !important"><strong>PAYMENT TERMS</strong></td>
+									<td style="width:30%; border:1px solid #000 !important">After {{poDetailData.poHeader.deliveryAddress}} days from the acceptance of Invoice</td>
+								</tr>
+								<tr *ngIf = "poDetailData.poHeader.type == 'J'">
+									<td style="width:20%; border:1px solid #000 !important"><strong>Vehicle Type</strong></td>
+									<td style="width:30%; border:1px solid #000 !important">{{printableVehicle.vehicleType}}</td>
+									<td style="width:20%; border:1px solid #000 !important"><strong>Vehicle Quantity</strong></td>
+									<td style="width:30%; border:1px solid #000 !important">{{poDetailData.poHeader.vehicleQuantity}}</td>
+								</tr>
+								<tr *ngIf = "poDetailData.poHeader.type == 'J'">
+									<td colspan="1" style="width:20%; border:1px solid #000 !important"><strong>Mukam</strong></td>
+									<td colspan="3" style="width:80%; border:1px solid #000 !important">{{printableMukam.mukamName}}</td>
+								</tr>
+								<tr>
+									<td colspan="2" style="width:50%; border:1px solid #000 !important">
+										<strong>TO,</strong><br/>
+										<strong>{{printableSupplierData.name}} [ Code :- {{printableSupplierData.id}} ]</strong><br/>
+										{{printableSupplierData.address1}}<br/>
+										{{printableSupplierData.address2}}<br/>
+										{{printableSupplierData.address3}}
+									</td>
+									<td colspan="2" style="width:50%; border:1px solid #000 !important">
+										<strong>SHIPPING ADDRESS:</strong><br/>
+										{{company}}<br/>
+										{{company_add_1}}<br/>
+										{{company_add_2}}<br/>
+										{{company_contact}}
+									</td>
+									<!-- <td colspan="2" style="width:50%; border:1px solid #000 !important"> -->
+										<!-- <strong>SHIPPING ADDRESS:</strong><br/> -->
+										<!-- NELLIMARLA JUTE MILLS CO LTD<br/> -->
+										<!-- Admn. Office:- 3A, Shakespeare Sarani, Kolkta- 70017<br/> -->
+										<!-- Mills: Cheepurupalli - Nellimarla Rd, Nellimarla, Andhra Pradesh 535217, India<br/> -->
+										<!-- Tel : Office : +91-033-40103700 Mill: 2501-1836 -->
+									<!-- </td> -->
+								</tr>
+							</table>
+							<table class="print-table" style="border:1px solid #000; margin:0; padding:0">
+								<thead>
+									<tr>
+										<th style="width:20px;">Sl. No.</th>
+										<th style="width:30px;">Item Code</th>
+										<th>Description</th>
+										<th style="width:50px;">HSN/SAC Code</th>
+										<th style="width:20px;">Qty.</th>
+										<th style="width:50px;">UOM</th>
+										<th style="width:50px;" *ngIf="poDetailData.poHeader.type =='J'">Allowable Moisture</th>
+										<th style="width:75px;">Rate</th>
+										<th style="width:50px;">CGST (%)</th>
+										<th style="width:50px;">SGST (%)</th>
+										<th style="width:50px;">IGST (%)</th>
+										<th style="width:100px;">Amount</th>
+									</tr>
+								</thead>
+								<tbody *ngFor = "let item of poDetailData.poItemList; let i = index">
+									<tr class="bordered" *ngIf="item.status !='4'">
+										<td style="width:20px;">{{i+1}}</td>
+										<td style="width:30px;">{{item.item.id}}</td>
+										<td>
+											{{item.item.legacyItemCode +"_"+ item.item.name}}
+											<span *ngIf = "poDetailData.poHeader.type == 'J'">-{{item.quality.name}}</span>
+											<span *ngIf="poDetailData.poHeader.type == 'J' && poDetailData.poHeader.juteUnit == 'BALE' || poDetailData.poHeader.type == 'J' && poDetailData.poHeader.juteUnit == 'PAKA BALE' || poDetailData.poHeader.type == 'J' && poDetailData.poHeader.juteUnit == 'HALF BALE'">-{{item.poQuantity * 4.6  | number : '1.0-2'}} BALE</span>
+											<span *ngIf="poDetailData.poHeader.type == 'J' && poDetailData.poHeader.juteUnit == 'LOOSE'">-{{(item.poQuantity/totJuteQuantity)*100 | number : '1.0-2'}} %</span>
+										</td>
+										<td style="width:50px;">{{item.item.hsnCode}}</td>
+										<td style="width:20px;">{{item.poQuantity | number : '1.0-2'}}</td>
+										<td style="width:50px;">{{item.quantityUnit.name}}</td>
+										<td style="width:50px;" *ngIf="poDetailData.poHeader.type =='J'">{{item.allowableMoisturePercentage | number : '1.0-2'}} %</td>
+										<td style="width:75px;">{{item.rate | number : '1.0-2'}}</td>
+										<td style="width:50px;"><span *ngIf="printableSupplierData.state == company_state">{{item.item.itemTax.gst/2 | number : '1.0-2'}}</span></td>
+										<td style="width:50px;"><span *ngIf="printableSupplierData.state == company_state">{{item.item.itemTax.gst/2 | number : '1.0-2'}}</span></td>
+										<td style="width:50px;"><span *ngIf="printableSupplierData.state != company_state">{{item.item.itemTax.gst | number : '1.0-2'}}</span></td>
+										<td style="width:100px;">{{item.rate * item.poQuantity | number : '1.0-2'}}</td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="print-table" style="border:1px solid #000; margin:0; padding:0">
+								<tr class="bordered">
+									<td style="width:100px; border-right:none;"></td>
+									<td style="border-left:none; text-align:center">Freight Charges  ( If Any )</td>
+									<td style="width:100px;">{{poDetailData.poHeader.frieghtCharge}}</td>
+								</tr>
+								<tr class="bordered">
+									<td style="width:100px; border-right:none;"></td>
+									<td style="text-align:center; border-left:none;"><strong>Total</strong></td>
+									<td style="width:100px;"><strong>{{poDetailData.poHeader.valueWithoutTax | number : '1.0-2' }}</strong></td>
+								</tr>
+								<tr class="bordered">
+									<td rowspan="3" style="width:100px; text-align:center"><strong>Taxes</strong></td>
+									<td style="text-align:center"><strong>CGST</strong></td>
+									<td style="width:100px;"><span *ngIf="printableSupplierData.state == company_state">{{poDetailData.poHeader.tax/2 | number : '1.0-2'}}</span></td>
+								</tr>
+								<tr class="bordered">
+									<td style="text-align:center"><strong>SGST</strong></td>
+									<td style="width:100px;"><span *ngIf="printableSupplierData.state == company_state">{{poDetailData.poHeader.tax/2 | number : '1.0-2'}}</span></td>
+								</tr>
+								<tr class="bordered">
+									<td style="text-align:center"><strong>IGST</strong></td>
+									<td style="width:100px;"><span *ngIf="printableSupplierData.state != company_state">{{poDetailData.poHeader.tax | number : '1.0-2'}}</span></td>
+								</tr>
+								<tr class="bordered">
+									<td style="width:100px; text-align:center"><strong>NET TOTAL</strong></td>
+									<td style="text-align:center"><strong>{{inWordData + " Only"}}</strong></td>
+									<td style="width:100px;"><strong>{{poDetailData.poHeader.valueWithTax}}</strong></td>
+								</tr>
+							</table>
+							<table class="print-table" style="border:1px solid #000; margin:0; padding:0">
+								<tr class="bordered">
+									<td>
+										<p><strong>TERMS & CONDITIONS</strong></p>
+										<ol>
+											<li>Please Submit Invoice In Triplicate , mentioning Our P.O No. , along with Delivery Challan/Installation Report.</li>
+											<li>Late delivery will be Subject to Penality.</li>
+											<li>Inspection of Goods will be done at our office.</li>
+											<li>Packing of Goods would be your responsibility.</li>
+										</ol>
+									</td>
+									<td valign="top" style="width:50%; text-align:right;">
+										<i>For {{company}}</i><br/><br/><br/><br/>
+									</td>
+								</tr>
+								<tr class="bordered">
+									<td colspan="2"><strong>SPECIAL NOTES(IF Any): </strong></td>
+								</tr>
+								<tr class="bordered" *ngIf = "poDetailData.poHeader.footerNote != '' && poDetailData.poHeader.footerNote == null">
+									<td colspan="2">{{poDetailData.poHeader.footerNote}}</td>
+								</tr>
+							</table>
+					</div>

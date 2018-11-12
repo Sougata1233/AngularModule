@@ -1,0 +1,529 @@
+<div class="left-nav-panel" [@navtogglestate]="togglestate">
+<nav *ngIf="inUrl != ''">
+					
+<span id="navtoggle" class="{{'state'+togglestate}}" (click)="toggleNav()"></span>			
+				
+				
+<ul>
+	<li>
+		<a routerLink="/home/dashboard" title="Home" routerLinkActive="active"><span class="ico-home"></span>Home</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('home') == 1">
+			<li class="indent">
+				<a routerLink="/home/dashboard" title="Summery" routerLinkActive="active">
+					Summery
+				</a>
+			</li>
+			<li class="indent">
+				<a routerLink="/home/task" title="Tasks" routerLinkActive="active">
+					Tasks
+				</a>
+			</li>
+		</perfect-scrollbar>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Store')!= -1">
+		<a routerLink="/store" title="Store" routerLinkActive="active"><span class="ico-store"></span>Store</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('store') == 1 && sessionData.mainMenu.indexOf('Store')!= -1" >
+			<li *ngIf="sessionData.subMenu.indexOf('Store Indent')!= -1">
+				<a routerLink="/store/srindent" title="Store Indent" routerLinkActive="active">
+					Store Indent
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Indent Worklist')!= -1">
+				<a routerLink="/store/worklist" title="Indent Worklist" routerLinkActive="active">
+					Indent Worklist
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Debit/Credit Note')!= -1">
+				<a routerLink="/store/debitCredit" title="Debit/Credit Note" routerLinkActive="active">
+					Debit/Credit Note
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Bill Pass')!= -1">
+				<a routerLink="/store/billpass" title="Bill Pass"routerLinkActive="active" >
+					Bill Pass
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Store Receive')!= -1">
+				<a routerLink="/store/storereceive" title="Store Receive" routerLinkActive="active">
+					Store Receive
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('SR Worklist')!= -1">
+				<a routerLink="/store/srworklist" title="SR Worklist"routerLinkActive="active" >
+					SR Worklist
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Store Issue')!= -1">
+				<a routerLink="/store/srgoodissue" title="Store Issue" routerLinkActive="active">
+					Store Issue
+				</a>
+			</li>
+		</perfect-scrollbar>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Purchase')!= -1">
+		<a routerLink="/purchase" title="Purchase" routerLinkActive="active"><span class="ico-purchase"></span>Purchase</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('purchase') == 1 && sessionData.mainMenu.indexOf('Purchase')!= -1">
+			<li *ngIf="sessionData.subMenu.indexOf('Request Price')!= -1">
+				<a routerLink="/purchase/requestprice" title="Request Price" routerLinkActive="active">
+					Request Price
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Supplier Worklist')!= -1">
+				<a routerLink="/purchase/supplier" title="Supplier Worklist" routerLinkActive="active">
+					Supplier Worklist
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Supplier Approval List')!= -1">
+				<a routerLink="/purchase/supplierapprovallist" title="Supplier Approval List" routerLinkActive="active">
+					Supplier Approval List
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Store Purchase Order')!= -1">
+				<a routerLink="/purchase/srpocreate" title="Store Purchase Order" routerLinkActive="active">
+					Store Purchase Order
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('PO Worklist')!= -1">
+				<a routerLink="/purchase/worklist" title="PO Worklist" routerLinkActive="active">
+					PO Worklist
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('PO Amendment')!= -1">
+				<a routerLink="/purchase/amendment" title="PO Amendment" routerLinkActive="active">
+					PO Amendment
+				</a>
+			</li>
+		</perfect-scrollbar>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Jute')!= -1">
+		<a routerLink="/jute" title="Jute" routerLinkActive="active"><span class="ico-jute"></span>Jute</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('jute') == 1 && sessionData.mainMenu.indexOf('Jute')!= -1">
+			<li *ngIf="sessionData.subMenu.indexOf('Jute Indent')!= -1">
+				<a routerLink="/jute/mrindent" title="Jute Indent" routerLinkActive="active">
+					Jute Indent
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Jute Indent Worklist')!= -1">
+				<a routerLink="/jute/juteworklist" title="Jute Indent Worklist" routerLinkActive="active">
+					Jute Indent Worklist
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Jute Purchase Order')!= -1">
+				<a routerLink="/jute/purchase" title="Jute Purchase Order" routerLinkActive="active">
+					Jute Purchase Order
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Jute PO Worklist')!= -1">
+				<a routerLink="/jute/jutePOworklist" title="Jute PO Worklist" routerLinkActive="active">
+					Jute PO Worklist
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Jute PO Amendment')!= -1">
+				<a routerLink="/jute/juteamendment" title="Jute PO Amendment" routerLinkActive="active">
+					Jute PO Amendment
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Material Reading')!= -1">
+				<a routerLink="/jute/materialreading" title="Material Reading" routerLinkActive="active">
+					Material Reading
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Material Receive')!= -1">
+				<a routerLink="/jute/materialreceive" title="Material Receive" routerLinkActive="active">
+					Material Receive
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Material Receive')!= -1">
+				<a routerLink="/jute/agentmrlist" title="Agent MR List" routerLinkActive="active">
+					Agent MR List
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('MR Worklist')!= -1">
+				<a routerLink="/jute/mrworklist" title="MR Worklist" routerLinkActive="active" >
+					MR Worklist
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Material Issue')!= -1">
+				<a routerLink="/jute/mrgoodissue" title="Material Issue" routerLinkActive="active">
+					Material Issue
+				</a>
+			</li>
+		</perfect-scrollbar>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Production')!= -1">
+		<a href="http://{{redirection+productionlink}}?auth_key={{sessionData.authkey}}" title="Production"><span class="ico-production"></span>Production</a>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Security')!= -1">
+		<!-- <a href="http://{{redirection+secuiritylink}}?auth_key={{sessionData.authkey}}" title="Security" routerLinkActive="active"><span class="ico-security"></span>Security</a> -->
+		<a routerLink="/security" title="Security" routerLinkActive="active"><span class="ico-security"></span>Security</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('security') == 1 && sessionData.mainMenu.indexOf('Security')!= -1">
+					<li *ngIf="sessionData.subMenu.indexOf('Store Entry Register')!= -1">
+						<a routerLink="/security/storeentryregister" title="Store Entry Register"routerLinkActive="active" >
+							Store Entry Register
+						</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Jute Entry Register')!= -1">
+							<a routerLink="/security/juteentryregister" title="Jute Entry Register" routerLinkActive="active">
+								Jute Entry Register
+							</a>
+					</li>
+		</perfect-scrollbar>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('masterscreen')!= -1">
+		<a routerLink="/masterscreen" title="Master Screen" routerLinkActive="active"><span class="ico-master"></span>Master Screen</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('masterscreen') == 1 && sessionData.mainMenu.indexOf('masterscreen')!= -1">
+			<li *ngIf="sessionData.subMenu.indexOf('Country')!= -1">
+				<a routerLink="/masterscreen/countrylist" title="Country" routerLinkActive="active">
+					Country
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('State')!= -1">
+				<a routerLink="/masterscreen/statelist" title="State" routerLinkActive="active">
+					State
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('City')!= -1">
+				<a routerLink="/masterscreen/CityList" title="City" routerLinkActive="active">
+					City
+				</a>
+			</li>
+
+			<li *ngIf="sessionData.subMenu.indexOf('Organization')!= -1">
+				<a routerLink="/masterscreen/OrganizationList" title="Organization" routerLinkActive="active">
+					Organization
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Department')!= -1">
+				<a routerLink="/masterscreen/departmentlist" title="Department" routerLinkActive="active">
+					Department
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Employee')!= -1">
+				<a routerLink="/masterscreen/employeeList" title="Employee" routerLinkActive="active">
+					Employee
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Location')!= -1">
+				<a routerLink="/masterscreen/locationlist" title="Location" routerLinkActive="active">
+					Location
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Holiday')!= -1">
+				<a routerLink="/masterscreen/holidaylist" title="Holiday" routerLinkActive="active">
+					Holiday
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Leave')!= -1">
+				<a routerLink="/masterscreen/leavelist" title="Leave" routerLinkActive="active">
+					Leave
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Weekend')!= -1">
+				<a routerLink="/masterscreen/weekendlist" title="Weekend" routerLinkActive="active">
+					Weekend
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('UserGroup')!= -1">
+				<a routerLink="/masterscreen/usergrouplist" title="UserGroup" routerLinkActive="active">
+					UserGroup
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Code')!= -1">
+			<a routerLink="/masterscreen/codelist" title="Code" routerLinkActive="active">
+				Code
+			</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Project')!= -1">
+			<a routerLink="/masterscreen/projectlist" title="Project" routerLinkActive="active">
+				Project
+			</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Machine')!= -1">
+			<a routerLink="/masterscreen/machinelist" title="Machine" routerLinkActive="active">
+				Machine
+			</a>
+			</li>
+
+			<li *ngIf="sessionData.subMenu.indexOf('Uommaster')!= -1">
+				<a routerLink="/masterscreen/uomlist" title="Uommaster" routerLinkActive="active">
+					Uommaster
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Frame')!= -1">
+			<a routerLink="/masterscreen/framelist" title="Frame" routerLinkActive="active">
+				Frame
+			</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Jute Quality Price')!= -1">
+			<a routerLink="/masterscreen/jutequalitypricelist" title="Jute Quality Price" routerLinkActive="active">
+				Jute Quality Price
+			</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Main Menu')!= -1">
+			<a routerLink="/masterscreen/menulist" title="Main Menu" routerLinkActive="active">
+				Main Menu
+			</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Submenu')!= -1">
+			<a routerLink="/masterscreen/submenulist" title="Submenu" routerLinkActive="active">
+				Submenu
+			</a>
+			</li>
+
+			<li *ngIf="sessionData.subMenu.indexOf('Mukam')!= -1">
+				<a routerLink="/masterscreen/mukamList" title="Mukam" routerLinkActive="active">
+					Mukam
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Role Details')!= -1">
+				<a routerLink="/masterscreen/roledetailslist" title="Role Details" routerLinkActive="active">
+					Role Details
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('SCM Indent Type')!= -1">
+				<a routerLink="/masterscreen/scmindenttypelist" title="SCM Indent Type" routerLinkActive="active">
+					SCM Indent Type
+				</a>
+			</li>
+
+			<li *ngIf="sessionData.subMenu.indexOf('Selection Quality')!= -1">
+				<a routerLink="/masterscreen/selectionqualityList" title="Selection Quality" routerLinkActive="active">
+					Selection Quality
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Shift')!= -1">
+				<a routerLink="/masterscreen/shiftlist" title="Shift" routerLinkActive="active">
+					Shift
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Status')!= -1">
+				<a routerLink="/masterscreen/statuslist" title="Status" routerLinkActive="active">
+					Status
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Supplier')!= -1">
+				<a routerLink="/masterscreen/supplierlist" title="Supplier" routerLinkActive="active">
+					Supplier
+				</a>
+			</li>
+
+			<li *ngIf="sessionData.subMenu.indexOf('Broker')!= -1">
+				<a routerLink="/masterscreen/broakerlist" title="Broker" routerLinkActive="active">
+					Broker
+				</a>
+			</li>
+
+			<li *ngIf="sessionData.subMenu.indexOf('Item Group')!= -1">
+				<a routerLink="/masterscreen/itemgrouplist" title="Item Group" routerLinkActive="active">
+					Item Group
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Item Master')!= -1">
+				<a routerLink="/masterscreen/itemlist" title="Item Master" routerLinkActive="active">
+					Item Master
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Activity')!= -1">
+					<a routerLink="/masterscreen/activtylist" title="Activity" routerLinkActive="active">
+						Activity
+					</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Task Type')!= -1">
+				<a routerLink="/masterscreen/tasktypelist" title="Task Type" routerLinkActive="active">
+					Task Type
+				</a>
+			</li>
+				
+			<li *ngIf="sessionData.subMenu.indexOf('Bank')!= -1">
+				<a routerLink="/masterscreen/banklist" title="Bank" routerLinkActive="active">
+					Bank
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Branch')!= -1">
+				<a routerLink="/masterscreen/branchlist" title="Branch" routerLinkActive="active">
+					Branch
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Price')!= -1">
+				<a routerLink="/masterscreen/ pricelist" title="Price" routerLinkActive="active">
+					Price
+				</a>
+			</li>
+			<li>
+				<a routerLink="/masterscreen/ticketcategory" title="Ticket Category" routerLinkActive="active">
+					Ticket Category
+				</a>
+			</li>
+			<li>
+				<a routerLink="/masterscreen/ticketsubcategory" title="Ticket Sub Category" routerLinkActive="active">
+					Ticket Sub Category
+				</a>
+			</li>
+		</perfect-scrollbar>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('HRMS')!= -1">
+		<a routerLink="/hrms" title="HRMS" routerLinkActive="active"><span class="ico-hrms"></span>HRMS</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('hrms') == 1 && sessionData.mainMenu.indexOf('HRMS')!= -1">
+			<li *ngIf="sessionData.subMenu.indexOf('Expense')!= -1">
+				<a routerLink="/hrms/expense" title="Expense" routerLinkActive="active">
+					Expense
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('My Profile')!= -1">
+				<a routerLink="/hrms/profile" title="My Profile" routerLinkActive="active">
+					My Profile
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Leave')!= -1">
+				<a routerLink="/hrms/leave" title="Leave" routerLinkActive="active">
+					Leave
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Payroll')!= -1">
+				<a routerLink="/hrms/payrole" title="Payroll" routerLinkActive="active">
+					Payroll
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Travel')!= -1">
+				<a routerLink="/hrms/travel" title="Travel" routerLinkActive="active">
+					Travel
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('My Attendance')!= -1">
+				<a routerLink="/hrms/myattendance" title="My Attendance" routerLinkActive="active">
+					My Attendance
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Attendance Worklist')!= -1">
+				<a routerLink="/hrms/attendanceworklist" title="Attendance Worklist" routerLinkActive="active">
+					Attendance Worklist
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Edit Swap Details')!= -1">
+				<a routerLink="/hrms/swapDetails" title="Edit Swap Details" routerLinkActive="active">
+					Edit Swap Details
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Asign Work')!= -1">
+				<a routerLink="/hrms/asignwork" title="Asign Work" routerLinkActive="active">
+					Asign Work
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Search Asigned Work')!= -1">
+				<a routerLink="/hrms/searchasignwork" title="Search Asigned Work" routerLinkActive="active">
+					Search Asigned Work
+				</a>
+			</li>
+		</perfect-scrollbar>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Sale')!= -1">
+		<a routerLink="/home/dashboard" title="Sale"><span class="ico-sale"></span>Sale</a>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Inventory')!= -1">
+		<a routerLink="/home/dashboard" title="Inventory"><span class="ico-inventory"></span>Inventory</a>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Quality')!= -1">
+		<a routerLink="/home/dashboard" title="Quality"><span class="ico-quality"></span>Quality</a>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Logistics')!= -1">
+		<a routerLink="/home/dashboard" title="Logistics"><span class="ico-logistics"></span>Logistics</a>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Project')!= -1">
+		<a routerLink="/home/dashboard" title="Project"><span class="ico-project"></span>Project</a>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Data')!= -1">
+		<a routerLink="/home/dashboard" title="Data"><span class="ico-data"></span>Data</a>
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Reports')!= -1">
+		<a routerLink="/reports" title="Reports" routerLinkActive="active"><span class="ico-report"></span>Reports</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('reports') == 1 && sessionData.mainMenu.indexOf('Reports')!= -1">
+		<li *ngIf="sessionData.subMenu.indexOf('Godownwise Stock Report')!= -1">
+				<a routerLink="/reports/jute" title="Jute Reports" routerLinkActive="active">Jute Reports</a>
+				<ul *ngIf="inUrl.url.indexOf('reports/jute') == 1">
+					<li *ngIf="sessionData.subMenu.indexOf('Godownwise Stock Report')!= -1">
+						<a routerLink="/reports/jute/godownwiseStockReport" title="Godownwise Stock Report" routerLinkActive="active">Godownwise Stock Report</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Groupwise Stock Register')!= -1">
+						<a routerLink="/reports/jute/groupwisestockregister" title="Groupwise Stock Register" routerLinkActive="active">Groupwise Stock Register</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Issue Register')!= -1">
+						<a routerLink="/reports/jute/issueregister" title="Issue Register" routerLinkActive="active">Issue Register</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Jute Rate Report')!= -1">
+						<a routerLink="/reports/jute/juteratereport" title="Jute Rate Report" routerLinkActive="active">Jute Rate Report</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Qualitywise Stock Register')!= -1">
+						<a routerLink="/reports/jute/qualitywisestockregister" title="Qualitywise Stock Register" routerLinkActive="active">Qualitywise Stock Register</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Receipt Register')!= -1">
+						<a routerLink="/reports/jute/receiptregister" title="Receipt Register" routerLinkActive="active">Receipt Register</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Summary Receipt Register')!= -1">
+						<a routerLink="/reports/jute/summeryreceiptregister" title="Summary Receipt Register" routerLinkActive="active">Summary Receipt Register</a>
+					</li>
+				</ul>
+		</li>
+		<li *ngIf="sessionData.subMenu.indexOf('Indent Details Report')!= -1">
+				<a routerLink="/reports/store" title="Store Reports" routerLinkActive="active">Store Indent Reports</a>
+				<ul *ngIf="inUrl.url.indexOf('reports/store') == 1">
+					<li *ngIf="sessionData.subMenu.indexOf('Indent Details Report')!= -1">
+						<a routerLink="/reports/store/indentdetails" title="Indent Details Report" routerLinkActive="active">Indent Details(Numberwise)</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Outstanding Indent Report')!= -1">
+						<a routerLink="/reports/store/outstandingindent" title="Outstanding Indent Report" routerLinkActive="active">Outstanding Indent Report</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Indent Details Report(itemwise)')!= -1">
+						<a routerLink="/reports/store/indentdetailitemwise" title="Indent Details Report(itemwise)" routerLinkActive="active">Indent Details(Itemwise)</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Outstanding Indent(Itemwise)')!= -1">
+						<a routerLink="/reports/store/outstandingindentitemwise" title="Outstanding Indent(Itemwise)" routerLinkActive="active">Outstanding Indent(Itemwise)</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Indent Waiting for PO')!= -1">
+						<a routerLink="/reports/store/indentWaitingforPO" title="Indent Waiting for PO" routerLinkActive="active">Indent Waiting for PO</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('RPTIN12')!= -1">
+						<a routerLink="/reports/store/rptin" title="RPTIN12" routerLinkActive="active">RPTIN12</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Outstanding Indent(Deptwise)')!= -1">
+						<a routerLink="/reports/store/outstandingindentdeptwise" title="Outstanding Indent(Deptwise)" routerLinkActive="active">Outstanding Indent(Deptwise)</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Outstanding Indent(Groupwise)')!= -1">
+						<a routerLink="/reports/store/outstandingindentgrpwise" title="Outstanding Indent(Groupwise)" routerLinkActive="active">Outstanding Indent(Groupwise)</a>
+					</li>
+					<li *ngIf="sessionData.subMenu.indexOf('Indent Cancel Register')!= -1">
+						<a routerLink="/reports/store/indentcancelregister" title="Indent Cancel Register" routerLinkActive="active">Indent Cancel Register</a>
+					</li>
+				</ul>
+		</li>
+		</perfect-scrollbar>
+		
+	</li>
+	<li *ngIf="sessionData.mainMenu.indexOf('Settings')!= -1">
+		<a routerLink="/settings/user" title="Settings" routerLinkActive="active"><span class="ico-user"></span>Settings</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('settings') == 1 && sessionData.mainMenu.indexOf('Settings')!= -1">
+			<li *ngIf="sessionData.subMenu.indexOf('User')!= -1">
+				<a routerLink="/settings/user" title="User" routerLinkActive="active">User</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('User Group')!= -1">
+				<a routerLink="/settings/usergroup" title="User Group" routerLinkActive="active">
+					User Group
+				</a>
+			</li>
+			<li *ngIf="sessionData.subMenu.indexOf('Map User/Menu to Group')!= -1">
+				<a routerLink="/settings/usergroupmapping" title="Map User/Menu to Group" routerLinkActive="active">
+					Map User/Menu to Group
+				</a>
+			</li>
+		</perfect-scrollbar>
+	</li>
+	<li>
+		<a routerLink="/callmanagement" title="Call Management" routerLinkActive="active"><span class="ico-data"></span>Call Management</a>
+		<perfect-scrollbar class="submenu" *ngIf="inUrl.url.indexOf('callmanagement') == 1">
+			<li>
+				<a routerLink="/callmanagement/create" title="User" routerLinkActive="active">Create Ticket</a>
+			</li>
+		</perfect-scrollbar>
+	</li>
+</ul>
+</nav>
+</div>

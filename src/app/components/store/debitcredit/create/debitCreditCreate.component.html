@@ -1,0 +1,145 @@
+				
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				<a [routerLink]="['/store/debitCredit']" title='Debit / Credit Note ' >Debit / Credit Note </a>
+				>
+				Create</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<form role="form" #drcrcreateform ="ngForm">
+					
+				<div class="content-heading-box printableContent">
+					<!--<h3>Added Items</h3>-->
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group row">
+								<div class="col-md-4"><label for="drcrdate">DR/CR Date</label></div>
+								<div class="col-md-8">
+									<my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "debitCreditModel.createDate"></my-date-picker>
+								</div>
+							</div>
+							
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="pono">PO No.</label></div>
+								<div class="col-md-8">
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'SR'">{{prefix+"/PO/"+GRNDtllData.storeGoodReceiveHeader.poId}}</span>
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'MR'">{{prefix+"/PO/"+GRNDtllData.materialGoodReceiveHeader.poId}}</span>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="supcd">Supplier</label></div>
+								<div class="col-md-8">
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'SR'">{{GRNDtllData.storeGoodReceiveHeader.supplierId}}</span>
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'MR'">{{GRNDtllData.materialGoodReceiveHeader.supplierId}}</span>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="debitCreditModel.itemCode != ''">
+								<div class="col-md-4"><label for="drcrquan">Quantity</label></div>
+								<div class="col-md-8">
+									<div class="input-group">
+									<input type="text" class="form-control" name="quantity" [(ngModel)] = "debitCreditModel.DRCRQuan" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$">
+									<span class="input-group-addon unit" *ngIf="debitCreditModel.GRNType == 'SR'">
+										{{GRNDtllData.storeGrnItemList[debitCreditModel.itemCode].item.quantityUnit.id}}
+									</span>
+									<span class="input-group-addon unit" *ngIf="debitCreditModel.GRNType == 'MR'">
+										{{GRNDtllData.materialGrnItemList[debitCreditModel.itemCode].item.quantityUnit.id}}
+									</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group row" *ngIf="drcrtypeoption.length > 0">
+								<div class="col-md-4"><label for="drcrtype">GRN Type</label><span class="start">*</span></div>
+								<div class="col-md-8">
+									<ng-select [allowClear]="false" [(ngModel)]="debitCreditModel.GRNType" placeholder="Please Select"
+													 [multiple]="false" [(options)]="drcrtypeoption" name="drcrtype" (selected)="grnTypeChange()" (deselected)="grnTypeChange()" required></ng-select>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="drcrno">GRN Date</label></div>
+								<div class="col-md-8">
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'SR'">{{GRNDtllData.storeGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}}</span>
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'MR'">{{GRNDtllData.materialGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}}</span>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="drcritemoption.length > 0 && debitCreditModel.GRNType == 'SR' && GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != '' && GRNDtllData.storeGrnItemList.length > 0">
+								<div class="col-md-4"><label for="itmcd">Item Code</label></div>
+								<div class="col-md-8">
+									<ng-select [allowClear]="false" [(ngModel)]="debitCreditModel.itemCode" placeholder="Please Select"
+													 [multiple]="false" [(options)]="drcritemoption" name="drcritem" required (selected)="itemChange($event)" (deselected)="itemChange($event)"></ng-select>
+								</div>
+							</div>
+							
+							<div class="form-group row" *ngIf="drcritemoption.length > 0 && debitCreditModel.GRNType == 'MR' && GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != '' && GRNDtllData.materialGrnItemList.length > 0">
+								<div class="col-md-4"><label for="itmcd">Item Code</label></div>
+								<div class="col-md-8">
+									<ng-select [allowClear]="false" [(ngModel)]="debitCreditModel.itemCode" placeholder="Please Select"
+													 [multiple]="false" [(options)]="drcritemoption" name="drcritem" required (selected)="itemChange($event)" (deselected)="itemChange($event)"></ng-select>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="debitCreditModel.itemCode != ''">
+								<div class="col-md-4"><label for="supcd">DR/CR Value</label></div>
+								<div class="col-md-8">
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'SR'">{{GRNDtllData.storeGrnItemList[debitCreditModel.itemCode].receivedPrice * debitCreditModel.DRCRQuan | number : '1.0-2'}}</span>
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'MR'">{{GRNDtllData.materialGrnItemList[debitCreditModel.itemCode].rate * debitCreditModel.DRCRQuan | number : '1.0-2'}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+						<div class="form-group row" *ngIf="debitCreditModel.GRNType != ''">
+								<div class="col-md-4"><label for="srno">GRN No.</label><span class="start">*</span></div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="srno" [(ngModel)] = "debitCreditModel.SRNo" required (blur) = "getGRNDetails($event, debitCreditModel.GRNType)">
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="drcrdate">GRN Fin. Year</label></div>
+								<div class="col-md-8">
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'SR'">{{GRNDtllData.storeGoodReceiveHeader.goodReceiptDate | date:'yyyy'}}</span>
+									<span class="form-control" *ngIf="debitCreditModel.GRNType == 'MR'">{{GRNDtllData.materialGoodReceiveHeader.goodReceiptDate | date:'yyyy'}}</span>
+								</div>
+							</div>
+							<div class="form-group row"  *ngIf="debitCreditModel.itemCode != '' && GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != '' && debitorcreditoption.length > 0">
+								<div class="col-md-4"><label for="drcrdate">DR/CR Type</label></div>
+								<div class="col-md-8">
+									<ng-select [allowClear]="false" [(ngModel)]="debitCreditModel.DRCRType" placeholder="Please Select"
+													 [multiple]="false" [(options)]="debitorcreditoption" name="debitorcredittype"  required></ng-select>
+								</div>
+							</div>
+							
+						</div>
+					</div>	
+					<div class="row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+						<div class="col-md-12">
+							<label for="finyr">Remarks</label>
+							<div>
+								<textarea class="form-control" name="drcrremarks" [(ngModel)] = "debitCreditModel.drcrremarks" ></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<p>&nbsp;</p>
+					<div class="row nonprintableContent">
+						<div class="col-md-12 text-center">
+							<button  class="btn btn-primary" title="Create" [disabled] = "drcritemoption.length == 0 || !drcrcreateform.form.valid" (click)="createDRCR()">Create</button>
+						</div>
+					</div>
+				</form>
+				

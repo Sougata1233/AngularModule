@@ -1,0 +1,23 @@
+{
+	"shift" : [{
+		"title" : "A1",
+		"plannedHour" : "4"
+	},
+	{
+		"title" : "A2",
+		"plannedHour" : "4"
+	},
+	{
+		"title" : "B1",
+		"plannedHour" : "4"
+	},{
+		"title" : "B2",
+		"plannedHour" : "4"
+	},
+	{
+		"title" : "C",
+		"plannedHour" : "7.5"
+	}],
+	"Activity" : ["spinning","beaming", "selection","weaving"],
+	"machine" : ["spinner1", "spinner2", "NA"]
+}

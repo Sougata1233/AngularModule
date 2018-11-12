@@ -1,0 +1,602 @@
+<p *ngIf="errorMsg">&nbsp;</p>
+<div *ngIf="errorMsg" class="form-group">
+	<div class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		{{ errorMsg }}
+	</div>
+</div>
+<p *ngIf="successMsg">&nbsp;</p>
+<div *ngIf="successMsg" class="form-group">
+	<div class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		{{ successMsg }}
+	</div>
+</div>
+
+
+
+<h2>
+	Jute Entry Register
+</h2>
+				<form role="form" #createjuteForm="ngForm">
+					<div class="row"><!-- search-->
+					<div class="col-sm-12 text-right searchbtn">
+						<a href="#" data-toggle="modal" data-target="#myModal" class="search-btn-one"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></a>
+					</div>
+					<div id="myModal" class="modal fade" role="dialog">
+						<div class="modal-dialog search-modal">
+							<div class="row text-right">
+								<button type="button" class="close sh-close btn" data-dismiss="modal">×</button>
+							</div>
+							<div class="modal-content">
+								<div class="modal-body">
+								<div class="col-md-12">
+									<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>From Date</label>
+										</div>
+										<div class="col-md-8">
+											<my-date-picker name="fromDate" [options]="myDatePickerOptions" required [(ngModel)] = "fromDate"></my-date-picker>
+										</div>
+										
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>To Date</label>
+										</div>
+										<div class="col-md-8">
+											<my-date-picker name="toDate" [options]="myDatePickerOptions" required [(ngModel)] = "toDate"></my-date-picker>
+										</div>
+									
+									</div>
+								</div>
+								<div class="text-center">
+								<button type="button"  routerLink="/Security/juteregistersearch" class="btn btn-primary" (click) = "search($event,fromDate,toDate)" data-dismiss="modal">Search</button>
+								</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><!-- search-->
+				<div class="content-heading-box">
+						<h3>Jute Entry Register</h3>
+						<div class="form-field-style text-center">
+								<div class="row"><!--current-date-time-->
+									<div class="col-md-6">
+											<div class="form-group row">
+												<div class="col-md-4 text-left">
+													<label>Date</label>
+												</div>
+												<div class="col-md-8">
+													<!-- <div load="startDate()" class="form-control custom-height">
+														{{currentDate}}
+														<i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
+													
+													</div> -->
+													<my-date-picker name="Mydate" [options]="myDatePickerOptions" required [(ngModel)] = "inDate"></my-date-picker>
+													
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+												<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Time</label>
+													</div>
+													<div class="col-md-8">
+														
+															<input [owlDateTimeTrigger]="time" [owlDateTime]="time" class="form-control custom-height">
+															<owl-date-time [pickerType]="'timer'" #time></owl-date-time>
+													
+															<!-- 															
+															<div load="startTime()" class="form-control custom-height">
+																{{time}}
+																<i class="glyphicon glyphicon-dashboard" aria-hidden="true"></i>
+															
+															</div> -->
+														
+															
+													</div>
+												</div>
+											</div>
+								</div><!--current-date-time-->
+								<div class="row">
+									<div class="col-md-6">
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Challan No<span class="start">*</span></label>
+													</div>
+													<div class="col-md-8">
+														<input type="text" name="challanNo" pattern="[0-9 ]*" 
+														required maxlength="10" class="form-control" [(ngModel)] = "juteCreateModel.chalanNo">
+													</div>
+											</div>
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Challan Date<span class="start">*</span></label>
+													</div>
+													<div class="col-md-8">
+														<my-date-picker name="Mydate" [options]="myDatePickerOptions" required [(ngModel)] = "date"></my-date-picker>
+														
+													</div>
+											</div>
+											<div class="form-group row">
+													<div class="col-md-3 text-left">
+														<label>Without PO</label>
+														<input type="checkbox" name="po" (change) = "withoutPo($event)" [checked]="check">
+													</div>
+													<div class="col-md-4 text-left">
+														<input type="checkbox" name="poCheckbox" [disabled] = "po" (change) = "supplierbyPono($event)" [checked]="checktwo">
+														<label *ngIf="poNumberinput">Enter PO NO <span class="start">*</span></label>
+														<label *ngIf="supplierByponumber">Select PO NO<span class="start">*</span></label>
+													
+													</div>
+												<div class="col-md-5">
+														<input  *ngIf="poNumberinput" type="text" [disabled] = "po" name="poNo" pattern="[a-zA-Z0-9 _ ]*"
+														 required maxlength="25" [(ngModel)] = "juteCreateModel.poNo" 
+														 (change) = "loadData($event.target.value,juteCreateModel.poNo)">
+
+														 <select  *ngIf="supplierByponumber" [disabled] = "po" class="form-control" name="poNo" [(ngModel)] = "juteCreateModel.poNo" (change) = "loadData($event.target.value,juteCreateModel.poNo)">
+															<option value="">--Please Select Supplier First--</option>
+															<option *ngFor = "let approvedpoNumber of approvedpoNumberList;" [value]="approvedpoNumber.id">{{approvedpoNumber.id}}</option>
+															   
+														</select>
+												</div>
+													<!-- <div class="col-md-2 text-left">
+															<label>PO NO <span class="start">*</span></label>
+														</div>
+													<div class="col-md-6">
+															<input type="text" [disabled] = "po" name="poNo" pattern="[a-zA-Z0-9 _ ]*"
+															 maxlength="25" [(ngModel)] = "juteCreateModel.poNo" 
+															 (change) = "loadData($event.target.value,juteCreateModel.poNo)"
+															 >
+													</div> -->
+											</div>
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Supplier/Broker<span class="start">*</span></label>
+													
+													</div>
+												
+													 <div class="col-md-8" *ngIf = "myOptions.length > 0">
+														
+														<div *ngIf="withPoDiv">
+															
+															<ng-select [allowClear]="false" placeholder="Please Select"
+															 [multiple]="false" [(options)]="myOptions" [(ngModel)]="juteCreateModel.suppCode" name="suppName" 
+															 (selected) = "loadsuppNamePoData($event,juteCreateModel.suppCode)" required></ng-select>
+													</div>
+													<div *ngIf="withoutPoDiv">
+																<ng-select [allowClear]="false" placeholder="Please Select"
+																[multiple]="false" [(options)]="myOptions" [(ngModel)]="juteCreateModel.suppCode" name="suppName" 
+																(selected) = "loadSuppliermastername($event,juteCreateModel.suppCode)" required></ng-select>
+													</div>
+															
+																
+													</div> 
+													
+											</div>
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Supplier Address</label>
+													</div>
+													<div class="col-md-8">
+															<input type="text" [(ngModel)]="juteCreateModel.brokerAddress" [value]="supplierMasternameAddress" name="brokerAddress" class="form-control">
+													
+													</div>
+												
+													
+											</div>
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Mukam</label>
+													</div>
+													<div class="col-md-8">
+														<input type="text" *ngIf="withPomukam" [(ngModel)]="juteCreateModel.mukam" [value]="juteCreateModel.mukam" name="mukam" class="form-control">
+															<select  *ngIf="withoutPomukam" class="form-control" name="mukam" [(ngModel)]="juteCreateModel.mukam" (change)="loaditemofgroupList($event.target.value,juteCreateModel.mukam);">
+																	<option value="">--Please Select--</option>
+																	<option [value]="mukamList.mukamName" *ngFor="let mukamList of supplierMastername.mukams">{{mukamList.mukamName}}</option>
+															</select>	
+														
+															
+													</div>
+													
+											</div>
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Financial Year<span class="start">*</span></label>
+													</div>
+													<div class="col-md-8">
+															<!-- <input type="text" name="finYear"  pattern="[0-9- ]*" 
+															maxlength="10" class="form-control" [(ngModel)] = "juteCreateModel.finYear"> -->
+															<select class="form-control" name="finYear" [(ngModel)] = "juteCreateModel.finYear">
+																	<option value="">--Please Select--</option>
+																	<option  *ngFor="let Allfinancialyears of Allfinancialyear" [value]="Allfinancialyears.finYear">{{Allfinancialyears.finYear}}</option>
+																
+															</select>
+		
+													</div>
+													
+											</div>
+									</div>
+									<div class="col-md-6">
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Transporter<span class="start">*</span></label>
+													</div>
+													<div class="col-md-8">
+															<input type="text" name="transporter"  pattern="[a-zA-Z ]*" 
+															required maxlength="100" class="form-control" [(ngModel)] = "juteCreateModel.transporter">
+													</div>
+											</div>
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Vehicle No <span class="start">*</span></label>
+													</div>
+													<div class="col-md-8">
+															<input type="text" name="vehicleNo" required maxlength="24" class="form-control" [(ngModel)] = "juteCreateModel.vehicleNo">
+													</div>
+											</div>
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Driver name<span class="start">*</span></label>
+													</div>
+													<div class="col-md-8">
+															<input type="text" name="driverName"  pattern="[a-zA-Z ]*" 
+															required maxlength="50" class="form-control" [(ngModel)] = "juteCreateModel.driverName">
+													</div>
+											</div>
+											<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Tare Weight</label>
+													</div>
+													<div class="col-md-7">
+															<input type="text" name="netWeight"  pattern="[0-9 ]*" maxlength="100" 
+															class="form-control"  [disabled]="!disable" [(ngModel)] = "juteCreateModel.netWeight">
+													</div>
+													<div class="col-md-1">
+														<label>Kgs</label>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Gross Weight</label>
+													</div>
+													<div class="col-md-7">
+															<input type="text" name="grossWeight"  
+															pattern="[0-9 ]*" maxlength="100" class="form-control" [(ngModel)] = "juteCreateModel.grossWeight">
+													</div>
+													<div class="col-md-1">
+														<label>Kgs</label>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Actual Weight</label>
+													</div>
+													<div class="col-md-7">
+															<input type="text" name="actualWeight"  pattern="[0-9 ]*" maxlength="100" 
+															class="form-control" [disabled]="!disable" [(ngModel)] = "juteCreateModel.actualWeight">
+													</div>
+													<div class="col-md-1">
+														<label>Kgs</label>
+													</div>
+												</div>
+												<div class="form-group row">
+														<div class="col-md-4 text-left">
+															<label>Challan Weight</label>
+														</div>
+														<div class="col-md-7">
+																<input type="text" name="challanWeight"  pattern="[0-9 ]*" maxlength="100" 
+																class="form-control" [(ngModel)] = "juteCreateModel.challanWeight">
+														</div>
+														<div class="col-md-1">
+															<label>Kgs</label>
+														</div>
+													</div>
+
+									</div>
+									<div class="col-md-12">
+										<div *ngIf ="ponodetails.length != 0">
+												<table class="table">
+													<thead>
+														<tr>
+														
+															<th>ADVISED JUTE TYPE</th>
+															<th>ADVISED QUALITY</th>
+															<th>ACTUAL QUALITY</th>
+															<th>RECEIVED TYPE</th>
+															<th>ADVISED QUANTITY</th>
+															<th>ACTUAL QUANTITY</th>
+															<th>UOM</th>
+															<th>IS PO AMMENT REQUIRED</th>
+															<th>REMARKS</th>
+															
+															
+														</tr>
+													   </thead>
+													<tbody>
+													<tr *ngFor ="let ponoallDatas of ponodetails ; let i = index">
+														<td>{{ponoallDatas.advisedJuteType}}</td>
+														<td>{{ponoallDatas.advisedQuality}}</td>
+														<td>
+															<input type="text" class="form-control" name="actualQuality{{i}}" [(ngModel)] = "ponoallDatas.actualQuality" [value]="ponoallDatas.actualQuality">
+															<!-- {{ponoallDatas.actualQuality}}  -->
+														</td>
+
+														<td>{{ponoallDatas.receivedIn}}</td>
+														<td>{{ponoallDatas.advisedQuantity}}</td>
+
+														<td>
+																<input type="text" class="form-control" name="actualQuantity{{i}}" [(ngModel)] = "ponoallDatas.actualQuantity" [value]="ponoallDatas.actualQuantity">
+															<!-- {{ponoallDatas.actualQuantity}} -->
+														</td>
+														<td>{{ponoallDatas.uom}}</td>
+
+														<td><input type="checkbox" name="isPOAmment{{i}}" [(ngModel)] = "ponoallDatas.isPOAmment" [checked]="ponoallDatas.isPOAmment"></td>
+														<td><input type="text" class="form-control" name="remarks{{i}}" [(ngModel)] = "ponoallDatas.remarks" [value]="ponoallDatas.remarks"></td>
+
+														
+													
+													
+													</tr>
+													</tbody>
+												</table>
+												
+										</div>
+										
+									
+								
+									</div>
+									
+									<!-- <div class="col-sm-12" *ngIf="polinedeetails">
+											<div class="heading-two three" id="hld_lineitems" style="display: block;">
+												<h3>Line Items</h3>
+											</div>
+											<div class="row form-field-style">
+												<div class="col-md-6">
+													<div class="form-group row">
+														<div class="col-md-4 text-left">
+															<label>Jute Type<span class="start">*</span></label>
+														</div>
+														<div class="col-md-8">
+															<select class="form-control" name="juteType" [(ngModel)] = "juteType" (change)="loadAlljutequlity($event.target.value)">
+																<option value="">--Please Select--</option>
+																<option *ngFor = "let itemofgroup of itemofgroupList.itemJuteCode;" [value]="itemofgroup.id">{{itemofgroup.itemDsc}}</option>
+																   
+															</select>
+														</div>		
+													</div>
+												
+													<div class="form-group row">
+															<div class="col-md-4 text-left">
+																<label>Quantity<span class="start">*</span></label>
+															</div>
+															<div class="col-md-4">
+																	<input type="text" name="quantity"  pattern="[0-9 ]*" maxlength="100" class="form-control" [(ngModel)] = "polineitemDetails.advisedQuantity">
+															</div>
+															<div class="col-md-4">
+																	<select class="form-control" name="quantityname" class="form-control" [(ngModel)] = "polineitemDetails.receivedIn">
+																		<option value="LOOSE">LOOSE</option>
+																		<option value="BALES">BALES</option>
+																	  
+																	</select>
+															</div>		
+														</div>
+					
+												</div>
+												<div class="col-md-6">
+														<div class="form-group row">
+																<div class="col-md-4 text-left">
+																	<label>Quality<span class="start">*</span></label>
+																</div>
+																<div class="col-md-8">
+																	<select class="form-control" name="advisedQuality" [(ngModel)] = "polineitemDetails.advisedQuality">
+																		<option value="">--Please Select--</option>
+																		<option *ngFor = "let Alljutequlitylist of Alljutequlity;" [value]="Alljutequlitylist.name">{{Alljutequlitylist.name}}</option>
+																		   
+																	</select>
+																</div>		
+															</div>
+														<div class="form-group row">
+																<div class="col-md-4 text-left">
+																	<label>Remarks</label>
+																</div>
+																<div class="col-md-8">
+																		<td><input type="text" class="form-control" name="remarks" [(ngModel)] = "polineitemDetails.remarks"></td>
+																</div>		
+															</div>
+												</div>
+											</div>
+											<div class="col-md-12 text-center">
+													<button class="btn btn-primary"  [disabled] = "!polineitemDetails.advisedQuality || !polineitemDetails.advisedQuantity || !polineitemDetails.receivedIn || !polineitemDetails.remarks" (click) = "addPolineItems()"> Add</button>
+											</div>
+			
+									</div> -->
+									<div class="col-sm-12" *ngIf="polinedeetails">
+										<div class="heading-two three" id="hld_lineitems" style="display: block;">
+											<h3>Line Items</h3>
+										</div>
+										<div class="row form-field-style">
+											<div class="col-md-6">
+												<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Jute Type<span class="start">*</span></label>
+													</div>
+													<div class="col-md-8">
+														<select class="form-control" name="juteType" [(ngModel)] = "juteType" (change)="loadAlljutequlity($event.target.value)">
+															<option value="">--Please Select--</option>
+															<option *ngFor = "let itemofgroup of itemofgroupList.itemJuteCode;" [value]="itemofgroup.id">{{itemofgroup.itemDsc}}</option>
+															   
+														</select>
+													</div>		
+												</div>
+												<div class="form-group row">
+													<div class="col-md-4 text-left"><label for="vehicleType">Vehicle Type<span class="start">*</span></label></div>
+													<div class="col-md-8">
+													<select class="form-control" name="vehicleType" [(ngModel)]="polineitemDetails.vehicleType" (change) = "loadVehicleById($event,polineitemDetails.vehicleType)">
+														<option value="">--Please Select--</option>
+														<option *ngFor = "let vehicle of allVehicles;" [value]="vehicle.id">{{vehicle.vehicleType}}</option>
+													</select>
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-md-4 text-left">
+															<label>	Unit Conversion<span class="start">*</span></label>
+														</div>
+												
+													<div class="col-md-8">
+															<select class="form-control" name="unitConversion" class="form-control"
+															 [(ngModel)] = "polineitemDetails.receivedIn" (change)="onChangeUnitConversion($event.target.value)">
+																<option value="LOOSE">LOOSE</option>
+																<option value="BALES">BALES</option>
+															  
+															</select>
+													</div>
+												</div>
+												<!-- <div class="form-group row">
+														<div class="col-md-4 text-left">
+															<label>Quantity<span class="start">*</span></label>
+														</div>
+														<div class="col-md-4">
+																<input type="text" name="quantity"  pattern="[0-9 ]*" maxlength="100" class="form-control" [(ngModel)] = "polineitemDetails.advisedQuantity">
+														</div>
+														<div class="col-md-4">
+																<select class="form-control" name="quantityname" class="form-control" [(ngModel)] = "polineitemDetails.receivedIn">
+																	<option value="LOOSE">LOOSE</option>
+																	<option value="BALES">BALES</option>
+																  
+																</select>
+														</div>	
+													</div> -->
+												<div class="form-group row">
+															<div class="col-md-4 text-left">
+																<label>Remarks</label>
+															</div>
+															<div class="col-md-8">
+																	<td><input type="text" class="form-control" name="remarks" [(ngModel)] = "polineitemDetails.remarks"></td>
+															</div>		
+												</div>
+				
+											</div>
+											<div class="col-md-6">
+													<div class="form-group row">
+															<div class="col-md-4 text-left">
+																<label>Quality<span class="start">*</span></label>
+															</div>
+															<div class="col-md-8">
+																<select class="form-control" name="advisedQuality" [(ngModel)] = "polineitemDetails.advisedQuality">
+																	<option value="">--Please Select--</option>
+																	<option *ngFor = "let Alljutequlitylist of Alljutequlity;" [value]="Alljutequlitylist.name">{{Alljutequlitylist.name}}</option>
+																	   
+																</select>
+															</div>		
+													</div>
+													
+													<div class="form-group row" *ngIf="polineitemDetails.vehicleType">
+														<div class="col-md-4  text-left"><label for="itemDesc">PO Quantity<span class="start">*</span></label></div>
+														<div class="col-md-8">
+															<div class="input-group col-md-12">
+															<input type="text" class="form-control" name="poQuantity" [value]="poQuantity" [(ngModel)]="poQuantity"/>
+															<!-- {{polineitemDetails.poQuantity}} -->
+															<span class="input-group-addon unit">QUINTAL</span>
+															</div>
+														
+														</div>
+													</div>
+													<div class="form-group row" *ngIf="polineitemDetails.receivedIn == 'BALES'">
+														<div class="col-md-4 text-left"><label>PO Converted Quantity<span class="start">*</span></label></div>
+														<div class="col-md-8">
+															<div class="input-group col-md-12">
+																<input type="number" class="form-control number-control" name="poConvertedQuantity" [value]="balesValue"
+																[(ngModel)] = "balesValue" />
+						
+																<!-- {{polineitemDetails.poConvertedQuantity}} -->
+																<span class="input-group-addon unit">BALES</span>
+															</div>
+														</div>
+													</div>
+													<div class="form-group row" *ngIf="polineitemDetails.receivedIn == 'BALES'">
+														<div class="col-md-4 text-left">
+															<label>Quantity<span class="start">*</span></label>
+														</div>
+														<div class="col-md-8">
+																<div class="input-group col-md-12">
+																<input type="number" name="quantity" required  maxlength="100" 
+																class="form-control number-control" [(ngModel)] = "polineitemDetails.quantity" (change)="onChangeBale($event.target.value)">
+																<span class="input-group-addon unit">BALES</span>
+																</div>
+														</div>
+																											
+													</div>
+													<div class="form-group row" *ngIf="polineitemDetails.receivedIn == 'LOOSE'">
+														<div class="col-md-4 text-left">
+															<label>Quantity<span class="start">*</span></label>
+														</div>
+														<div class="col-md-8">
+															<div class="input-group col-md-12">
+															<input type="number" name="quantity" required  maxlength="100" 
+															class="form-control number-control" [(ngModel)] = "polineitemDetails.quantity" (change)="onChangeLoose($event.target.value)">
+															<span class="input-group-addon unit">%</span>
+															</div>
+													</div>
+													</div>		
+											
+											</div>
+										</div>
+										<div class="col-md-12 text-center" *ngIf="polineitemDetails.receivedIn == 'BALES'">
+												<button class="btn btn-primary"  [disabled] = "disableButton" (click) = "addPolineItemsBale()"> Add</button>
+										</div>
+										<div class="col-md-12 text-center" *ngIf="polineitemDetails.receivedIn == 'LOOSE'">
+												<button class="btn btn-primary"  [disabled] = "disableButton" (click) = "addPolineItemsLoose()"> Add</button>
+										</div>
+		
+								</div>
+										
+									
+								</div>
+						</div>
+				</div>
+				<div class="content-heading-box" *ngIf = "polineitemsCreateModel.length != 0">
+					<h3>Without Po Line Items</h3>
+					<div class="row form-field-style customs_table">
+						
+								<table class="table">
+									<thead>
+										<tr>
+												<th>VEHICLE TYPE</th>
+												<th>QUALITY DESC</th>
+												
+												<th>QUANTITY</th>
+												<th>RECEIVED TYPE</th>
+												<th>REMARKS</th>
+												<th>DELETE</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let polineitemsdata of polineitemsCreateModel; let i= index">
+											<td>{{polineitemsdata.vehicleType}}</td>	
+											<td>{{polineitemsdata.advisedQuality}}</td>
+											<td>{{polineitemsdata.advisedQuantity}}</td>
+											<td>{{polineitemsdata.receivedIn}}</td>
+											<td>{{polineitemsdata.remarks}}</td>
+											
+											<td><button class="btn btn-primary" (click) = "polineitemsCreateModel.splice(i, 1)">Delete</button></td>
+											</tr>
+										</tbody>
+									</table>
+						
+					</div>
+			</div>
+			
+			<div class="row form-field-style createbtn text-center">
+					<button class="btn btn-primary" [disabled] = "!date || !juteCreateModel.chalanNo" (click) = "createJuteEntry()">IN</button>
+			</div>
+			
+				</form>
+			
+		
+				
+		

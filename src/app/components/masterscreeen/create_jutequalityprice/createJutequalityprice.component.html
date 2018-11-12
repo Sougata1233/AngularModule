@@ -1,0 +1,94 @@
+<h2>
+	<!-- <a href="/payroll" ng-reflect-router-link="/payroll" routerlink="/payroll">Payroll</a>
+	> Create Parameter -->
+	Create Jute Quality Price
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+	<form role="form" #createJutequalitypriceForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Jute Quality Price</h3>
+					<div class="row form-field-style text-center">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>Jute Type<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+												<select class="form-control" name="itemCode"  [(ngModel)] = "jutequalitypriceCreateModel.itemCode">
+														<option value="">--Please Select--</option>
+														<option *ngFor = "let itemofgroup of itemofgroupList;" [value]="itemofgroup.itemDsc">{{itemofgroup.itemDsc}}</option>
+														   
+													</select>
+											
+											<!-- <input type="text" name="code" required pattern="[a-zA-Z0-9][a-zA-Z0-9]+" maxlength="10" [(ngModel)] = "jutequalitypriceCreateModel.itemCode" class="form-control"> -->
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-left">
+										<label>Quality<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="juteQuality" required pattern="[a-zA-Z0-9 -/.][a-zA-Z0-9 -/.]+" maxlength="35" [(ngModel)] = "jutequalitypriceCreateModel.juteQuality" class="form-control">
+									</div>
+							</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Rate</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" name="rate" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="25" [(ngModel)] = "jutequalitypriceCreateModel.rate" class="form-control">
+								</div>
+						</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Currency</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" name="currency" pattern="[a-zA-Z ]*" maxlength="3" [(ngModel)] = "jutequalitypriceCreateModel.currency" class="form-control">
+							</div>
+					</div>
+			</div>
+
+					
+					
+					
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "jutequalitypriceCreateModel.itemCode == '' || jutequalitypriceCreateModel.juteQuality == '' || !createJutequalitypriceForm.form.valid" (click) = "createJutequalitypricemaster()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Jute Quality Price's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="jutequalitypriceList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

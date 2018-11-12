@@ -1,0 +1,30 @@
+{
+"leavebalance" : [{
+	"SickLeave" : 3,
+	"CopOff"	: 0,
+	"PaternityLeave" : 7,
+	"MaternityLeave" : 90,
+	"Carryfwd" : 8
+}],
+"leaveSummery" : [{
+	"month" : "JANUARY",
+	"startDate" : 1514917800000,
+	"endDate" : 1517682600000,
+	"leaveType" : "Sick Leave",
+	"leaveCount" : 2
+},
+{
+	"month" : "JANUARY",
+	"startDate" : 1516732200000,
+	"endDate" : 1516732200000,
+	"leaveType" : "Sick Leave",
+	"leaveCount" : 1
+},
+{
+	"month" : "FEBRUARY",
+	"startDate" : 1518633000000,
+	"endDate" : 1518633000000,
+	"leaveType" : "Comp Off",
+	"leaveCount" : 1
+}]
+}

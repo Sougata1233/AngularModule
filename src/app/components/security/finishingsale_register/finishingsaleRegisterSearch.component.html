@@ -1,0 +1,43 @@
+<h2>
+		<a [routerLink]="['/Security/finishingsaleregister']">Finishing / Sale Dispatch Register</a> >
+	
+		<a [routerLink]="['/Security/finishingsaleregisteredit']">Finishing / Sale Dispatch Register Search</a>
+	</h2>
+	
+	<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+	
+	
+	<form role="form">
+			<div class="content-heading-box create-section">
+					<h3>Finishing / Sale Dispatch Register Search</h3>
+					<div class="row form-group">
+							<div class="col-sm-6">
+								<!-- <a routerLink="/masterscreen/createbroker" title="" class="btn btn-primary">Create New</a> -->
+							</div>
+							<div class="col-sm-6 search-box"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+						</div>
+						<div class="text-center">
+						<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="searchList"></ag-grid-angular>
+						</div>
+				</div>
+		
+		
+			
+				</form>
+				
+		
+				
+		

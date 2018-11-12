@@ -1,0 +1,350 @@
+				
+				<h2>
+				<a [routerLink]="['/jute/mrindent']" title='Jute'>Jute</a>
+				>
+				<a [routerLink]="['/jute/materialreceive']" title='Material Receive'>Material Receive</a>
+				>
+				MR Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+					<h3>MR Header</h3>
+					<div class="row form-field-style">
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>MR Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>PO No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{prefix+"/PO/"+GRNDtllData.materialGoodReceiveHeader.poId}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Contract No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.contractNo}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Agent<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.agentName}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Challan No<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.chalanNo}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>PO Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.poDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Contract Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.contractDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group" *ngIf="MRDtls && MRDtls != 'undefined' && MRDtls!= ''">
+								<div class="col-md-4"><label>Vehicle No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{MRDtls[0].vehicleNo}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.chalanDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Supplier<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{printableSupplierData.name}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Ex. Stn.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{printmukamdata}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Status<span class="start">*</span></label></div>
+								<div class="col-md-8">
+										<span class="btn btn-block btn-info" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '1'">OPEN</span>
+										<span class="btn btn-block  btn-primary" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '2'">IN-PROGRESS</span>
+										<span class="btn btn-block  btn-success" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '3'">APPROVED</span>
+										<span class="btn btn-block  btn-danger" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '4'">REJECTED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '5'">CLOSED</span>
+										<span class="btn btn-block  btn-danger" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '6'">CANCELED</span>
+										<span class="btn btn-block  btn-success" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '7'">BOOKED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '8'">RAISE PENDING</span>
+										<span class="btn btn-block  btn-danger" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '9'">RAISE REJECTED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '10'">MODIFY PENDING</span>
+										<span class="btn btn-block  btn-success" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '11'">AVAILABLE</span>
+										<span class="btn btn-block  btn-danger" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '12'">LAPSED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '13'">PENDING</span>
+										<span class="btn btn-block  btn-primary" *ngIf="GRNDtllData.materialGoodReceiveHeader.status == '14'">INVITED</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != '' && GRNDtllData.materialGrnItemList.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="GRNDtllData.materialGrnItemList"></ag-grid-angular>
+					<p>&nbsp;</p>
+					<div class="row" *ngIf="printableSupplierData != ''">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" title="Print Purchase Order" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+				
+				</div>
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div  class="printable" *ngIf = "GRNDtllData && GRNDtllData !='undefined' && GRNDtllData.materialGrnItemList.length > 0">
+					<table class="print-table-show">
+							<tr>
+								<td style="text-align:center" *ngIf="GRNDtllData.materialGoodReceiveHeader.agentId == null">
+									{{company}}<br/>
+										{{company_add_1}}<br/>
+										{{company_add_2}}<br/>
+										{{company_contact}}
+								</td>
+								<td style="text-align:center" *ngIf="GRNDtllData.materialGoodReceiveHeader.agentId != null">
+									{{GRNDtllData.materialGoodReceiveHeader.agentName}}<br/>
+										{{(printableagentdata.address1)?printableagentdata.address1:''}}
+										{{(printableagentdata.address2)?', '+printableagentdata.address2:''}}
+										{{(printableagentdata.address3)?', '+printableagentdata.address3:''}}<br/>
+										{{(printableagentdata.district)?printableagentdata.district:''}} 
+										{{(printableagentdata.pinCode)?printableagentdata.pinCode:''}} 
+										{{(printableagentdata.state)?printableagentdata.state:''}}<br/>
+										{{(printableagentdata.phone1)?printableagentdata.phone1:''}} 
+										{{(printableagentdata.phone2)?', '+printableagentdata.phone2:''}} 
+										{{(printableagentdata.cellPhone)?', '+printableagentdata.cellPhone:''}} 
+										{{(printableagentdata.email)?', '+printableagentdata.email:''}} 
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-left:100px">
+									<span *ngIf="printResponsedata == ''">1st Copy</span>
+									<span *ngIf="printResponsedata != ''">Copy No. : {{printResponsedata.counter}}</span>
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td colspan="2">
+									Jute Receipt No
+								</td>
+								<td colspan="4">
+									{{GRNDtllData.materialGoodReceiveHeader.id}} 
+								</td>
+								<td colspan="3">
+									Date :
+								</td>
+								<td colspan="2">
+									{{GRNDtllData.materialGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									M/s
+								</td>
+								<td colspan="4">
+									{{printableSupplierData.name}}
+								</td>
+								<td colspan="3">
+									&nbsp;
+								</td>
+								<td colspan="2">
+									&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									Seller/Broker :
+								</td>
+								<td colspan="4">
+									{{GRNDtllData.materialGoodReceiveHeader.poId}}
+								</td>
+								<td colspan="3">
+									&nbsp; 
+								</td>
+								<td colspan="2">
+									&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									Purchase No :
+								</td>
+								<td colspan="4">
+									{{prefix+"/PO/"+GRNDtllData.materialGoodReceiveHeader.poId}}
+								</td>
+								<td colspan="3">
+									Date :
+								</td>
+								<td colspan="2">
+									{{GRNDtllData.materialGoodReceiveHeader.poDate | date:'mediumDate'}}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									Contract No :
+								</td>
+								<td colspan="4">
+									{{GRNDtllData.materialGoodReceiveHeader.contractNo}}
+								</td>
+								<td colspan="3">
+									Date : 
+								</td>
+								<td colspan="2">
+									{{GRNDtllData.materialGoodReceiveHeader.contractDate | date:'mediumDate'}}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									Challan no :
+								</td>
+								<td colspan="4">
+									{{GRNDtllData.materialGoodReceiveHeader.chalanNo}}
+								</td>
+								<td colspan="3">
+									Date : 
+								</td>
+								<td colspan="2">
+									{{GRNDtllData.materialGoodReceiveHeader.chalanDate | date:'mediumDate'}}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									Lorry No :
+								</td>
+								<td colspan="4">
+									<span *ngIf="MRDtls && MRDtls != 'undefined' && MRDtls!= ''">{{MRDtls[0].vehicleNo}}</span>
+								</td>
+								<td colspan="3">
+									  
+								</td>
+								<td colspan="2">
+									&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4">
+									&nbsp;
+								</td>
+								<td>
+									Ex. Stn : 
+								</td>
+								<td>
+									 {{printmukamdata}}
+								</td>
+								<td colspan="5">
+								</td>
+							</tr>
+							<tr>
+								<td colspan="11">Against the above we have received the consignment as follow</td>
+							</tr>
+							<tr>
+								<td rowspan="2" style="width:50px;">
+									 {{(GRNDtllData.materialGrnItemList[0].unitConversionType=='BALE')?'Bales or Drums':'Loose'}} 
+								</td>
+								<td rowspan="2" style="width:75px;">
+									Marks & Quality 
+								</td>
+								<td rowspan="2" style="width:75px;">
+									Advised Weight (Kgs)
+								</td>
+								<td rowspan="2" style="width:75px;">
+									Mill Weight (Kgs)
+								</td>
+								<td rowspan="2" style="width:50px;">
+									Shortage (Kgs)
+								</td>
+								<td rowspan="2" style="width:75px;">
+									 Rate Per Qtls(Rs) 
+								</td>
+								<td colspan="3" style="text-align:center">
+									CLAIM FOR 
+								</td>
+								<td rowspan="2" style="width:25px;">
+									Godown no 
+								</td>
+								<td rowspan="2">
+									Remarks
+								</td>
+							</tr>
+							<tr>
+								<td style="width:50px;">
+									Quality Rs/Qtl
+								</td>
+								<td style="width:50px;">
+									condition %
+								</td>
+								<td style="width:75px;">
+									initial
+								</td>
+							</tr>
+							<tbody *ngFor = "let item of GRNDtllData.materialGrnItemList; let i = index">
+							<tr *ngIf="item.status != '4'">
+								<td>
+									{{item.conversionActualQuantity}} {{(item.unitConversionType=='BALE')?item.unitConversionType:item.quantityUnit.id}} 
+								</td>
+								<td><span *ngIf="item.marka != null && item.marka != ''">{{item.marka}} - </span>{{item.actualQuality.name}}</td>
+								<td>{{item.advisedWeight * 100 | number : '1.0-2'}}</td>
+								<td>{{item.actualWeight * 100 | number : '1.0-2'}}</td>
+								<td>{{(item.advisedWeight - item.actualWeight) * 100 | number : '1.0-2'}}</td>
+								<td>{{item.rate | number : '1.0-2'}}</td>
+								<td>{{item.claimsQuality }}</td>
+								<td>{{item.claimsCondition}}</td>
+								<td>&nbsp;</td>
+								<td>{{item.warehouseNo}}</td>
+								<td>{{item.remarks}}</td>
+							</tr>
+							</tbody>
+							<tr class="bordered">
+								<td>{{totalconweight}} {{(GRNDtllData.materialGrnItemList[0].unitConversionType=='BALE')?GRNDtllData.materialGrnItemList[0].unitConversionType:GRNDtllData.materialGrnItemList[0].quantityUnit.id}} </td>
+								<td></td>
+								<td>{{totalAdvisedWt * 100 | number : '1.0-2'}}</td>
+								<td>{{totalActualWt * 100 | number : '1.0-2'}}</td>
+								<td>{{(totalAdvisedWt - totalActualWt) * 100 | number : '1.0-2'}}</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>&nbsp;</td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+				</div>
+				
+				 

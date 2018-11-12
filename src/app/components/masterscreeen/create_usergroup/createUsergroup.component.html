@@ -1,0 +1,80 @@
+
+<h2>Create Usergroup</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+	<div *ngIf="errorMsg" class="form-group">
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ errorMsg }}
+		</div>
+	</div>
+	<p *ngIf="successMsg">&nbsp;</p>
+	<div *ngIf="successMsg" class="form-group">
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ successMsg }}
+		</div>
+	</div>
+	<form role="form" #createUsergroupForm="ngForm" >
+				<div class="content-heading-box">
+					<h3>Create Usergroup</h3>
+					<div class="row form-field-style text-center">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>Name<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+											<input type="text" name="usrgrpName" required pattern="[a-zA-Z ]*" maxlength="25" [(ngModel)] = "usergroupCreateModel.usrgrpName" class="form-control">
+										</div>
+									</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-left">
+										<label>Isenable<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<select class="form-control" name="paramType" [(ngModel)] = "usergroupCreateModel.isenable">
+											<option>--Please Select--</option>
+											<option value="1">Yes</option>
+											<option value="0">No</option>
+										  
+										</select>
+									</div>
+							</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>From Date<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+									<my-date-picker name="fromDate" [options]="myDatePickerOptions" required [(ngModel)] = "usergroupCreateModel.fromDate"></my-date-picker>
+									
+								</div>
+						</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>To Date<span class="start">*</span></label>
+							</div>
+							<div class="col-md-8">
+								<my-date-picker name="toDate" [options]="myDatePickerOptions" required [(ngModel)] = "usergroupCreateModel.toDate"></my-date-picker>
+								
+							</div>
+					</div>
+			</div>
+			<div class="col-md-12 text-center">
+					<button class="btn btn-primary" [disabled] = "!createUsergroupForm.form.valid" (click) = "createUsergroupmaster()"> Create</button>
+			</div>
+			</div>
+		</div>
+		<div class="content-heading-box">
+			<h3>Usergroup's List</h3>
+			<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="usergroupList"></ag-grid-angular>
+		</div>
+	</form>
+	
+				
+		

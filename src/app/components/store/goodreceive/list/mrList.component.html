@@ -1,0 +1,59 @@
+				<h2>
+				<a [routerLink]="['/jute/mrindent']" title='Jute'>Jute</a>
+				>
+				Material Receive
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div *ngIf = "allOpenMrList == undefined || allOpenMrList == '' || allOpenMrList.length == 0" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						No MR Created.
+					</div>
+				</div>
+				<div class="content-heading-box">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-group">
+								<div class="col col-xs-6">
+									<a routerLink="/jute/materialreceivecreate" title="Create New MR" class="btn btn-primary">Create New</a>
+								</div>
+								<div class="col col-xs-6 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+					</div>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="viewableMrList"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive approval">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>MR Id</th>
+									<th>MR Date</th>
+									<th>PO No.</th>
+									<th>Supplier Code</th>
+									<th>Submitter</th>
+								</tr>
+                            </thead>
+							<tbody *ngFor = "let MRitem of allOpenMrList">
+                                <tr *ngIf="grnReceiveModel.searchMr == '' || (MRitem.materialGoodReceiveHeader.id).toString().indexOf(grnReceiveModel.searchMr) > -1 " [routerLink]="['/store/mrworklist/', MRitem.materialGoodReceiveHeader.id]">
+									<td><a [routerLink]="['/store/mrworklist/', MRitem.materialGoodReceiveHeader.id]" title="View Details">{{MRitem.materialGoodReceiveHeader.id}}</a></td>
+									<td>{{MRitem.materialGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}}</td>
+									<td><a [routerLink]="['/purchase/list/', MRitem.materialGoodReceiveHeader.poId]" title="View Details">{{MRitem.materialGoodReceiveHeader.poId}}</a></td>
+									<td>{{MRitem.materialGoodReceiveHeader.supplierId}}</td>
+									<td>{{MRitem.materialGoodReceiveHeader.submitter }}</td>
+								</tr>
+                            </tbody>
+						</table>
+					</div>-->
+				</div>
+				

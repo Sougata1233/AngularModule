@@ -1,0 +1,93 @@
+				
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				<a [routerLink]="['/store/billpass']" title='Debit / Credit Note ' >Bill Pass </a>
+				>
+				Bill Pass Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<div class="content-heading-box printableContent" *ngIf = "billpassDtlData && billpassDtlData !='undefined'">
+					<!--<h3>Added Items</h3>-->
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group row">
+								<div class="col-md-4"><label for="drcrtype">Bill No.</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{billpassDtlData.billNo}}</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4"><label for="srno">GRN No.</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{billpassDtlData.grnNo}}</span>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<div class="col-md-4"><label for="drcrquan">Supplier Code</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{billpassDtlData.supplierCode}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group row">
+								<div class="col-md-4"><label for="drcrno">Bill Date</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{billpassDtlData.billDate  | date:'mediumDate'}}</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4"><label for="pono">PO No.</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{prefix+"/PO/"+billpassDtlData.poId}}</span>
+								</div>
+							</div>
+							<!--<div class="form-group row">
+								<div class="col-md-4"><label for="supcd">Supplier Name</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{billpassDtlData.poId }}</span>
+								</div>
+							</div>-->
+						</div>
+						<div class="col-md-4">
+							<div class="form-group row">
+								<div class="col-md-4"><label for="drcrdate">Bill Amount</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{billpassDtlData.billAmount | number : '1.0-2'}} INR</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4"><label for="drcrdate">Fin. Year</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{billpassDtlData.financialYear }}</span>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+				
+				<!--<p>&nbsp;</p>
+					<div class="row nonprintableContent">
+						<div class="col-md-12 text-center">
+							<button  class="btn btn-danger" title="Cancel Purchase Order" (click)="statusChange(6)"><span class="glyphicon glyphicon-trash"></span></button>
+						</div>
+					</div>-->
+				
+				

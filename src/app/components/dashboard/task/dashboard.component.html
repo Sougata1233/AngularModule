@@ -1,0 +1,102 @@
+  
+  <div class="row">
+          
+               <div class="col-sm-12 pd home-right-side">
+                 <div class="box right-skew">
+                  <h2>Task</h2>
+                  </div>
+                  <div class="row">
+					<h5 style="margin:20px 95px;"  *ngIf = "indentApprovalListAllfiltered.length == 0 && poApprovalListAllfiltered.length == 0 && mrApprovalLidstAll.length == 0 && srApprovalLidstAll.length == 0">You do not have any pending tasks.</h5>
+            <div class="scrollable-section">
+                     <div class="col-sm-12" *ngIf = "indentApprovalListAllfiltered && indentApprovalListAllfiltered.length > 0">
+						<h5 style="margin:20px 95px; border-bottom:1px dashed #cdcdcd; padding-bottom:20px;">Indent Approval requests</h5>
+                        <ul class="task-contant">
+                           <li *ngFor = "let indentRequest of indentApprovalListAllfiltered; let i = index">
+                              <div class="col-sm-9">
+                                <p><strong>Indent Id {{indentRequest.id}}</strong>  created by {{indentRequest.submitter}} on {{indentRequest.createDate | date:'mediumDate'}} of type {{indentRequest.type}} is waiting for your approval. Please click view button to know the details and take necessary action.</p>
+                              </div> 
+                               <div class="col-sm-3">
+                                  <a [routerLink]="['/store/worklist/', indentRequest.id]" title="View Details" class="btn btn-info">View</a>
+                               </div>
+
+                           </li>
+                        </ul>
+                     </div>
+					 <div class="col-sm-12" *ngIf = "poApprovalListAllfiltered && poApprovalListAllfiltered.length > 0">
+						<h5 style="margin:20px 95px; border-bottom:1px dashed #cdcdcd; padding-bottom:20px;">Purchase Order Approval requests</h5>
+                        <ul class="task-contant">
+                           <li *ngFor = "let poRequest of poApprovalListAllfiltered; let i = index">
+                              <div class="col-sm-9">
+                                <p><strong>PO Id {{poRequest.id}}</strong>  created by {{poRequest.submitter}} on {{poRequest.createDate | date:'mediumDate'}} of type {{poRequest.type}} is waiting for your approval. Please click view button to know the details and take necessary action.</p>
+                              </div> 
+                               <div class="col-sm-3">
+                                  <a [routerLink]="['/purchase/worklist/', poRequest.id]" title="View Details" class="btn btn-info">View</a>
+                               </div>
+
+                           </li>
+                        </ul>
+                     </div>
+					 <div class="col-sm-12" *ngIf = "mrApprovalLidstAll && mrApprovalLidstAll.length > 0">
+						<h5 style="margin:20px 95px; border-bottom:1px dashed #cdcdcd; padding-bottom:20px;">Merial Receive Approval requests</h5>
+                        <ul class="task-contant">
+                           <li *ngFor = "let mrRequest of mrApprovalLidstAll; let i = index">
+                              <div class="col-sm-9">
+                                <p><strong>MR Id {{mrRequest.materialGoodReceiveHeader.id}}</strong>  created by {{mrRequest.materialGoodReceiveHeader.submitter}} on {{mrRequest.materialGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}} from supplier {{mrRequest.materialGoodReceiveHeader.supplierId}} is waiting for your approval. Please click view button to know the details and take necessary action.</p>
+                              </div> 
+                               <div class="col-sm-3">
+                                  <a [routerLink]="['/store/mrworklist/', mrRequest.materialGoodReceiveHeader.id]" title="View Details" class="btn btn-info">View</a>
+                               </div>
+
+                           </li>
+                        </ul>
+                     </div>
+					 <div class="col-sm-12" *ngIf = "srApprovalLidstAll && srApprovalLidstAll.length > 0">
+						<h5 style="margin:20px 95px; border-bottom:1px dashed #cdcdcd; padding-bottom:20px;">Store Receive Approval requests</h5>
+                        <ul class="task-contant">
+                           <li *ngFor = "let srRequest of srApprovalLidstAll; let i = index">
+                              <div class="col-sm-9">
+                                <p><strong>SR Id {{srRequest.storeGoodReceiveHeader.id}}</strong>  created by {{srRequest.storeGoodReceiveHeader.submitter}} on {{srRequest.storeGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}} from supplier {{srRequest.storeGoodReceiveHeader.supplierId}} is waiting for your approval. Please click view button to know the details and take necessary action.</p>
+                              </div> 
+                               <div class="col-sm-3">
+                                  <a [routerLink]="['/store/srworklist/', srRequest.storeGoodReceiveHeader.id]" title="View Details" class="btn btn-info">View</a>
+                               </div>
+
+                           </li>
+                        </ul>
+                        </div>
+                     </div>
+                     <div class="col-sm-12">
+                        <div class="home-events">
+                          <div class="box right-skew">
+                           <h2>Events</h2>
+                           </div>
+						   <div class="scrollable-section">
+                        <ul class="row">
+                           <li class="col-sm-6">
+                              <span class="home-clander-icon"><i class="glyphicon glyphicon-calendar"></i></span>
+                              <span class="home-events-text"><p><strong>26/09/2017</strong> Durga puja starts from thisday and our puja vacation also starts from <strong>26/09/2017 to 30/09/2017</strong></p></span>
+
+                           </li>
+                            <li class="col-sm-6">
+                               <span class="home-clander-icon"><i class="glyphicon glyphicon-calendar"></i></span>
+                               <span class="home-events-text"><p><strong>19/09/2017</strong> Dewali on this day and it is also celebrated in our office. Happy Dewali.</p></span>
+
+                           </li>
+                            <li class="col-sm-6">
+                               <span class="home-clander-icon"><i class="glyphicon glyphicon-calendar"></i></span>
+                               <span class="home-events-text"><p><strong>2/12/2017</strong>After lots of work we are going to meet with everyone for fresh breeze we are going to oraganise a Get Together on this Day at Saturday Club in Kolkata.</p></span>
+                           </li>
+                           <li class="col-sm-6">
+                               <span class="home-clander-icon"><i class="glyphicon glyphicon-calendar"></i></span>
+                               <span class="home-events-text"><p><strong>25/12/2017</strong> Christmas is an annual festival commemorating the birth of Jesus Christ, observed most commonly on December 25 as a religious and cultural celebration among billions of people around the world.</p>
+                              </span>
+                           </li>
+                        </ul>
+						</div>
+                     </div>
+                  </div>
+                  
+               </div>
+
+            </div>   
+         </div>

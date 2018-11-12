@@ -1,0 +1,83 @@
+{
+	"item_group": [{
+			"id": "G0000001",
+			"Name": "Demo Item Group 1",
+			"items": [{
+					"id": "I000001",
+					"Name": "Demo Item Description 1",
+					"stock" : "201",
+					"stockUnit" : "Kg"
+				},
+				{
+					"id": "I000002",
+					"Name": "Demo Item Description 2",
+					"stock" : "12",
+					"stockUnit" : "Ltr"
+				},
+				{
+					"id": "I000003",
+					"Name": "Demo Item Description 3",
+					"stock" : "147",
+					"stockUnit" : "gm"
+				},
+				{
+					"id": "I000004",
+					"Name": "Demo Item Description 4",
+					"stock" : "116",
+					"stockUnit" : "K Ltr"
+				}
+			]
+		},
+		{
+			"id": "G0000002",
+			"Name": "Demo Item Group 2",
+			"items": [{
+					"id": "I000011",
+					"Name": "Demo Item Description 1",
+					"stock" : "201",
+					"stockUnit" : "Kg"
+				},
+				{
+					"id": "I000012",
+					"Name": "Demo Item Description 2",
+					"stock" : "116",
+					"stockUnit" : "K Ltr"
+				}
+			]
+		}
+	],
+	"department": [{
+			"id": "D000001",
+			"name": "Department 1"
+		},
+		{
+			"id": "D000002",
+			"name": "Department 2"
+		},
+		{
+			"id": "D000003",
+			"name": "Department 3"
+		},
+		{
+			"id": "D000004",
+			"name": "Department 4"
+		}
+	],
+	"units": [{
+			"id": "U000001",
+			"name": "Kg"
+		},
+		{
+			"id": "U000002",
+			"name": "Grm"
+		},
+		{
+			"id": "U000003",
+			"name": "Ltr"
+		},
+		{
+			"id": "U000004",
+			"name": "Kltr"
+		}
+	]
+}

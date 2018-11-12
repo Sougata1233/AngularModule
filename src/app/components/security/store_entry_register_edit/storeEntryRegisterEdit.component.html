@@ -1,0 +1,89 @@
+				<h2>
+				<a routerLink="/security/storeentryregister" title="Security">Security</a> > 
+				<a routerLink="/security/storeentryregister" title="Security">Store Entry Register</a> >
+				{{requestedId}}
+				</h2>
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				<form role="form" #createEntryForm="ngForm">
+				<div class="content-heading-box">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="challanNo" required maxlength="10" [(ngModel)] = "challanData.challanNo" class="form-control" pattern="^[0-9]*$">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Vehicle No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="vehicleNo" required [(ngModel)] = "challanData.vehicleNo" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Supplier</label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{challanData.supplierName +"["+challanData.suppCode+"]"}}</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">PO</label></div>
+								<div class="col-md-8">
+								<span class="form-control" *ngIf="challanData.poNo != undefined && challanData.poNo.length > 0 && challanData.poNo[0] != null">{{(challanData.poNo).toString()}}</span>
+								<span class="form-control" *ngIf="challanData.poNo == undefined || challanData.poNo.length == 0">--NA--</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="challanDate" [options]="myDatePickerOptions" required [(ngModel)] = "storeCreateModel.challandate"></my-date-picker>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Driver Name <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="driverName" required maxlength="50" [(ngModel)] = "challanData.driverName" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Remarks</label></div>
+								<div class="col-md-8">
+								<textarea name="challanremarks" [(ngModel)] = "challanData.remarks" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</form>
+				
+				<div class="content-heading-box" *ngIf="allPOLineItems.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group" *ngFor ="let eachPOData of allPOLineItems; let i = index">
+						<p *ngIf="eachPOData.polineitems[0].poId != undefined"><strong>PO No. : {{eachPOData.polineitems[0].poId}}</strong></p>
+						<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="eachPOData.polineitems"></ag-grid-angular>
+					</div>
+				</div>
+				<p>&nbsp;</p>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<!-- <button class="btn btn-primary" [disabled] = "!createEntryForm.form.valid" (click)="updateEntry()">Update</button> -->
+						<button class="btn btn-primary" [disabled] = "!createEntryForm.form.valid" (click)="outEntry()" *ngIf="challanData.outTime == null">Out</button>
+					</div>
+				</div>
+				
+				

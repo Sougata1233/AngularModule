@@ -1,0 +1,362 @@
+			<h2>
+				<a routerlink="/purchase" title="Purchase">Purchase</a>
+				> 
+				Create Store Purchase Order</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				
+				<form role="form" #poCreateForm ="ngForm">
+					
+				<div class="content-heading-box">
+					<h3>Purchase Order Details</h3>
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="form-group row" *ngIf="userGroupData && userGroupData != 'undefined'">
+								<div class="col-md-4"><label for="poType">Purchase Type<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<select class="form-control" name="poType" [(ngModel)] = "purchaseCreateModel.selectedPOType" (change) = "loadIndents($event)">
+									<option value="">--Please Select--</option>
+									<option *ngFor = "let potype of allTypes" value="{{potype.code}}" [disabled]="potype.code == 'J'">{{potype.name}}</option>
+								</select>
+							</div>
+							</div>
+							<div class="form-group row" *ngIf="purchaseCreateModel.selectedPOType && purchaseCreateModel.selectedPOType != ''">
+								<div class="col-md-4"><label for="poType">Indent<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<select class="form-control" name="poIndent" [(ngModel)] = "purchaseCreateModel.selectedIndent" (change) = "getIndentDetails($event)">
+									<option value="">--Please Select--</option>
+									<option *ngFor = "let indent of indentListAll" value="{{indent}}" >{{prefix+"/Indent/"+ indent}}</option>
+								</select>
+							</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4"><label for="supplier">Credit Term</label></div>
+								<div class="col-md-8">
+									<div class="input-group">
+									<input class="form-control" type="text" name="creditTerm" [(ngModel)] = "purchaseCreateModel.creditTerm" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$">
+									<span class="input-group-addon unit">Days</span>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf = "purchaseCreateModel.selectedPOType == 'J'">
+								<div class="col-md-4"><label for="makerSelection">Mukam<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input class="form-control" type="text" name="mukam" [(ngModel)] = "purchaseCreateModel.mukam">
+								</div>
+							</div>
+							<div class="row form-group" *ngIf = "purchaseCreateModel.selectedPOType == 'J'">
+								<div class="col-md-4">
+									<label for="orderPrice">Unit Conversion<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+									<select class="form-control" name="convTpe" [(ngModel)] = "purchaseCreateModel.juteType">
+										<option value="LOOSE" >LOOSE</option>
+										<option value="BALE" >BALE</option>
+										<option value="PAKA BALE" >PAKA BALE</option>
+										<option value="HALF BALE" >HALF BALE</option>
+									</select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf = "purchaseCreateModel.selectedIndent != ''">
+								<div class="col-md-4"><label for="makerSelection">Discount</label></div>
+								<div class="col-md-8">
+								<div class="input-group">
+								<input class="form-control" type="text" name="dischdr" [(ngModel)] = "purchaseCreateModel.discounthdr" maxlength="2" pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$">
+								<span class="input-group-addon unit">%</span>
+								</div>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf = "purchaseCreateModel.selectedIndent != ''">
+								<div class="col-md-4"><label for="makerSelection">Freight Charge</label></div>
+								<div class="col-md-8">
+								<input class="form-control" type="text" name="flightchage" [(ngModel)] = "purchaseCreateModel.flightcharge" pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Raised By<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<span class="form-control">{{sessionData.sessionUserName}}</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Raised On<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "purchaseCreateModel.createDate"></my-date-picker>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4"><label for="supplier">Delivery Timeline<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<div class="input-group">
+									<input class="form-control" type="text" name="deliveryTime" [(ngModel)] = "purchaseCreateModel.deliveryTime" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$">
+									<span class="input-group-addon unit">Days</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf = "purchaseCreateModel.selectedPOType == 'J'">
+								<div class="col-md-4"><label for="supplier">Supplier<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<select class="form-control" name="supjute" [(ngModel)] = "purchaseCreateModel.selectedSupplier">
+										<option value="">--Please Select--</option>
+										<option *ngFor = "let supl of supplierListJute; let i = index" value="{{i}}">{{supl.name + "(" +supl.id+ ")"}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "indentDetailData.indentHeader && indentDetailData.indentHeader != 'undefined' && addedItems && addedItems.length > 0">
+					<h3>Line Items</h3>
+					
+					<div class="datagrid table-responsive po-create">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>Item Descrption</th>
+									<th *ngIf = "purchaseCreateModel.selectedPOType == 'J'">Quality</th>
+									<th>Indent No.</th>
+									<th>Department</th>
+									<th *ngIf = "purchaseCreateModel.selectedPOType == 'J'">Price/Unit</th>
+									<th *ngIf = "purchaseCreateModel.selectedPOType == 'J'">Quantity</th>
+									<th>Quantity</th>
+									<th>Unit</th>
+									<th *ngIf = "purchaseCreateModel.selectedPOType == 'J'">Converted Quantity</th>
+									<th *ngIf = "purchaseCreateModel.selectedPOType == 'J'">Payable</th>
+									<th>Discount(%)</th>
+									<th>Additional Requirement</th>
+									<th>Delete</th>
+                                </tr>
+                            </thead>
+							<tbody>
+                                <tr *ngFor = "let itemAdded of addedItems; let i = index">
+									<td>{{itemAdded.item.legacyItemCode +"_"+ itemAdded.item.name}}</td>
+									<td *ngIf = "purchaseCreateModel.selectedPOType == 'J'">{{itemAdded.quality.name}}</td>
+									<td>{{itemAdded.indentId}}</td>
+									<td>{{itemAdded.department.name}}</td>
+									<td *ngIf = "purchaseCreateModel.selectedPOType == 'J'">
+										<input type="text" class="form-controll" name="{{'priceVal'+ i}}" [(ngModel)]="itemAdded.rate" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$">
+									</td>
+									<td *ngIf = "purchaseCreateModel.selectedPOType == 'J'">
+										<input type="text" class="form-controll" name="{{'quanval'+ i}}" [(ngModel)]="itemAdded.poQuantity" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" (change)="refreshTotals()">
+									</td>
+									<td>
+										<input type="text" class="form-controll" name="{{'priceVal'+ i}}" [(ngModel)]="itemAdded.poQuantity" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$">
+									</td>
+									<td>{{itemAdded.quantityUnit.name}}</td>
+									<td *ngIf = "purchaseCreateModel.selectedPOType == 'J'">
+										<span *ngIf="purchaseCreateModel.juteType == 'BALE' || purchaseCreateModel.juteType == 'PAKA BALE' || purchaseCreateModel.juteType == 'HALF BALE'">{{itemAdded.poQuantity * 4.6  | number : '1.0-2'}} BALE</span>
+										<span *ngIf="purchaseCreateModel.juteType == 'LOOSE'">{{(itemAdded.poQuantity/totJuteQuantity)*100 | number : '1.0-2'}} %</span>
+									</td>
+									<td *ngIf = "purchaseCreateModel.selectedPOType == 'J'"><span>{{((itemAdded.poQuantity) * itemAdded.rate)}}</span></td>
+									<td>
+										<input type="text" class="form-controll" name="{{'addtnlreq'+ i}}" [(ngModel)]="itemAdded.discount" required maxlength = "2" pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$">
+									</td>
+									<td>
+										<input type="text" class="form-controll" name="{{'discitm'+ i}}" [(ngModel)]="itemAdded.additionalRequirement">
+									</td>
+									<td class="text-center">
+										<button (click)= "deleteItem(i)" class="btn ntn-danger" *ngIf="addedItems.length > 1"><span class="glyphicon glyphicon-minus"></span></button>
+									</td>
+                                </tr>
+                            </tbody>
+						</table>
+					</div>
+				</div>
+				<div class="content-heading-box" *ngIf = "purchaseCreateModel.selectedPOType != 'J' && indentDetailData.indentHeader && indentDetailData.indentHeader != 'undefined' && rateComparedata.sortedIndentSuppliers && rateComparedata.sortedIndentSuppliers.length > 0">
+					<h3>Indent Price Comparison</h3>
+					<div class="row">
+						<div class="col col-xs-5" style="padding:0 !important">
+							<div class="datagrid table-responsive po-create">
+								<table class="table">
+									<thead>
+										<tr>
+											<th style="height:39px;">Item Descrption</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td *ngFor = "let supplierLevel of rateComparedata.sortedIndentSuppliers; let i = index" class="{{(i==0)?null:'fake'}}" style="padding:0 !important">
+											<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="supplierLevel.supplierIndentList" [columnDefs]="columnDefOnlyItem"></ag-grid-angular>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Total
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="col col-xs-7" style="padding:0 !important">
+							<div class="datagrid table-responsive po-create">
+								<table class="table">
+									<thead>
+										<tr>
+											<th *ngFor = "let supplierLevel of rateComparedata.sortedIndentSuppliers; let i = index" >
+												<input type="radio" name="supplierSelection" value="{{'INPC'+i}}" [(ngModel)] = "purchaseCreateModel.selectedSup"/>  
+												{{supplierLevel.supplier.name + "("+ supplierLevel.supplier.id +")"}}
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td *ngFor = "let supplierLevel of rateComparedata.sortedIndentSuppliers; let i = index" style="padding:0 !important">
+											<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="supplierLevel.supplierIndentList" style="width:302px;" [columnDefs]="columnDef"></ag-grid-angular>
+											</td>
+										</tr>
+										<tr>
+											<td *ngFor = "let supplierLevel of rateComparedata.sortedIndentSuppliers; let i = index" class="text-right">
+												<span style="font-weight:bold">{{"Rs " + supplierLevel.totalFinalPrice}}</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--<div class="content-heading-box" *ngIf = "purchaseCreateModel.selectedPOType != 'J' && indentDetailData.indentHeader && indentDetailData.indentHeader != 'undefined' && rateComparedata.sortedIndentSuppliers && rateComparedata.sortedIndentSuppliers.length > 0">
+					<h3>Indent Price Comparison</h3>
+					<div class="datagrid table-responsive po-create">
+						<div class="supplierRateBox" *ngFor = "let supplierLevel of rateComparedata.sortedIndentSuppliers; let i = index">
+						<div class="row box-header" (click)="toggle($event)">
+							<div class="col-xs-1"><input type="radio" name="supplierSelection" value="{{'INPC'+i}}" [(ngModel)] = "purchaseCreateModel.selectedSup"></div>
+							<div class="col-xs-9"><label>{{supplierLevel.supplier.name + "("+ supplierLevel.supplier.id +")"}}</label></div>
+							<div class="col-xs-2">{{"Rs " + supplierLevel.totalFinalPrice}}</div>
+						</div>
+						
+						<div class="expandarea">
+							
+                        </div>
+						</div>
+					</div>
+				</div>-->
+				
+				<div class="content-heading-box" *ngIf = "purchaseCreateModel.selectedPOType != 'J' && indentDetailData.indentHeader && indentDetailData.indentHeader != 'undefined' && rateComparedata.sortedIndentItemSuppliers && rateComparedata.sortedIndentItemSuppliers.length > 0">
+					<h3>Item Price Comparison</h3>
+					<div class="row">
+						<div class="col col-xs-5" style="padding:0 !important">
+							<div class="datagrid table-responsive po-create">
+								<table class="table">
+									<thead>
+										<tr>
+											<th style="height:39px;">Item Descrption</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td *ngFor = "let supplierLeveltem of rateComparedata.sortedIndentItemSuppliers; let i = index" class="{{(i==0)?null:'fake'}}" style="padding:0 !important">
+											<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="supplierLeveltem.supplierIndentList" [columnDefs]="columnDefOnlyItem"></ag-grid-angular>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Total
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="col col-xs-7" style="padding:0 !important">
+							<div class="datagrid table-responsive po-create">
+								<table class="table">
+									<thead>
+										<tr>
+											<th *ngFor = "let supplierLeveltem of rateComparedata.sortedIndentItemSuppliers; let i = index" >
+												<input type="radio" name="supplierSelection" value="{{'ITPC'+i}}" [(ngModel)] = "purchaseCreateModel.selectedSup">  
+												{{supplierLeveltem.supplier.name + "("+ supplierLeveltem.supplier.id +")"}}
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td *ngFor = "let supplierLeveltem of rateComparedata.sortedIndentItemSuppliers; let i = index" style="padding:0 !important">
+											<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="supplierLeveltem.supplierIndentList" style="width:302px;" [columnDefs]="columnDef"></ag-grid-angular>
+											</td>
+										</tr>
+										<tr>
+											<td *ngFor = "let supplierLeveltem of rateComparedata.sortedIndentItemSuppliers; let i = index" class="text-right">
+												<span style="font-weight:bold">{{"Rs " + supplierLeveltem.totalFinalPrice}}</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--<div class="content-heading-box" *ngIf = "purchaseCreateModel.selectedPOType != 'J' && indentDetailData.indentHeader && indentDetailData.indentHeader != 'undefined' && rateComparedata.sortedIndentItemSuppliers && rateComparedata.sortedIndentItemSuppliers.length > 0">
+					<h3></h3>
+					<div class="datagrid table-responsive po-create">
+						<div class="supplierRateBox" *ngFor = "let supplierLeveltem of rateComparedata.sortedIndentItemSuppliers; let i = index">
+						<div class="row box-header" (click)="toggle($event)">
+							<div class="col-xs-1"></div>
+							<div class="col-xs-9"><label>{{supplierLeveltem.supplier.name + "("+ supplierLeveltem.supplier.id +")"}}</label></div>
+							<div class="col-xs-2">{{"Rs " + supplierLeveltem.totalFinalPrice}}</div>
+						</div>
+						
+						
+						<div class="expandarea">
+						<!--<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="supplierLeveltem.supplierIndentList"></ag-grid-angular>-->
+                        <!--<table class="table">
+                            <thead>
+                                <tr>
+									<th>Item Descrption</th>
+									<th>Rate/Unit</th>
+									<th>Quantity</th>
+									<th>CGST</th>
+									<th>SGST</th>
+									<th>IGST</th>
+									<th>Payable Ammount</th>
+								 </tr>
+                            </thead>
+							<tbody *ngFor = "let itemRatetemased of supplierLeveltem.supplierIndentList">
+                                <tr *ngIf="itemRatetemased.status == '1'">
+									<td>{{itemRatetemased.item.legacyItemCode +"_"+ itemRatetemased.item.name}}</td>
+									<td>{{itemRatetemased.rate}}</td>
+									<td>{{itemRatetemased.indentQuantity}}</td>
+									<td><span *ngIf="supplierLeveltem.supplier.state == 'WB'">{{itemRatetemased.item.itemTax.gst/2 + "%"}}</span></td>
+									<td><span *ngIf="supplierLeveltem.supplier.state == 'WB'">{{itemRatetemased.item.itemTax.gst/2 + "%"}}</span></td>
+									<td><span *ngIf="supplierLeveltem.supplier.state != 'WB'">{{itemRatetemased.item.itemTax.gst + "%"}}</span></td>
+									<td>{{"(" + itemRatetemased.indentQuantity * itemRatetemased.rate + "+" + (itemRatetemased.indentQuantity * itemRatetemased.rate * itemRatetemased.item.itemTax.gst)/100 + ") = " + ((itemRatetemased.indentQuantity * itemRatetemased.rate) + (itemRatetemased.indentQuantity * itemRatetemased.rate * itemRatetemased.item.itemTax.gst)/100)}}</td>
+								</tr>
+                            </tbody>
+						</table>
+						</div>
+						</div>
+					</div>
+				</div>-->
+				<div class="content-heading-box" *ngIf = "purchaseCreateModel.selectedSup != 'INPC0'">
+					<h3>Reason for selecting costly supplier</h3>
+					<textarea name="reasonComment" [(ngModel)] = "purchaseCreateModel.reasonComment" class="form-control"></textarea>
+				</div>
+				<p>&nbsp;</p>
+				<div class="row">
+						<div class="col-md-12 text-center">
+						<button class="btn btn-primary" [disabled] = "addedItems.length == 0 || !poCreateForm.form.valid" (click) = "createPO()">Create PO</button>
+						</div>
+					</div>
+				</form>
+			
+				

@@ -1,0 +1,178 @@
+				<h2>
+				<a [routerLink]="['/jute/mrindent']" title='Jute'>Jute</a>
+				>
+				Material Reading
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<form role="form" #grnmrcreate ="ngForm">
+				<div class="content-heading-box">
+					<h3>MR Header</h3>
+					<div class="row form-field-style">
+						<div class="col-sm-4">
+							<div class="row form-group" *ngIf = "myOptions.length > 0">
+								<div class="col-md-4"><label>Supplier<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="grnReceiveModel.supplierId" placeholder="Please Select" [multiple]="false" [(options)]="myOptions"  name="supplierSelect" (selected)="generateChalan($event)" (removed)="generateChalan($event)"></ng-select>
+								</div>
+							</div>
+							<!-- <div class="row form-group"> -->
+								<!-- <div class="col-md-4"><label>Challan No<span class="start">*</span></label></div> -->
+								<!-- <div class="col-md-8"><input class="form-control" type="text" name="chalanNo" [(ngModel)] = "grnReceiveModel.chalanNo" (blur)="fetchChalanDetails($event)"></div> -->
+							<!-- </div> -->
+							<!--<div class="row form-group">
+								<div class="col-md-4"><label>MR Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "grnReceiveModel.mrdate" required></my-date-picker></div>
+							</div>-->
+							<div class="row form-group"*ngIf="chalanDtls && chalanDtls != 'undefined' && chalanDtls!= '' && chalanDtls.poItemList.length > 0" >
+								<div class="col-md-4"><label>Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{chalanDtls.chalanDate | date:'mediumDate'}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group" *ngIf="grnReceiveModel.supplierId != 'undefined' && grnReceiveModel.supplierId != '' && myChalanOptions.length > 0">
+								<div class="col-md-4"><label>Challan No<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<ng-select [allowClear]="false" [(ngModel)]="grnReceiveModel.chalanNo" placeholder="Please Select" [multiple]="false" [(options)]="myChalanOptions"  name="chalanNo" (selected)="fetchPOOptions($event)"></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="chalanDtls && chalanDtls != 'undefined' && chalanDtls!= '' && chalanDtls.poItemList.length > 0">
+								<div class="col-md-4"><label>PO Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{chalanDtls.poHeader.createDate | date:'mediumDate'}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group" *ngIf="grnReceiveModel.chalanNo != 'undefined' && grnReceiveModel.chalanNo != '' && myPOOptions.length > 0">
+								<div class="col-md-4"><label>PO No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<ng-select [allowClear]="false" [(ngModel)]="grnReceiveModel.poId" placeholder="Please Select" [multiple]="false" [(options)]="myPOOptions"  name="PONo" (selected)="fetchChalanDetails($event)"></ng-select>
+								</div>
+							</div>
+							<div class="row form-group"*ngIf="MRDtls && MRDtls != 'undefined' && MRDtls!= '' && chalanDtls && chalanDtls != 'undefined' && chalanDtls!= '' && chalanDtls.poItemList.length > 0" >
+								<div class="col-md-4"><label>Vehicle No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{MRDtls[0].vehicleNo}}</span></div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="content-heading-box" *ngIf="procced && chalanDtls && chalanDtls != 'undefined' && chalanDtls!= '' && addedItems.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+									
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="addedItems"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive good-receive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>Item Descrption</th>
+									<th>Coverted Quantity</th>
+									<th>Marka</th>
+									<th>Advised Quality</th>
+									<th>Actual Quality</th>
+									<th>Advised Weight</th>
+									<th>Actual Weight</th>
+									<th>Deviation</th>
+									<th>Rate</th>
+									<th>Claims for Quality</th>
+									<th>Claims for Condition</th>
+									<th>Warehouse No.</th>
+                                    <th>Remarks</th>
+									<th>Receive/Reject</th>
+                                </tr>
+                            </thead>
+							<tbody *ngFor = "let MRitem of addedItems; let i = index">
+                                <tr>
+									<td>{{MRitem.item.name}}</td>
+									<td>
+										<span *ngIf="chalanDtls.poHeader.juteUnit == 'BALE' || chalanDtls.poHeader.juteUnit == 'PAKA BALE' || chalanDtls.poHeader.juteUnit == 'HALF BALE'">{{MRitem.advisedWeight * 4.6  | number : '1.0-2'}} BALE</span>
+										<span *ngIf="chalanDtls.poHeader.juteUnit == 'LOOSE'">{{(MRitem.advisedWeight/totJuteQuantity)*100 | number : '1.0-2'}} %</span>
+									</td>
+									<td><input class="form-control" type="text" name="marka" name="{{'marka'+ i}}" [(ngModel)]="MRitem.marka" required></td>
+									<td>{{MRitem.actualQuality.name}}</td>
+									<td><input class="form-control" type="text" name="quality" name="{{'quality'+ i}}" [(ngModel)]="MRitem.actualQuality.name"></td>
+									<td>{{MRitem.advisedWeight}} {{MRitem.quantityUnit.name}}</td>
+									<td><input class="form-control" type="text" name="{{'actualWeight'+ i}}" [(ngModel)]="MRitem.actualWeight" required pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$" (blur) = "updateDeviation($event, i)"> {{MRitem.quantityUnit.name}}</td>
+									<td><span class="form-control">{{MRitem.deviation}}</span> {{MRitem.quantityUnit.name}}</td>
+									<td>{{MRitem.rate}}</td>
+									<td></td>
+									<td></td>
+									<td><input class="form-control" type="text" name="{{'warehouseNo'+ i}}" [(ngModel)]="MRitem.warehouseNo" required pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$"></td>
+									<td><input class="form-control" type="text" name="{{'remarks'+ i}}" [(ngModel)]="MRitem.remarks"></td>
+									<td class="text-center">
+										<label class="switch"> 
+										  <input type="checkbox" name="{{'received'+ i}}" (click)="changeMRItmStat($event, i)" [checked] = "MRitem.status == '1'">
+										  <span class="slider round"></span>
+										</label>
+									</td>
+                                </tr>
+                            </tbody>
+							<tfoot>
+								<tr>
+									
+								</tr>
+							</tfoot>
+						</table>
+					</div>-->
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" [disabled] = "addedItems.length == 0 || !grnmrcreate.form.valid" (click)="createMR()">Save Reading</button>
+						</div>
+					</div>
+				
+				</div>
+				</form>
+				
+				
+				<div class="readingArea" *ngIf = "conditionClicked != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Add Mousture Reading</h2></div>
+						<div class="popupcontent">
+						<form #conditionReader ="ngForm">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Reading No</th>
+										<th>Reading Value(%)</th>
+										<th>Add/Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor = "let condition of conditionReadingData; let i = index">
+										<td>{{i+1}}</td>
+										<td><input class="form-control" type="text" name="{{'conditionno'+ i}}" [(ngModel)]="condition.reading" required maxlength = "2" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$"></td>
+										<td>
+											<button type="button" class="btn btn-sm btn-success"  (click)="addRowCondition()" *ngIf="conditionReadingData.length == i+1">Add Row</button>
+											<button type="button" class="btn btn-sm btn-danger"  (click)="deleteRowCondition(i)" *ngIf="conditionReadingData.length > 10">Delete Row</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeConditionDialog()">Cancel</button> <button type="button" class="btn btn-sm btn-success" [disabled] = "!conditionReader.form.valid" (click)="updateCondition()">Save</button></div>
+					</div>
+				</div>
+				
+				

@@ -1,0 +1,145 @@
+				
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				Indent Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				<div class="printable" *ngIf = "indentDetailData && indentDetailData !=undefined && indentDetailData.indentList.length > 0">
+						<table class="print-table-show">
+							<tr>
+								<td style="text-align:center" colspan="7">
+									{{company}}<br/>
+									{{company_add_1}}<br/>
+									{{company_add_2}}<br/>
+									{{company_contact}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align:center" colspan="7">
+									<span *ngIf="printResponsedata == ''">1st Copy</span>
+									<span *ngIf="printResponsedata != ''">Copy No. : {{printResponsedata.counter}}</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Indent No.
+								</td>
+								<td colspan="3">
+								{{prefix+"/Indent/" + indentDetailData.indentHeader.id }}
+								</td>
+								<td>
+									Date
+								</td>
+								<td colspan="2">
+								{{indentDetailData.indentHeader.createDate  | date:'mediumDate'}}
+								</td>
+							</tr>
+							<tr>
+								<td style="width:75px">Item Code</td>
+								<td>Description</td>
+								<td  style="width:50px">Unit</td>
+								<td  style="width:40px">Stock/Appr Qty</td>
+								<td  style="width:40px">Avg Cons Last Mth</td>
+								<td  style="width:50px">Indent Quantity</td>
+								<td  style="width:75px">Dept</td>
+							</tr>
+							<tbody *ngFor = "let eachItem of indentDetailData.indentList">
+								<tr *ngIf="eachItem.status!='4'">
+									<td>{{eachItem.item.legacyItemCode}}</td>
+									<td>{{eachItem.itemGroup.name+"_"+eachItem.item.name}}</td>
+									<td>{{eachItem.quantityUnit.id}}</td>
+									<td>{{eachItem.item.stock  | number : '1.0-2'}}</td>
+									<td>{{eachItem.avgConsumption | number : '1.0-2'}}</td>
+									<td>{{eachItem.indentQuantity  | number : '1.0-2'}}</td>
+									<td>{{eachItem.department.name}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				<div class="content-heading-box" *ngIf = "indentDetailData && indentDetailData !='undefined'">
+					<!--<h3>Added Items</h3>-->
+					
+					<div class="row">
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>Indent Number<span class="start">*</span></label>
+								<span class="form-control">{{prefix+"/Indent/" + indentDetailData.indentHeader.id }}</span>
+							</div>
+						</div>
+						<div class="col col-sm-2">
+							<div class="form-group">
+								<label>Indent Type<span class="start">*</span></label>
+								<span class="form-control">{{indentDetailData.indentHeader.type}}</span>
+							</div>
+						</div>
+						<div class="col col-sm-2">
+							<div class="form-group">
+								<label>Raised By<span class="start">*</span></label>
+								<span class="form-control">{{indentDetailData.indentHeader.submitter}}</span>
+							</div>
+						</div>
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>Raised On<span class="start">*</span></label>
+								<span class="form-control">{{indentDetailData.indentHeader.createDate  | date:'mediumDate'}}</span>
+							</div>
+						</div> 
+						<div class="col col-sm-2">
+							<div class="form-group">
+								<label>Status<span class="start">*</span></label>
+								<span class="btn btn-block  btn-info" *ngIf="indentDetailData.indentHeader.status == '1'">OPEN</span>
+										<span class="btn btn-block  btn-primary" *ngIf="indentDetailData.indentHeader.status == '2'">IN-PROGRESS</span>
+										<span class="btn btn-block  btn-success" *ngIf="indentDetailData.indentHeader.status == '3'">APPROVED</span>
+										<span class="btn btn-block  btn-danger" *ngIf="indentDetailData.indentHeader.status == '4'">REJECTED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="indentDetailData.indentHeader.status == '5'">CLOSED</span>
+										<span class="btn btn-block  btn-danger" *ngIf="indentDetailData.indentHeader.status == '6'">CANCELED</span>
+										<span class="btn btn-block  btn-success" *ngIf="indentDetailData.indentHeader.status == '7'">BOOKED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="indentDetailData.indentHeader.status == '8'">RAISE PENDING</span>
+										<span class="btn btn-block  btn-danger" *ngIf="indentDetailData.indentHeader.status == '9'">RAISE REJECTED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="indentDetailData.indentHeader.status == '10'">MODIFY PENDING</span>
+										<span class="btn btn-block  btn-success" *ngIf="indentDetailData.indentHeader.status == '11'">AVAILABLE</span>
+										<span class="btn btn-block  btn-danger" *ngIf="indentDetailData.indentHeader.status == '12'">LAPSED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="indentDetailData.indentHeader.status == '13'">PENDING</span>
+										<span class="btn btn-block  btn-primary" *ngIf="indentDetailData.indentHeader.status == '14'">INVITED</span>
+										<span class="btn btn-block  btn-info" *ngIf="indentDetailData.indentHeader.status == '15'">READY</span>
+										<span class="btn btn-block  btn-warning" *ngIf="indentDetailData.indentHeader.status == '17'">APPROVED(LEVEL 1)</span>
+										<span class="btn btn-block  btn-warning" *ngIf="indentDetailData.indentHeader.status == '18'">APPROVED(LEVEL 2)</span>
+										<span class="btn btn-block  btn-warning" *ngIf="indentDetailData.indentHeader.status == '19'">APPROVED(LEVEL 3)</span>
+										<span class="btn btn-block  btn-warning" *ngIf="indentDetailData.indentHeader.status == '20'">APPROVED(LEVEL 5)</span>
+							</div>
+						</div>
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf = "indentDetailData && indentDetailData !=undefined && indentDetailData.indentList.length > 0">
+					<form role="form" #indentApproveForm ="ngForm">
+					<h3>Indent Items</h3>
+					<ag-grid-angular class="ag-fresh nonprintableContent" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="indentDetailData.indentList"></ag-grid-angular>
+					
+					
+					<p>&nbsp;</p>
+					<div class="row nonprintableContent">
+						<div class="col-md-12 text-center">
+							<button *ngIf = "indentDetailData.indentHeader.status != '4'" class="btn btn-danger" title="Cancel Indent" (click)="cancelIt()"><span class="glyphicon glyphicon-trash"></span></button>
+							<button  *ngIf = "indentDetailData.indentHeader.status != '4'" class="btn btn-primary" title="Print Indent" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+					</form>
+				</div>
+				
+				
+				

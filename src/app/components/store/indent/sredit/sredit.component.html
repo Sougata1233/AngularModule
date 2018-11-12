@@ -1,0 +1,185 @@
+				
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				> 
+				Indent
+				>
+				<span *ngIf="requestedId && requestedId != undefined">{{requestedId}}</span></h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "userGroupData && userGroupData != 'undefined' && indentDetailData != ''">
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-4"><label for="itemGroupSelect">Indent Type<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<select id="indentType" class="form-control" name="indentType" [(ngModel)] = "indentCreateModel.selectedIndentType" (change)="indentTypeChange($event)">
+									<option value="">--Please Select--</option>
+									<option *ngFor = "let type of indentType; let i = index;" value="{{type.code}}" [disabled]="type.code == 'J'">{{type.name}}</option>
+								</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+
+				<!--add item form-->
+				<div class="content-heading-box" *ngIf="indentCreateModel.selectedIndentType != '' && indentDetailData != ''">
+					<form role="form" #createIndentForm="ngForm">
+					<h3>Add Item</h3>
+					<div class="row form-field-style">
+						
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="itemGroupSelect">Department<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<select class="form-control" name="department" [(ngModel)] = "indentCreateModel.selectedDepartment" (change)="departmentChange($event)">
+									<option value="">--Please Select--</option>
+									<option *ngFor = "let dpt of departments; let i = index;" value="{{i}}" [disabled]="dpt.name == 'JUTE'" >{{dpt.name}}</option>
+								</select>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf = "indentCreateModel.selectedItemGroup != '' && myOptions.length > 0">
+								<div class="col-md-4"><label for="itemDesc">Item Description<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" placeholder="Please Select" [multiple]="false" [(options)]="myOptions" [(ngModel)]="indentCreateModel.selectedItem" name="itemDesc" (selected)="generateStock($event)" (removed)="generateStock($event)"></ng-select>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="indentCreateModel.selectedIndentType == 'J'">
+								<div class="col-md-4"><label for="itemGroupSelect">Quality<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<select class="form-control"  name="quality" [(ngModel)] = "indentCreateModel.selectedQuality" required>
+										<option value="">--Please Select--</option>
+										<option *ngFor = "let quality of itemQuality; let i = index;" value="{{i}}" >{{quality.name}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf = "indentCreateModel.selectedItemGroup != '' && myOptions.length > 0">
+								<div class="col-md-4"></div>
+								<div class="col-md-8">
+									<a routerLink="/masterscreen/createitem" title="Create an Item">Create an Item</a>
+								</div>
+							</div>
+
+						</div>
+						
+						
+						<div class="col-md-6">
+							<div class="form-group row" *ngIf = "indentCreateModel.selectedIndentType != 'J' && indentCreateModel.selectedDepartment != '' && itemgroupOptions.length > 0">
+								<div class="col-md-4"><label for="itemGroupSelect">Item Group<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" placeholder="Please Select" [multiple]="false" [(options)]="itemgroupOptions" [(ngModel)]="indentCreateModel.selectedItemGroup" name="itemGrp" (selected)="loadItemDesc($event)" (removed)="loadItemDesc($event)"></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="indentCreateModel.selectedItem != ''">
+								<div class="col-md-4"><label for="itemDesc">Quantity<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<div class="input-group col-md-12">
+									<input type="text" class="form-control" name="quantity" [(ngModel)] = "indentCreateModel.selectedQuantity" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$">
+									<span class="input-group-addon unit">
+										{{items[indentCreateModel.selectedItem].quantityUnit.name}}
+										<!--<select class="form-control" name="unit" [(ngModel)] = "indentCreateModel.selectedUnit" required>
+											<option *ngFor = "let unit of units; let i = index;" value="{{i}}" [disabled] = "indentCreateModel.selectedIndentType == 'J' && unit.id != 'MTS'">{{unit.name}}</option>
+										</select>-->
+									</span>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="col-md-6" *ngIf="StockUnit != 'undefined' && indentCreateModel.selectedItem != ''">
+						</div>
+						<div class="col-md-6" *ngIf="StockUnit != 'undefined' && indentCreateModel.selectedItem != ''">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="itemGroup">Stock</label></div>
+								<div class="col-md-8">
+									<span class="form-control">{{Stock}}</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="itemGroup">Average Consumption</label></div>
+								<div class="col-md-8">
+									<span class="form-control">{{avgconsump}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button *ngIf = "indentCreateModel.selectedIndentType != 'J'" class="btn btn-primary" [disabled] = "indentCreateModel.selectedItemGroup == '' || indentCreateModel.selectedItem == '' || indentCreateModel.selectedDepartment == '' || indentCreateModel.selectedQuantity == '' || !createIndentForm.form.valid" (click) = "addItems()">Add Item</button>
+							<button *ngIf = "indentCreateModel.selectedIndentType == 'J'" class="btn btn-primary" [disabled] = "indentCreateModel.selectedItemGroup == '' || indentCreateModel.selectedItem == '' || indentCreateModel.selectedDepartment == '' || indentCreateModel.selectedQuantity == '' || indentCreateModel.selectedQuality == '' || !createIndentForm.form.valid" (click) = "addItems()">Add Item</button>
+						</div>
+					</div>
+					</form>
+				</div>
+				
+				
+				
+				
+				
+				
+				<div class="content-heading-box" *ngIf = "addedItems.length > 0 && indentCreateModel.selectedIndentType != '' && indentDetailData != ''">
+					<h3>Added Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="addedItems"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive">
+                        <table class="table custom-width">
+                            <thead>
+                                <tr>
+									<th>Item Group</th>
+									<th>Item Descrption</th>
+									<th *ngIf = "indentCreateModel.selectedIndentType == 'J'">Quality</th>
+									<th>Department</th>
+									<th>Stock</th>
+									<th>Quantity</th>
+									<th>Unit</th>
+									<th>Raised By</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+							<tbody>
+                                <tr *ngFor = "let itemAdded of addedItems; let i = index">
+									<td>{{itemAdded.itemGroup.name}}</td>
+									<td>{{itemAdded.item.name}}</td>
+									<td *ngIf = "indentCreateModel.selectedIndentType == 'J'">{{itemAdded.quality.name}}</td>
+									<td>{{itemAdded.department.name}}</td>
+									<td>{{itemAdded.stock}}</td>
+									<td>{{itemAdded.indentQuantity}}</td>
+									<td>{{itemAdded.quantityUnit.name}}</td>
+									<td>{{itemAdded.submitter}}</td>
+									<td class="text-center">
+										<button (click)= "deleteItem(i)" class="btn ntn-danger"><span class="glyphicon glyphicon-minus"></span></button>
+									</td>
+                                </tr>
+                            </tbody>
+						</table>
+					</div>-->
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center"><button class="btn btn-primary" [disabled] = "addedItems.length == 0" (click) = "createIndent()">Create Indent</button>&nbsp;<button class="btn btn-primary" [disabled] = "addedItems.length == 0" (click) = "saveIndent()">Save Indent</button></div>
+					</div>
+				</div>
+				
+				
+				
+				
+				
+				

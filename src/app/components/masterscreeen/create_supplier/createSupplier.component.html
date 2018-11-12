@@ -1,0 +1,270 @@
+<h2>
+
+	Create Supplier
+</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+	<form role="form" #createsupplierForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Supplier</h3>
+					<div class="form-field-style text-center">
+						<div class="row">
+			
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-left">
+										<label>Name<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="suppName"  required  maxlength="35" [(ngModel)] = "supplierCreateModel.suppName" class="form-control">
+									</div>
+							</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Type<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+									<select class="form-control" name="suppTyp" required [(ngModel)] = "supplierCreateModel.suppTyp" (change)="onmukamChange($event.target.value)">
+										<option value="">--Please Select--</option>
+										<option value="J">Jute</option>
+										
+										<option value="S">Store</option>S
+										<option value="O">Agent</option>
+									</select>
+									
+								</div>
+						</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Gst No<span class="start">*</span></label>
+							</div>
+							<div class="col-md-4">
+								<select class="form-control" name="Registered" (change)="ongstChange($event.target.value)">
+									
+										<option value="r">Registered</option>
+										<option value="u">Unregistered</option>
+								
+									  
+									</select>
+							</div>
+							<div class="col-md-4">
+								<input type="text" name="gstNo" [disabled] = "!enableGst" pattern="[a-zA-Z0-9 ]*" maxlength="15" [(ngModel)] = "supplierCreateModel.gstNo" class="form-control">
+								
+							</div>
+					</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group row">
+					<div class="col-md-4 text-left">
+							<label>PIN<span class="start">*</span></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" name="pincode" pattern="[0-9 ]*" maxlength="6" [(ngModel)] = "supplierCreateModel.pincode" class="form-control">
+							
+						</div>
+				</div>	
+			</div>
+		
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Country<span class="start">*</span></label>
+							</div>
+							<div class="col-md-8">
+									<select (change) = "loadstateList($event.target.value)" class="form-control" name="country" required [(ngModel)] = "supplierCreateModel.country">
+											<option value="">--Please Select--</option>
+											<option *ngFor = "let country of countryList;" [value]="country.countryName">{{country.countryName}}</option>
+											   
+										</select>
+							</div>
+					</div>
+			</div>
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>State<span class="start">*</span></label>
+							</div>
+							<div class="col-md-8">
+										<select class="form-control" name="State" [(ngModel)] = "supplierCreateModel.state">
+											<option value="">--Please Select--</option>
+											<option *ngFor = "let state of stateList;" [value]="state.stateName">{{state.stateName}}</option>
+										</select>
+							</div>
+					</div>
+			</div>
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>District</label>
+							</div>
+							<div class="col-md-8">
+									<input type="text" name="district" maxlength="30" [(ngModel)] = "supplierCreateModel.district" class="form-control">
+							</div>
+					</div>
+			</div>
+	
+			<div class="col-md-6">
+					<div class="form-group row">
+							
+									<div class="col-md-4 text-left">
+										<label>PAN NO<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="panNo" pattern="[a-zA-Z0-9 ]*" maxlength="10" [(ngModel)] = "supplierCreateModel.panNo" class="form-control">
+									</div>
+							
+					</div>
+			</div>
+		
+			<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Address </label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" name="address1" maxlength="250" [(ngModel)] = "supplierCreateModel.address1" class="form-control">
+							</div>
+					</div>
+			</div>
+	
+				<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Phone </label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" name="phone1" pattern="[0-9 -]*" maxlength="15" [(ngModel)] = "supplierCreateModel.phone1" class="form-control">
+								</div>
+						</div>
+				</div>
+
+				<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Fax</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" name="fax" pattern="[0-9 -]*" maxlength="15" [(ngModel)] = "supplierCreateModel.fax" class="form-control">
+								</div>
+						</div>
+				</div>
+
+				<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>E-mail</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" name="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" maxlength="100" [(ngModel)] = "supplierCreateModel.email" class="form-control">
+								</div>
+						</div>
+				</div>
+
+				<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>CIN</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" name="cin" pattern="[a-zA-Z0-9 / - ! & ]*" maxlength="21" [(ngModel)] = "supplierCreateModel.cin" class="form-control">
+								</div>
+						</div>
+				</div>
+				<div class="col-sm-6" *ngIf="enableDiv">
+
+
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+										<label>Mukam<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+										<div class="list-menu mukam-master" >
+													
+												<ul class="all-menus">
+														<li *ngFor = "let mukam of mukamList;">
+																<input type="checkbox" [value]="mukam.id" (change)="onmukamCheckbox(mukam,$event)">
+																		{{mukam.mukamName}}
+														 </li>
+												</ul>
+												
+											
+								
+											</div>
+								</div>
+						</div>
+						
+				
+				</div>
+					
+
+		</div>
+		<div class="row">
+			   
+			
+
+		
+				
+				<div class="col-sm-12 text-center">
+							<button class="btn btn-primary" [disabled] = "!createsupplierForm.form.valid" (click) = "createSupplier()"> Create</button>
+				</div>
+						
+			</div>
+		</div>
+				
+	</div>
+	<div class="content-heading-box">
+					<h3>Supplier's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="supplierList"></ag-grid-angular>
+					
+	</div>
+		
+			
+				</form>
+				
+				
+				<div class="readingArea" *ngIf = "conditionClicked != ''">
+						<div class="reading-popup reading-popup-master">
+							<div class="popupcontent">
+									<div class="list-menu mukam-master">
+									<ul class="all-menus">
+										<span>
+											<li *ngFor = "let supplierLists of supplierListid.mukam;">
+											<input type="checkbox" [value]="supplierLists.id"  [checked]="supplierLists.isMapped == 'true'" (change)="onCheckboxChange($event)">
+													{{supplierLists.mukamName}}
+													
+											 </li>
+											</span>
+										
+										</ul>
+										</div>
+										<div >
+										
+									</div>
+
+
+							</div>
+						
+							<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeConditionDialog()">Cancel</button> <button type="button" class="btn btn-sm btn-success" (click)="updateCondition()">Save</button></div>
+						</div>
+						
+					</div>
+
+				
+		

@@ -1,0 +1,209 @@
+				
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				<a [routerLink]="['/store/storereceive']" title='Store Receive'>Store Receive</a>
+				>
+				SR Details</h2>
+				
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				<div class="printable" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+						<table class="print-table-show">
+							<tr>
+								<td style="text-align:center" colspan="9">
+									{{company}}<br/>
+									{{company_add_1}}<br/>
+									{{company_add_2}}<br/>
+									{{company_contact}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align:center" colspan="9">
+									<span *ngIf="printResponsedata == ''">1st Copy</span>
+									<span *ngIf="printResponsedata != ''">Copy No. : {{printResponsedata.counter}}</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									SR No.
+								</td>
+								<td>
+								{{GRNDtllData.storeGoodReceiveHeader.id }}
+								</td>
+								<td>
+									Date : {{GRNDtllData.storeGoodReceiveHeader.goodReceiptDate  | date:'mediumDate'}}
+								</td>
+								<td>
+									Chalan No.
+								</td>
+								<td colspan="2">
+									{{GRNDtllData.storeGoodReceiveHeader.chalanNo}}
+								</td>
+								<td colspan="3">
+									Date : {{GRNDtllData.storeGoodReceiveHeader.chalanDate  | date:'mediumDate'}}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									INW No.
+								</td>
+								<td>
+								
+								</td>
+								<td>
+									Date : 
+								</td>
+								<td>
+									R/Note No.
+								</td>
+								<td colspan="2">
+									
+								</td>
+								<td colspan="3">
+									Date : 
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align:center" colspan="9">&nbsp;</td>
+							</tr>
+							<tr>
+								<td style="width:75px">I/CODE/UNIT</td>
+								<td>DESCRIPTION/DETAIL/MAKE</td>
+								<td >P/O NO.</td>
+								<td  style="width:75px">QUANTITY</td>
+								<td  style="width:50px">RATE</td>
+								<td  style="width:50px">VALUE</td>
+								<td  style="width:50px">GST</td>
+								<td  style="width:50px" colspan="2">AMOUNT</td>
+							</tr>
+							<tbody *ngFor = "let eachItem of GRNDtllData.storeGrnItemList">
+								<tr *ngIf="eachItem.status!='4'">
+									<td>{{eachItem.item.legacyItemCode}}</td>
+									<td>{{eachItem.item.name}}</td>
+									<td>{{prefix+"/PO/"+GRNDtllData.storeGoodReceiveHeader.poId}}</td>
+									<td>{{eachItem.actualQuantity  | number : '1.0-2'}} {{eachItem.uomCode.id}}</td>
+									<td>{{eachItem.receivedPrice | number : '1.0-2'}}</td>
+									<td>{{(eachItem.actualQuantity*eachItem.receivedPrice) | number : '1.0-2'}}</td>
+									<td>{{(eachItem.actualQuantity*eachItem.receivedPrice)*(eachItem.item.itemTax.gst/100) | number : '1.0-2'}}</td>
+									<td colspan="2">{{(eachItem.actualQuantity*eachItem.receivedPrice)+((eachItem.actualQuantity*eachItem.receivedPrice)*(eachItem.item.itemTax.gst/100)) | number : '1.0-2'}}</td>
+								</tr>
+							</tbody>
+							<tr>
+								<td style="text-align:center" colspan="9">&nbsp;</td>
+							</tr>
+							<tr>
+								<td>GROSS AMOUNT</td>
+								<td>DISCOUNT</td>
+								<td >EXCISE</td>
+								<td>GST</td>
+								<td>SUR CH</td>
+								<td>DELIVERY</td>
+								<td>TOTAL DED</td>
+								<td>ROUND</td>
+								<td>NET AMOUNT</td>
+							</tr>
+							<tr>
+								<td>{{grossamount | number : '1.0-2'}}</td>
+								<td></td>
+								<td ></td>
+								<td>{{grosstax | number : '1.0-2'}}</td>
+								<td></td>
+								<td></td>
+								<td>{{grossamount + grosstax | number : '1.0-2'}}</td>
+								<td>{{grossamount + grosstax | number : '1.0-0'}}</td>
+								<td>{{grossamount + grosstax | number : '1.0-0'}}</td>
+							</tr>
+						</table>
+					</div>
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+					<h3>SR Header</h3>
+					<div class="row form-field-style">
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>SR Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>PO No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{prefix+"/PO/"+GRNDtllData.storeGoodReceiveHeader.poId}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Store No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.storeNo}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Challan No<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.chalanNo}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>PO Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.poDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Status<span class="start">*</span></label></div>
+								<div class="col-md-8">
+										<span class="btn btn-block btn-info" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '1'">OPEN</span>
+										<span class="btn btn-block  btn-primary" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '2'">IN-PROGRESS</span>
+										<span class="btn btn-block  btn-success" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '3'">APPROVED</span>
+										<span class="btn btn-block  btn-danger" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '4'">REJECTED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '5'">CLOSED</span>
+										<span class="btn btn-block  btn-danger" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '6'">CANCELED</span>
+										<span class="btn btn-block  btn-success" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '7'">BOOKED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '8'">RAISE PENDING</span>
+										<span class="btn btn-block  btn-danger" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '9'">RAISE REJECTED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '10'">MODIFY PENDING</span>
+										<span class="btn btn-block  btn-success" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '11'">AVAILABLE</span>
+										<span class="btn btn-block  btn-danger" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '12'">LAPSED</span>
+										<span class="btn btn-block  btn-warning" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '13'">PENDING</span>
+										<span class="btn btn-block  btn-primary" *ngIf="GRNDtllData.storeGoodReceiveHeader.status == '14'">INVITED</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.chalanDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Supplier<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.supplierId}}</span></div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != '' && GRNDtllData.storeGrnItemList.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="GRNDtllData.storeGrnItemList"></ag-grid-angular>
+					<p>&nbsp;</p>
+					<div class="row" *ngIf="printableSupplierData != ''">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" title="Print Purchase Order" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+					</div>
+				

@@ -1,0 +1,78 @@
+				
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				<a [routerLink]="['/store/goodissue']" title='MR Worklist'>Good Issue</a>
+				>
+				Issue Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+					<h3>Issue/Loan Header</h3>
+					<div class="row form-field-style">
+						<div class="col-sm-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Create Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.issueHeader.issueDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Issue/Loan Id<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.issueHeader.id}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Issue/Loan Type<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<span class="btn btn-success btn-block" *ngIf="GRNDtllData.issueHeader.type == 'i'">Issue</span>
+									<span class="btn btn-warning btn-block" *ngIf="GRNDtllData.issueHeader.type == 'l'">Loan</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Department<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.department.name}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Submitter<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.issueHeader.submitter}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Financial Year<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.issueHeader.finnacialYear}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-6" *ngIf="GRNDtllData.issueHeader.type == 'l'">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Unit Id<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.issueHeader.unitId}}</span></div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != '' && GRNDtllData.issuItemList.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="GRNDtllData.issuItemList"></ag-grid-angular>
+					</div>
+				

@@ -1,0 +1,38 @@
+<h2>
+	Role Details's List
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+
+	<form role="form">
+			
+				<div class="content-heading-box">
+					<h3>Role Details's List</h3>
+					<div class="row form-group">
+						<div class="col col-xs-8">
+							<a routerLink="/masterscreen/createroledetails" title="" class="btn btn-primary">Create New</a>
+						</div>
+						<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+					</div>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="roleList"></ag-grid-angular>
+				</div>
+		
+			
+				</form>
+				
+				
+		

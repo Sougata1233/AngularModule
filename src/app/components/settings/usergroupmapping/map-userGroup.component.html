@@ -1,0 +1,150 @@
+				<h2>
+				<a [routerLink]="['/settings/user']" title='Store'>Settings</a>
+				>
+				Map User/Menu to Group
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<!--add item form-->
+				<div class="content-heading-box">
+					<h3>Select User Group</h3>
+					<div class="row">
+						<div class="col-sm-5">
+						<div class="row form-group">
+							<div class="col-md-6"><label>Select User Group</label></div>
+							<div class="col-md-6">
+								<select class="form-control" [(ngModel)] = "userGroupSelectionModel.selectedUserGroup" (change)="refreshView($event)">
+									<option value="">--please select--</option>
+									<option *ngFor = "let userGroup of allUserGroupData; let i = index" value="{{i}}">{{userGroup.userGroupName}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-5 mapmar">
+                           <div class="row">
+                              <div class="col-sm-6 col-xs-6">
+                                 <div class="onoffswitch pull-right" *ngIf="userGroupSelectionModel.selectedUserGroup != ''">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" [checked]="allUserGroupData[userGroupSelectionModel.selectedUserGroup].isEnable == 1" [disabled]="userGroupSelectionModel.selectedUserGroup == ''" (click)="disableUserGroup($event)">
+                                    <label class="onoffswitch-label" for="myonoffswitch">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                    </label>
+                                 </div>
+                              </div>
+                              <div class="col-sm-6 col-xs-6" *ngIf="userGroupSelectionModel.selectedUserGroup != ''">
+                                 <div class="onofftwoswitch">
+                                    <input type="checkbox" name="onofftwoswitch" class="onofftwoswitch-checkbox" id="myonofftwoswitch" checked (click)="categorySwitching($event)">
+                                    <label class="onofftwoswitch-label" for="myonofftwoswitch">
+                                    <span class="onofftwoswitch-inner"></span>
+                                    <span class="onofftwoswitch-switch"></span>
+                                    </label>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+					
+					</div>
+					
+					<div class="content-heading-box mapping-area" *ngIf = "userGroupSelectionModel.selectedUserGroup != '' && selectedCategory == 'USER'">
+						<h3>Select {{SelectedItem}} for Mapping</h3>
+						<div class="row">
+							<div class="col-sm-5">
+								<div class=" list-menu">
+									<h3>All {{SelectedItem}}</h3>
+								   <ul class="all-menus" *ngIf = "selectedCategory == 'USER'">
+										<li *ngFor = "let all of allUserData; let i = index" (click)="selectFromAll($event, i)" [class]="(selectedUserIds.indexOf(all.id) > -1)?'hide':''">
+											{{all.firstName +" "+all.lastName +" ("+all.userName+")"}}
+										</li>
+								   </ul>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="list-menu-button" *ngIf="allUserGroupData[userGroupSelectionModel.selectedUserGroup].isEnable == 1 && !serviceon">
+								   <button class="bt-one" id="addtoselect" *ngIf = "SelectFromSelected.length > 0" (click)="deleteUserGroupMapping()"><span class="glyphicon glyphicon-chevron-left"></span></button>
+								   <button class="bt-two" id="cancelselection" *ngIf = "SelectFromAll.length > 0" (click)="mapUserToGroupByLeftToRight()"><span class="glyphicon glyphicon-chevron-right"></span></button>
+								</div>
+								<div class="list-menu-button" *ngIf="serviceon">
+								   <button class="bt-one"><span class="glyphicon glyphicon-hourglass"></span> Loading...</button>
+								</div>
+							 </div>
+							<div class="col-sm-5">
+							<div class=" list-menu">
+							 <h3>Selected  {{SelectedItem}}</h3>
+							   <ul class="all-menus selectedRegion" *ngIf = "selectedCategory == 'USER'">
+								
+								<li *ngFor = "let selected of selectedallUserData; let i = index" (click)="selectFromSelected($event, i)">
+										{{selected.user.firstName +" "+selected.user.lastName +" ("+selected.user.userName+")"}}
+									</li>
+							   </ul>
+							  </div>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="content-heading-box mapping-area" *ngIf = "userGroupSelectionModel.selectedUserGroup != '' && selectedCategory == 'MENU'">
+						<h3>Select {{SelectedItem}} for Mapping</h3>
+						<div class="row">
+							<div class="col-sm-5">
+								<div class=" list-menu">
+									<h3>All {{SelectedItem}}</h3>
+								   <ul class="all-menus" *ngIf = "selectedCategory == 'MENU'">
+										<li *ngFor = "let all of allMenuData; let i = index" (click)="selectFromAll($event, i)" [class]="(selectedMenuIds.indexOf(all.id) > -1)?'hide':''">
+											{{all.subMenu +" ("+all.menu.menuName+")"}}
+										</li>
+								   </ul>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="list-menu-button" *ngIf="allUserGroupData[userGroupSelectionModel.selectedUserGroup].isEnable == 1 && !serviceon">
+								   <button class="bt-one" id="addtoselect" *ngIf = "SelectFromSelected.length > 0" (click)="deleteUserGroupMenuMapping()"><span class="glyphicon glyphicon-chevron-left"></span></button>
+								   <button class="bt-two" id="cancelselection" *ngIf = "SelectFromAll.length > 0" (click)="mapMenuToUserGroup()"><span class="glyphicon glyphicon-chevron-right"></span></button>
+								</div>
+								<div class="list-menu-button" *ngIf="serviceon">
+								   <button class="bt-one"><span class="glyphicon glyphicon-hourglass"></span> Loading...</button>
+								</div>
+							 </div>
+							<div class="col-sm-5">
+							<div class=" list-menu">
+							 <h3>Selected  {{SelectedItem}}</h3>
+							   <ul class="all-menus selectedRegion" *ngIf = "selectedCategory == 'MENU'">
+								
+								<li *ngFor = "let selected of selectedallMenuData; let i = index" (click)="selectFromSelected($event, i)">
+										{{selected.subMenuItem.subMenu +" ("+selected.menuItem.menuName+")"}}
+									</li>
+							   </ul>
+							  </div>
+							</div>
+						</div>
+					</div>
+					
+					
+				
+				
+				
+					
+						
+			
+				
+				
+				
+				
+				
+			
+				

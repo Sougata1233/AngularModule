@@ -1,0 +1,173 @@
+				<h2>
+				<a [routerLink]="['/store']" title='Store'>Store</a>
+				>
+				<a [routerLink]="['/store/storereceive']" title='Store'>Store Receive</a>
+				>
+				Create
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<form role="form" #srnmrcreate ="ngForm">
+				<div class="content-heading-box">
+					<h3>SR Header</h3>
+					<div class="row form-field-style">
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>SR Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "grnReceiveModel.srdate"></my-date-picker></div>
+							</div>
+							<div class="row form-group" *ngIf="grnReceiveModel.chalanNo != 'undefined' && grnReceiveModel.chalanNo != '' && myPOOptions.length > 0">
+								<div class="col-md-4"><label>PO No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<ng-select [allowClear]="false" [(ngModel)]="grnReceiveModel.poId" placeholder="Please Select" [multiple]="false" [(options)]="myPOOptions"  name="PONo" (selected)="fetchChalanDetails($event)"></ng-select>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group" *ngIf = "myOptions.length > 0">
+								<div class="col-md-4"><label>Supplier<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="grnReceiveModel.supplierId" placeholder="Please Select" [multiple]="false" [(options)]="myOptions"  name="supplierSelect" (selected)="generateChalan($event)" (removed)="generateChalan($event)"></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="chalanDtls && chalanDtls != 'undefined' && chalanDtls!= ''&& chalanDtls.poItemList.length > 0">
+								<div class="col-md-4"><label>PO Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{chalanDtls.poHeader.createDate | date:'mediumDate'}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group" *ngIf="grnReceiveModel.supplierId != 'undefined' && grnReceiveModel.supplierId != '' && myChalanOptions.length > 0">
+								<div class="col-md-4"><label>Challan No<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<ng-select [allowClear]="false" [(ngModel)]="grnReceiveModel.chalanNo" placeholder="Please Select" [multiple]="false" [(options)]="myChalanOptions"  name="chalanNo" (selected)="fetchPOOptions($event)"></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="chalanDtls && chalanDtls != 'undefined' && chalanDtls!= ''&& chalanDtls.poItemList.length > 0">
+								<div class="col-md-4"><label>Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{chalanDtls.chalanDate | date:'mediumDate'}}</span></div>
+							</div>
+							
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf="procced && chalanDtls && chalanDtls != 'undefined' && chalanDtls!= '' && chalanDtls.poItemList.length > 0 && addedItems.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+									
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="addedItems"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive good-receive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>Item Code</th>
+									<th>Item Description</th>
+									<th>Additional Requirement</th>
+									<th>Advised Quantity</th>
+									<th>Actual Quantity</th>
+									<th>Deviation</th>
+									<th>Ordered Price</th>
+									<th>Received Price</th>
+									<th>Claims for Quality</th>
+									<th>Claims for Condition</th>
+									<th>Store Id.</th>
+									<th>Floor No.</th>
+									<th>Room No.</th>
+									<th>Rack No.</th>
+									<th>Position</th>
+									<th>Expiry Date</th>
+                                    <th>Remarks</th>
+									<th>Receive/Reject</th>
+                                </tr>
+                            </thead>
+							<tbody>
+                                <tr *ngFor = "let MRitem of addedItems; let i = index">
+									<td>{{MRitem.item.id}}</td>
+									<td>{{MRitem.item.name}}</td>
+									<td>{{MRitem.additionalRequirements}}</td>
+									<td>{{MRitem.advisedQuantity}} {{MRitem.uomCode.name}}</td>
+									<td><input class="form-control" type="text" name="{{'actualWeight'+ i}}" [(ngModel)]="MRitem.actualQuantity" required pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$" (blur) = "updateDeviation($event, i)"> {{MRitem.uomCode.name}}</td>
+									<td><span class="form-control">{{MRitem.deviation}}</span> {{MRitem.uomCode.name}}</td>
+									<td>{{MRitem.rate}}</td>
+									<td><input class="form-control" type="text" name="{{'receivedRate'+ i}}" [(ngModel)]="MRitem.rate" required pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$"> {{MRitem.uomCode.name}}</td>
+									<td></td>
+									<td></td>
+									<td><input class="form-control" type="text" name="{{'storno'+ i}}" [(ngModel)]="MRitem.storeId" pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$"></td>
+									<td><input class="form-control" type="text" name="{{'floor'+ i}}" [(ngModel)]="MRitem.floor" pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$"></td>
+									<td><input class="form-control" type="text" name="{{'room'+ i}}" [(ngModel)]="MRitem.room" pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$"></td>
+									<td><input class="form-control" type="text" name="{{'rack'+ i}}" [(ngModel)]="MRitem.rack" pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$"></td>
+									<td><input class="form-control" type="text" name="{{'position'+ i}}" [(ngModel)]="MRitem.position" pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$"></td>
+									<td><my-date-picker name="mydate" [options]="expiryDateOptions" required [(ngModel)] = "grnReceiveModel.expiryDate"></my-date-picker></td>
+									<td><input class="form-control" type="text" name="{{'remarks'+ i}}" [(ngModel)]="MRitem.remarks"></td>
+									<td class="text-center">
+										<label class="switch">
+										  <input type="checkbox" name="{{'received'+ i}}" (click)="changeMRItmStat($event, i)" [checked] = "MRitem.status == '1'">
+										  <span class="slider round"></span>
+										</label>
+									</td>
+                                </tr>
+                            </tbody>
+							<tfoot>
+								<tr>
+									
+								</tr>
+							</tfoot>
+						</table>
+					</div>-->
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" [disabled] = "addedItems.length == 0 || !srnmrcreate.form.valid" (click)="createMR()">Receive</button>
+						</div>
+					</div>
+				
+				</div>
+				</form>
+				
+				
+				<div class="overlayer" *ngIf="expOpn">
+					<div class="pops">
+						<div class="content-heading-box">
+							<h3>Expiry Date</h3>
+							<my-date-picker name="mydate" [options]="expiryDateOptions" required [(ngModel)] = "grnReceiveModel.exdate"></my-date-picker>
+							<button type="button" class="btn btn-info btn-sm" (click)="setExpVal(expOpnId)">OK</button>
+						</div>
+					</div>
+				</div>
+				
+				<div class="readingArea" *ngIf = "storeedit != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Select Store</h2></div>
+						<div class="popupcontent">
+						<form #actualQualityForm ="ngForm">
+							<select class="form-control"  name="storeSelection" [(ngModel)] = "grnReceiveModel.SRStoreSelect" required>
+								<option value="">--Please Select--</option>
+								<option *ngFor = "let item of allStores; let i = index;" value="{{i}}">{{item.storeName+" [Store Id : "+item.storeId+"]"}}</option>
+							</select>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeStoreDialog()">CANCEL</button> <button type="button" class="btn btn-sm btn-success" (click)="updateStoreNumber()" [disabled]="!actualQualityForm.form.valid">OK</button></div>
+					</div>
+				</div>

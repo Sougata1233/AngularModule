@@ -1,0 +1,52 @@
+export class employeeCreateModel {
+"id":string;
+"ebId":string;
+"ebFixedId":string;
+"empName":string = "";
+"dateOfBirth":string = "";
+"sex":string = "";
+"fatherHusbandName":string = "";
+"religion":string = "";
+"deptId":string;
+"occuId":string;  
+"dateOfJoining":string = "";
+"dateOfPfJoining":string = "";
+"active":string = "";
+"dateOfInactive":string = "";
+"cataId":string = "";
+"workingReley":string = "";
+"quarter":string = "";
+"quarterNo":string = "";
+"esiMember":string = "";
+"pfMember":string = "";
+"fpfMember":string = "";
+"esiNo":string = "";
+"pfNo":string = "";
+"fpffNo":string = "";
+"education":string = "";
+"educationRead":string = "";
+"educationWrite":string = "";
+"prevEmployment":string = "";
+"identicalMarks":string = "";
+"permanentAdd1":string = "";
+"permanentAdd2":string = "";
+"permanentAdd3":string = "";
+"permanentAdd4":string = "";
+"localAdd1":string = "";
+"localAdd2":string = "";
+"localAdd3":string = "";
+"localAdd4":string = "";
+"phoneNo":string = "";
+"mobileNo":string = "";
+"offday":string = "";
+"photoDir":string = "";
+"updated":string = "";
+"userId":string = "";
+"occuCode":string = "";
+"wrkType":string = "";
+"photofile":string = "";
+"chkOld":string = "";
+"oldEb":string = "";
+
+  
+ }

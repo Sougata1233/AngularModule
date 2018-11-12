@@ -1,0 +1,98 @@
+
+<h2>Create Weekend</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+<div *ngIf="errorMsg" class="form-group">
+	<div class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		{{ errorMsg }}
+	</div>
+</div>
+<p *ngIf="successMsg">&nbsp;</p>
+<div *ngIf="successMsg" class="form-group">
+	<div class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		{{ successMsg }}
+	</div>
+</div>
+<form role="form" #createWeekendForm="ngForm" >
+			<div class="content-heading-box">
+				<h3>Create Weekend</h3>
+				<div class="row form-field-style text-center">
+				<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>Location<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+												<select class="form-control" name="locationId" [(ngModel)] = "weekendCreateModel.locationId" >
+														<option value="">--Please Select--</option>
+													<option *ngFor = "let location of locationList;" [value]="location.id">{{location.locationArea}}</option>
+														   
+												</select>								
+										</div>
+								</div>
+					</div>		
+				<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Organization<span class="start">*</span></label>
+							</div>
+							<div class="col-md-8">
+									<select class="form-control" name="unitId" [(ngModel)] = "weekendCreateModel.unitId" >
+											<option value="">--Please Select--</option>
+										<option *ngFor = "let organization of organizationList;" [value]="organization.id">{{organization.orgName}}</option>
+											   
+									</select>	
+								
+							</div>
+					</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group row">
+						<div class="col-md-4 text-left">
+							<label>Weekend 1<span class="start">*</span></label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" name="weekend1" required pattern="[a-zA-Z][a-zA-Z ]+" maxlength="25" [(ngModel)] = "weekendCreateModel.weekend1" class="form-control">							
+						</div>
+				</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group row">
+					<div class="col-md-4 text-left">
+						<label>Weekend 2<span class="start">*</span></label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" name="weekend2" required pattern="[a-zA-Z][a-zA-Z ]+" maxlength="25"[(ngModel)] = "weekendCreateModel.weekend2" class="form-control">								
+					</div>
+			</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group row">
+				<div class="col-md-4 text-left">
+					<label>Alternative Weekend 1<span class="start">*</span></label>
+				</div>
+				<div class="col-md-8">
+					<select name="alterforw1" [(ngModel)] = "weekendCreateModel.alterforw1" class="form-control">
+						<option value="y">Yes</option>
+						<option value="n">No</option>
+					</select>
+										
+				</div>
+		</div>
+</div>
+
+
+<div class="col-md-12 text-center">
+	<button class="btn btn-primary" [disabled] = "!createWeekendForm.form.valid" (click) = "createWeekendmaster()"> Create</button>
+</div>
+</div>
+	</div>
+	<div class="content-heading-box">
+		<h3>Weekend's List</h3>
+		<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="weekendList"></ag-grid-angular>
+	</div>
+</form>
+
+			
+	

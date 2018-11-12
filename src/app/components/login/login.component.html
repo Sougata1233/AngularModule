@@ -1,0 +1,37 @@
+<div id="page-wrap">
+<section id="loginpanel">
+	<div class="container">
+	<a href="#" target="_self" class="logo"><img src="assets/images/logologin.png"></a>
+	<div class="panel panel-default login-contant text-center">
+		<form role="form" #loginForm="ngForm">
+		<div class="panel-heading"><h1>Sign In</h1></div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label for="userName">User Name :</label>
+				<input type="text" class="form-control" name="userName" id="userName" placeholder="Your User Name" required [(ngModel)]="user.userName">
+			</div>
+			<div class="form-group">
+				<label for="userPass">Password :</label>
+				<input type="password" class="form-control" name="userPass" id="userPass" placeholder="Password" required [(ngModel)]="user.password">
+			</div>
+			<div class="form-group" *ngIf = "errorMsg">
+				<div class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					{{ errorMsg }}
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="text-center">
+				<input type="reset" class="btn btn-sm btn-danger" value="Reset">
+				<button class="btn btn-sm btn-success" (click)="authenticate()" [disabled]="!loginForm.form.valid">Login</button>
+				<div class="col-sm-12">
+				<a href="#" class="forgot-btn">Forgot Password?</a>
+				</div>
+			</div>
+		</div>
+		</form>
+	</div>
+	</div>
+</section>
+</div>

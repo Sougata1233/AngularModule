@@ -1,0 +1,80 @@
+<h2>
+	Create Code
+</h2>
+
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+	<form role="form" #createCodeForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Code</h3>
+					<div class="row form-field-style text-center">
+						<div class="col-md-4">
+								<div class="form-group row">
+										<div class="col-md-4 text-right">
+											<label>Code<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+												<input type="text" name="code" required pattern="[a-zA-Z ]*" maxlength="6" [(ngModel)] = "codeCreateModel.code" class="form-control">
+											
+										</div>
+								</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group row">
+									<div class="col-md-4 text-right">
+										<label>Type<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+											<input type="text" name="codeType" required pattern="[a-zA-Z ]*" maxlength="3" [(ngModel)] = "codeCreateModel.codeType" class="form-control">
+											
+									</div>
+							</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group row">
+								<div class="col-md-4 text-right">
+									<label>Description<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+										<input type="text" name="codeDsc" required pattern="[a-zA-Z ]*" maxlength="30" [(ngModel)] = "codeCreateModel.codeDsc" class="form-control">
+
+								</div>
+						</div>
+				</div>
+
+					
+					
+					
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "!createCodeForm.form.valid" (click) = "createCodemaster()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Code's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="codeList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

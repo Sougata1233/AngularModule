@@ -1,0 +1,101 @@
+<h2>
+	Create Machine
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+
+	<form role="form" #createMachineForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Machine</h3>
+					<div class="row form-field-style">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-5">
+											<label>Code<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+												<input type="text" name="id" required pattern="[a-zA-Z0-9 ]*" maxlength="5" [(ngModel)] = "machineCreateModel.id" class="form-control">
+											
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							
+							<div class="form-group row">
+								<div class="col-md-5">
+									<label for="paramCode">Description<span class="start">*</span></label>
+								</div>
+								<div class="col-md-7">
+										<input type="text" name="machineDsc" required pattern="[a-zA-Z0-9 ]*" maxlength="60" [(ngModel)] = "machineCreateModel.machineDsc" class="form-control">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+								<div class="form-group row">
+											<div class="col-md-5">
+													<label> Active Flag</label>
+											</div>
+											<div class="col-md-7">
+												<input type="text" name="activeFlag" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "machineCreateModel.activeFlag" class="form-control">
+											</div>
+											</div>
+														
+								</div>
+											<div class="col-md-6">
+												<div class="form-group row">
+													<div class="col-md-5">
+														<label> Deparment</label>
+													</div>
+													<div class="col-md-7">
+															<input type="text" name="dept" pattern="[a-zA-Z ]*" maxlength="200" [(ngModel)] = "machineCreateModel.dept" class="form-control">
+													</div>
+												</div>
+												
+											</div>
+											<div class="col-md-6">
+													<div class="form-group row">
+														<div class="col-md-5">
+															<label>Mill Fact<span class="start">*</span></label>
+														</div>
+														<div class="col-md-7">
+															
+																<input type="text" name="millFact" required pattern="[a-zA-Z ]*" maxlength="1" [(ngModel)] = "machineCreateModel.millFact" class="form-control">
+														</div>
+													</div>
+													
+												</div>
+										
+										<div class="col-md-12 text-center">
+												<button class="btn btn-primary" [disabled] = "!createMachineForm.form.valid" (click) = "createMachinemaster()"> Create</button>
+										</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Machine's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="machineList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

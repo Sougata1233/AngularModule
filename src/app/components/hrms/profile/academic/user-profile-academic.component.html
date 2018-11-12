@@ -1,0 +1,83 @@
+				
+				<h2><a routerLink="/hrms">HRMS</a> > <a routerLink="/hrms/profile">My Profile</a> > Academic Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf="!addmodeOn && editModeOn == ''">
+					<h3>Academic Records</h3>
+					<div class="row form-group">
+								<div class="col col-xs-12 text-right">
+									<button title="Add academic" class="btn btn-primary" (click)="addRecordOpen()">Add Record</button>
+								</div>
+					</div>
+					<div class="row" *ngIf="userAcademicData && userAcademicData.length > 0">
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="userAcademicData"></ag-grid-angular>	
+					</div>
+					<div *ngIf="!userAcademicData || userAcademicData.length == 0" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						No record found.
+					</div>
+				</div>
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf="addmodeOn || editModeOn != ''">
+					<!--<h3>Added Items</h3>-->
+					<form role="form" #addeditProffessiondata ="ngForm">
+					<div class="row">
+						
+					<div class="col-md-12 form-field-style">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="row form-group">
+										<div class="col-md-4"><label>University/Board<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" name="uniBoard" placeholder="University or Board Name" [(ngModel)]="userAcademicModel.university" required>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Passing Year<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" name="passOutYear" placeholder="Passing Year" [(ngModel)]="userAcademicModel.passOutYear" required pattern="\d{4}">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="row form-group">
+										<div class="col-md-4"><label>Course Name<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" name="coursename" placeholder="Course Name" [(ngModel)]="userAcademicModel.highestDegree" required>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<button class="btn btn-secondary" (click) = "gotoback()">Back</button> 
+							<button class="btn btn-success" (click) = "addAcademicData()" [disabled]="!addeditProffessiondata.valid" *ngIf="addmodeOn">Add</button> 
+							<button class="btn btn-success" (click) = "saveDetails()" [disabled]="!addeditProffessiondata.valid" *ngIf="editModeOn != ''">Save</button>
+						</div>
+					</div>
+					</form>
+				</div>
+				
+				
+				
+				
+				
+				
+				

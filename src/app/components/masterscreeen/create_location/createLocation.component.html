@@ -1,0 +1,114 @@
+<h2>Create Location</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+
+	<form role="form" #createLocationForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Location</h3>
+					<div class="row form-field-style">
+							<div class="col-md-6">
+									<div class="form-group row">
+										<div class="col-md-5">
+											<label>Country<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+												<select class="form-control" name="country" (change) = "loadstateList($event.target.value)" [(ngModel)] = "locationCreateModel.locationCountry">
+														<option value="">--Please Select--</option>
+															
+												<option *ngFor = "let country of countryList;" [value]="country.id">{{country.countryName}}</option>
+														   
+												</select>
+										</div>
+									</div>
+									
+								</div>
+								<div class="col-md-6">
+										<div class="form-group row">
+											<div class="col-md-5">
+												<label>State<span class="start">*</span></label>
+											</div>
+											<div class="col-md-7">
+													<select class="form-control" name="State" (change) = "loadcityList($event.target.value)" [(ngModel)] = "locationCreateModel.locationState" >
+															<option value="">--Please Select--</option>
+																
+													<option *ngFor = "let state of stateList;" [value]="state.id">{{state.stateName}}</option>
+															   
+													</select>
+											</div>
+										</div>
+										
+									</div>
+									<div class="col-md-6">
+											
+											<div class="form-group row">
+												<div class="col-md-5">
+													<label>City<span class="start">*</span></label>
+												</div>
+												<div class="col-md-7">
+														<select class="form-control" name="city" [(ngModel)] = "locationCreateModel.locationCity">
+																<option value="">--Please Select--</option>
+																<option *ngFor = "let city of cityList;" [value]="city.id">{{city.cityName}}</option>
+																 
+														</select>
+												</div>
+											</div>
+										</div>
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-5">
+											<label>Area<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+											<input type="text" class="form-control" name="locationArea" required pattern="[a-zA-Z][a-zA-Z ]+" maxlength="25" [(ngModel)] = "locationCreateModel.locationArea">
+										</div>
+								</div>
+						</div>
+					
+					
+			
+						<div class="col-md-6">
+							<div class="form-group row">
+								<div class="col-md-5">
+									<label>PIN<span class="start">*</span></label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" class="form-control" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="6" name="locationPin" [(ngModel)] = "locationCreateModel.locationPin">
+								</div>
+							</div>
+							
+						</div>
+						
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "!createLocationForm.form.valid" (click) = "createLocationmaster()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Location's List</h3>
+				
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="locationList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

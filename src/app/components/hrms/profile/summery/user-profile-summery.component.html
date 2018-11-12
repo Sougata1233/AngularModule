@@ -1,0 +1,116 @@
+			<h2>
+					<a [routerLink]="['/hrms']" title='HRMS'>HRMS</a>
+					> My Profile
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "userData != '' && userData != null && userData != undefined">
+					<!--<h3>Added Items</h3>-->
+					<div class="row">
+						<div class="col-md-3 userpf-info">
+							<div class="profile-image">
+								<img src="assets/images/img-2.png" alt="images" *ngIf="userData.userImg == '' || userData.userImg == null || userData.userImg == undefined">
+								<img *ngIf="userData.userImg != '' && userData.userImg != null && userData.userImg != undefined" src="{{'data:image/gif;base64,'+userData.userImg}}" alt="images">
+							</div>
+							<h4>{{userData.firstName +' '+ userData.lastName}}</h4>
+							<p *ngIf = "userData.permAddr && userData.permAddr != ''"><span class="glyphicon glyphicon-map-marker"></span> {{userData.permAddr}}</p>
+							<p *ngIf = "userData.email && userData.email != ''"><span class="glyphicon glyphicon-envelope"></span> {{userData.email}}</p>
+							<p *ngIf = "userData.mobile && userData.mobile != ''"><span class="glyphicon glyphicon-earphone"></span> {{userData.mobile}}</p>
+						</div>
+						<div class="col-md-9">
+							<owl-carousel [options]="{items: 3, dots: false, navigation: false}" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+							<div class="item">
+									<figure class="use-profile-item">
+                                        <div class="profile-details-info-icon">
+                                           <img src="assets/images/icon-1.png" alt="img">
+                                        </div>
+                                        <div class="profile-details-contant-right">
+                                            <div class="profile-details-info">
+												<h3>Personel Details</h3>
+												<ul>
+													<li><p>Sed ut perspiciatis unde omn is iste natus error sit voluptatem</p></li>
+													<li><p>accusantium doloremque </p></li>
+													<li><p>laudantium, totam rem</p></li>
+												</ul>
+												<span class="editbt"><a routerLink="/hrms/profile/personal"><img src="assets/images/icon-4.png" alt="img"></a></span>
+											</div>
+										</div>
+                                    </figure>
+								</div>
+								<div class="item">
+									<figure class="use-profile-item">
+                                        <div class="profile-details-info-icon">
+                                           <img src="assets/images/icon-2.png" alt="img">
+                                        </div>
+                                        <div class="profile-details-contant-right">
+                                            <div class="profile-details-info">
+												<h3>Professional Details</h3>
+												<ul>
+													<li><p>Sed ut perspiciatis unde omn is iste natus error sit voluptatem</p></li>
+													<li><p>accusantium doloremque </p></li>
+													<li><p>laudantium, totam rem</p></li>
+												</ul>
+												<span class="editbt"><a routerLink="/hrms/profile/professional"><img src="assets/images/icon-4.png" alt="img"></a></span>
+											</div>
+										</div>
+                                    </figure>
+								</div>
+								<div class="item">
+									<figure class="use-profile-item">
+                                        <div class="profile-details-info-icon">
+                                           <img src="assets/images/icon-3.png" alt="img">
+                                        </div>
+                                        <div class="profile-details-contant-right">
+                                            <div class="profile-details-info">
+												<h3>Academic Details</h3>
+												<ul>
+													<li><p>Sed ut perspiciatis unde omn is iste natus error sit voluptatem</p></li>
+													<li><p>accusantium doloremque </p></li>
+													<li><p>laudantium, totam rem</p></li>
+												</ul>
+												<span class="editbt"><a routerLink="/hrms/profile/academic"><img src="assets/images/icon-4.png" alt="img"></a></span>
+											</div>
+										</div>
+                                    </figure>
+								</div>
+								<div class="item">
+									<figure class="use-profile-item">
+                                        <div class="profile-details-info-icon">
+                                           <img src="assets/images/icon-7.png" alt="img">
+                                        </div>
+                                        <div class="profile-details-contant-right">
+                                            <div class="profile-details-info">
+												<h3>Bank Details</h3>
+												<ul>
+													<li><p>Sed ut perspiciatis unde omn is iste natus error sit voluptatem</p></li>
+													<li><p>accusantium doloremque </p></li>
+													<li><p>laudantium, totam rem</p></li>
+												</ul>
+												<span class="editbt"><a routerLink="/hrms/profile/bank"><img src="assets/images/icon-4.png" alt="img"></a></span>
+											</div>
+										</div>
+                                    </figure>
+								</div>
+						</owl-carousel>	
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+				

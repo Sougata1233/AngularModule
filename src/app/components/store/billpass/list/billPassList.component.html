@@ -1,0 +1,59 @@
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				Bill Pass
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<!--<div *ngIf = "AllPOData == undefined || AllPOData == '' || AllPOData.length == 0" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						No Indent Created.
+					</div>
+				</div>-->
+				<div class="content-heading-box">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-group">
+								<div class="col col-xs-6">
+									<a routerLink="/store/billpassCreate" title="Create Bill Pass" class="btn btn-primary">Create New</a>
+								</div>
+								<div class="col col-xs-6 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="AllPOData"></ag-grid-angular>
+					
+					<!--<div class="datagrid table-responsive approval">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>Bill No.</th>
+									<th>Bill Date</th>
+									<th>Supplier Name</th>
+									<th>Bill Ammount</th>
+								</tr>
+                            </thead>
+							<tbody >
+                                <tr [routerLink]="['/store/billpass/', '1234']">
+									<td><a [routerLink]="['/store/billpass/', '1234']" title="View Details">1245</a></td>
+									<td>23/12/2016</td>
+									<td>S0098</td>
+									<td>569</td>
+								</tr>
+                            </tbody>
+						</table>
+					</div>-->
+				</div>
+				

@@ -1,0 +1,253 @@
+				<h2>
+				<a [routerLink]="['/jute']" title='Reports'>Reports</a>
+				>
+				<a [routerLink]="['/reports/jute']" title='Jute Reports'>Jute Reports</a>
+				>
+				Qualitywise Stock Register
+				</h2>
+				<p>&nbsp;</p>
+				
+				<div class="content-heading-box nonprintableContent">
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Select Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "reportModel.reportdate"></my-date-picker>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<button class="btn btn-primary" [disabled] = "!reportModel.reportdate" (click) = "searchReport()">Get Report</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p>&nbsp;</p>
+				<div class="form-group nonprintableContent" *ngIf="reportdata ==''">
+					<div class="alert alert-info alert-dismissable">
+						No report to show.
+					</div>
+				</div>
+				<div class="row form-group printableContent" *ngIf="reportdata !=''">
+					<table class="print-table-show">
+							<tr>
+								<td>
+									{{company}}
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td style="width:40%">
+									Qualitywise Stock Register For The   :
+								</td>
+								<td style="width:20%">
+									&nbsp;
+								</td>
+								<td>
+									{{reportModel.reportdate.formatted}}
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td rowspan="2" style="text-align:center">
+									  Quality
+								</td>
+								<td colspan="6" style="text-align:center">
+									  Opening Stock
+								</td>
+								<td colspan="6" style="text-align:center">
+									  ISSUE
+								</td>
+								<td colspan="6" style="text-align:center">
+									  Closing Stock
+								</td>
+							</tr>
+							<tr>
+								<td>
+									PBALE
+								</td>
+								<td>
+									BALE
+								</td>
+								<td>
+									 HBALE
+								</td>
+								<td>
+									 LOOSE
+								</td>
+								<td>
+									 DRUMS
+								</td>
+								<td>
+									 Weight 
+								</td>
+								<td>
+									PBALE
+								</td>
+								<td>
+									BALE
+								</td>
+								<td>
+									 HBALE
+								</td>
+								<td>
+									 LOOSE
+								</td>
+								<td>
+									 DRUMS
+								</td>
+								<td>
+									 Weight 
+								</td>
+								<td>
+									PBALE
+								</td>
+								<td>
+									BALE
+								</td>
+								<td>
+									 HBALE
+								</td>
+								<td>
+									 LOOSE
+								</td>
+								<td>
+									 DRUMS
+								</td>
+								<td>
+									 Weight 
+								</td>
+							</tr>
+							<tr *ngFor = "let item of reportdata; let i = index">
+								<td>
+									{{item.actualQuality}}
+								</td>
+								<td>
+									{{item.openningStock.pbale}}
+								</td>
+								<td>
+									 {{item.openningStock.bale}}
+								</td>
+								<td>
+									 {{item.openningStock.hbale}}
+								</td>
+								<td>
+									{{item.openningStock.loose}}
+								</td>
+								<td>
+									 {{item.openningStock.drums}} 
+								</td>
+								<td>
+									{{item.openningStock.actualWeight}}
+								</td>
+								<td>
+									{{item.issue.pbale}}
+								</td>
+								<td>
+									 {{item.issue.bale}}
+								</td>
+								<td>
+									 {{item.issue.hbale}}
+								</td>
+								<td>
+									{{item.issue.loose}}
+								</td>
+								<td>
+									 {{item.issue.drums}} 
+								</td>
+								<td>
+									{{item.issue.actualWeight}}
+								</td>
+								<td>
+									{{item.closingstock.pbale}}
+								</td>
+								<td>
+									 {{item.closingstock.bale}}
+								</td>
+								<td>
+									 {{item.closingstock.hbale}}
+								</td>
+								<td>
+									{{item.closingstock.loose}}
+								</td>
+								<td>
+									 {{item.closingstock.drums}} 
+								</td>
+								<td>
+									{{item.closingstock.actualWeight}}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Grand Total</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.openningstockgrandtotal.pbale}}</strong>
+								</td>
+								<td>
+									 <strong>{{reportdata[0].grandtotal.openningstockgrandtotal.bale}}</strong>
+								</td>
+								<td>
+									 <strong>{{reportdata[0].grandtotal.openningstockgrandtotal.hbale}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.openningstockgrandtotal.loose}}</strong>
+								</td>
+								<td>
+									 <strong>{{reportdata[0].grandtotal.openningstockgrandtotal.drums}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.openningstockgrandtotal.weight}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.issuegrandtotal.pbale}}</strong>
+								</td>
+								<td>
+									 <strong>{{reportdata[0].grandtotal.issuegrandtotal.bale}}</strong>
+								</td>
+								<td>
+									 <strong>{{reportdata[0].grandtotal.issuegrandtotal.hbale}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.issuegrandtotal.loose}}</strong>
+								</td>
+								<td>
+									 <strong>{{reportdata[0].grandtotal.issuegrandtotal.drums}}</strong> 
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.issuegrandtotal.weight}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.closingstockgrandtotal.pbale}}</strong>
+								</td>
+								<td>
+									 <strong>{{reportdata[0].grandtotal.closingstockgrandtotal.bale}}</strong>
+								</td>
+								<td>
+									 <strong>{{reportdata[0].grandtotal.closingstockgrandtotal.hbale}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.closingstockgrandtotal.loose}}</strong>
+								</td>
+								<td>
+									 <strong>{{reportdata[0].grandtotal.closingstockgrandtotal.drums}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.closingstockgrandtotal.weight}}</strong>
+								</td>
+							</tr>
+						</table>
+				</div>
+				<p>&nbsp;</p>
+					<div class="row nonprintableContent" *ngIf="reportdata !=''">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" title="Print Report" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+				
+				
+				

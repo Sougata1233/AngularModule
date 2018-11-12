@@ -1,0 +1,216 @@
+				
+				<h2>
+				<a [routerLink]="['/jute/mrindent']" title='Jute'>Jute</a>
+				>
+				<a [routerLink]="['/jute/agentmrlist']" title='Jute'>Agent MR List</a>
+				>
+				Agent MR Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+					<h3>MR Header</h3>
+					<div class="row form-field-style">
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>MR Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "grnReceiveModel.mrdate" required></my-date-picker></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>PO No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{prefix+"/PO/"+GRNDtllData.materialGoodReceiveHeader.poId}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Contract No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><input class="form-control" type="text" name="contractNo" [(ngModel)] = "grnReceiveModel.contractNo" required pattern="^\s*(?=.*[0-9])\d*(?:\.\d{1,2})?\s*$"></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Agent Name<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.agentName}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Challan No<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.chalanNo}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>PO Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.poDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Contract Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "grnReceiveModel.contractDate" required></my-date-picker></div>
+							</div>
+							<div class="row form-group" *ngIf="MRDtls && MRDtls != 'undefined' && MRDtls!= ''">
+								<div class="col-md-4"><label>Vehicle No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{MRDtls[0].vehicleNo}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.chalanDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Supplier<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.supplierId}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Ex. Stn.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.materialGoodReceiveHeader.exSTN}}</span></div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != '' && GRNDtllData.materialGrnItemList.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="GRNDtllData.materialGrnItemList"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive good-receive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>Item Descrption</th>
+									<th>Coverted Quantity</th>
+									<th>Marka</th>
+									<th>Advised Quality</th>
+									<th>Actual Quality</th>
+									<th>Advised Weight</th>
+									<th>Actual Weight</th>
+									<th>Deviation</th>
+									<th>Rate</th>
+									<th>Claims for Quality</th>
+									<th>Claims for Condition</th>
+									<th>Warehouse No.</th>
+                                    <th>Remarks</th>
+								</tr>
+                            </thead>
+							<tbody *ngFor = "let MRitem of GRNDtllData.materialGrnItemList">
+                                <tr *ngIf="MRitem.status == '1'">
+									<td>{{MRitem.item.name}}</td>
+									<td></td>
+									<td>{{MRitem.marka}}</td>
+									<td>{{MRitem.advisedQuality.name}}</td>
+									<td>{{MRitem.actualQuality.name}}</td>
+									<td>{{MRitem.advisedWeight}} {{MRitem.quantityUnit.name}}</td>
+									<td>{{MRitem.actualWeight}} {{MRitem.quantityUnit.name}}</td>
+									<td>{{MRitem.deviation}} {{MRitem.quantityUnit.name}}</td>
+									<td>{{MRitem.rate}} INR.</td>
+									<td>{{MRitem.claimsQuality.name}}</td>
+									<td>{{MRitem.claimsCondition}}</td>
+									<td>{{MRitem.warehouseNo}}</td>
+									<td>{{MRitem.remarks}}</td>
+								 </tr>
+                            </tbody>
+							<tfoot>
+								<tr>
+									
+								</tr>
+							</tfoot>
+						</table>
+					</div>-->
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-success" (click) = "createMR()">Create MR for Source</button>
+						</div>
+					</div>
+				
+				</div>
+				
+				
+				<div class="readingArea" *ngIf = "conditionClicked != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Add Mousture Reading</h2></div>
+						<div class="popupcontent">
+						<form #conditionReader ="ngForm">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Reading No</th>
+										<th>Reading Value(%)</th>
+										<th>Add/Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor = "let condition of conditionReadingData; let i = index">
+										<td>{{i+1}}</td>
+										<td><input class="form-control" type="text" name="{{'conditionno'+ i}}" [(ngModel)]="condition.val" required max = "100" pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$"></td>
+										<td>
+											<button type="button" class="btn btn-sm btn-success"  (click)="addRowCondition()" *ngIf="conditionReadingData.length == i+1">Add Row</button>
+											<button type="button" class="btn btn-sm btn-danger"  (click)="deleteRowCondition(i)" *ngIf="conditionReadingData.length > 10">Delete Row</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeConditionDialog()">Cancel</button> <button type="button" class="btn btn-sm btn-success" [disabled] = "!conditionReader.form.valid" (click)="updateCondition()">Save</button></div>
+					</div>
+				</div>
+
+				<div class="readingArea" *ngIf = "actualQualityEdit != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Select Actual Quality</h2></div>
+						<div class="popupcontent">
+						<form #actualQualityForm ="ngForm">
+							<select class="form-control"  name="quality" [(ngModel)] = "grnReceiveModel.selectedQuality" required>
+								<option value="">--Please Select--</option>
+								<option *ngFor = "let quality of itemQuality; let i = index;" value="{{i}}">{{quality.name}}</option>
+							</select>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeQuzlityDialog()">CANCEL</button> <button type="button" class="btn btn-sm btn-success" (click)="updateActualQuantity()" [disabled]="!actualQualityForm.form.valid">OK</button></div>
+					</div>
+				</div>
+				
+				<div class="readingArea" *ngIf = "actualItemEdit != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Select Actual Jute Type</h2></div>
+						<div class="popupcontent">
+						<form #actualQualityForm ="ngForm">
+							<select class="form-control"  name="quality" [(ngModel)] = "grnReceiveModel.selectedactualitem" required>
+								<option value="">--Please Select--</option>
+								<option *ngFor = "let item of jutetypes; let i = index;" value="{{i}}">{{item.legacyItemCode+"_"+item.name}}</option>
+							</select>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeItemDialog()">CANCEL</button> <button type="button" class="btn btn-sm btn-success" (click)="updateActualItem()" [disabled]="!actualQualityForm.form.valid">OK</button></div>
+					</div>
+				</div>
+				
+				<div class="readingArea" *ngIf = "warehouseedit != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Select Warehouse</h2></div>
+						<div class="popupcontent">
+						<form #actualQualityForm ="ngForm">
+							<select class="form-control"  name="storeSelection" [(ngModel)] = "grnReceiveModel.SRStoreSelect" required>
+								<option value="">--Please Select--</option>
+								<option *ngFor = "let item of allWarehouse; let i = index;" value="{{i}}">{{item.name+" [Warehouse Id : "+item.id+"]"}}</option>
+							</select>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeWareDialog()">CANCEL</button> <button type="button" class="btn btn-sm btn-success" (click)="updateWarehouseNumber()" [disabled]="!actualQualityForm.form.valid">OK</button></div>
+					</div>
+				</div>

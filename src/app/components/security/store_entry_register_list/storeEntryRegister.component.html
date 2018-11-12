@@ -1,0 +1,63 @@
+				<h2>
+				Security > 
+				Store Entry Register
+				</h2>
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box">
+					<form role="form" #searchEntryForm="ngForm">
+					<h3>Search Entry</h3>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">From Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="fromDaterange" [options]="myDatePickerOptions" required [(ngModel)] = "storeCreateModel.fromDaterange"></my-date-picker>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">To Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="toDaterange" [options]="myDatePickerOptions" required [(ngModel)] = "storeCreateModel.toDaterange"></my-date-picker>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 text-right">
+							<button class="btn btn-primary" [disabled] = "!searchEntryForm.form.valid" (click) = "searchEntry()">Search</button>
+							<a routerLink="/security/storeentryregistercreate" title="Create New Entry" class="btn btn-success">Create New</a>
+						</div>
+					</div>
+					</form>
+				</div>
+				<p *ngIf = "AllEntryData != undefined && (AllEntryData == '' || AllEntryData.length == 0)">&nbsp;</p>
+				<div *ngIf = "AllEntryData != undefined && (AllEntryData == '' || AllEntryData.length == 0)" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						No Entry Found.
+					</div>
+				</div>
+				<div class="content-heading-box" *ngIf = "AllEntryData != undefined && AllEntryData != '' && AllEntryData.length > 0">
+					<h3>Search Result</h3>
+					<div class="row form-group">
+								<div class="col col-xs-6">
+								</div>
+								<div class="col col-xs-6 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="AllEntryData"></ag-grid-angular>
+				</div>
+				

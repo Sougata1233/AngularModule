@@ -1,0 +1,65 @@
+	<h2>Purchase</h2>
+	
+	<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+	
+				<div *ngIf = "AllPODatafiltered == undefined || AllPODatafiltered == '' || AllPODatafiltered.length == 0" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						No PO Created.
+					</div>
+				</div>
+				<div class="content-heading-box">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-group" *ngIf="userGroupData != ''">
+								<div class="col col-xs-8">
+									<a routerLink="/purchase/srpocreate" title="Create New PO" class="btn btn-primary" *ngIf = "router.url != '/jute/purchase'">Create New</a>
+									<a routerLink="/jute/mrpocreate" title="Create New PO" class="btn btn-primary" *ngIf = "router.url == '/jute/purchase'">Create New</a>
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="AllPODatafiltered"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive approval">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>PO Number</th>
+									<th>PO Type</th>
+									<th>Raised By</th>
+									<th>Raised On</th>
+									<th style="text-align:center">PO Status</th>
+								</tr>
+                            </thead>
+							<tbody *ngFor = "let PO of AllPODatafiltered; let i = index">
+                                <tr *ngIf="purchaseCreateModel.searchInput == '' || (PO.id).toString().indexOf(purchaseCreateModel.searchInput) > -1 " [routerLink]="['/purchase/list/', PO.id]">
+									<td><a [routerLink]="['/purchase/list/', PO.id]" title="View Details">{{PO.id}}</a></td>
+									<td>{{PO.type}}</td>
+									<td>{{PO.submitter}}</td>
+									<td>{{PO.createDate | date:'mediumDate'}}</td>
+									<td>
+										<span class="btn btn-block btn-info" *ngIf="PO.status == '1'">OPEN</span>
+										<span class="btn btn-block btn-primary" *ngIf="PO.status == '2'">IN-PROGRESS</span>
+										<span class="btn btn-block btn-success" *ngIf="PO.status == '3'">APPROVED</span>
+										<span class="btn btn-block btn-danger" *ngIf="PO.status == '4'">REJECTED</span>
+										<span class="btn btn-block btn-warning" *ngIf="PO.status == '5'">CLOSED</span>
+										<span class="btn btn-block btn-danger" *ngIf="PO.status == '6'">CANCELED</span>
+										<span class="btn btn-block btn-success" *ngIf="PO.status == '7'">BOOKED</span>
+									</td>
+								</tr>
+                            </tbody>
+						</table>
+					</div>-->
+				</div>
+				

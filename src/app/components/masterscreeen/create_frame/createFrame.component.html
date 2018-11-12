@@ -1,0 +1,117 @@
+
+<h2>Create Frame</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+	<div *ngIf="errorMsg" class="form-group">
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ errorMsg }}
+		</div>
+	</div>
+	<p *ngIf="successMsg">&nbsp;</p>
+	<div *ngIf="successMsg" class="form-group">
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ successMsg }}
+		</div>
+	</div>
+
+
+	<form role="form" #createFrameForm="ngForm" >
+				<div class="content-heading-box">
+					<h3>Create Frame</h3>
+					<div class="row form-field-style text-center">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>No<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+											<input type="text" name="frameNo" required pattern="[0-9 ]*" maxlength="25" [(ngModel)] = "frameCreateModel.frameNo" class="form-control">
+											
+										</div>
+									</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-left">
+										<label>Side</label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="side" pattern="[a-zA-Z ]*" maxlength="1" [(ngModel)] = "frameCreateModel.side" class="form-control">
+									</div>
+							</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Trolly No</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" name="trollyNo" pattern="[0-9 ]*" maxlength="25" [(ngModel)] = "frameCreateModel.trollyNo" class="form-control">									
+								</div>
+						</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-4 text-left">
+								<label>Type</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" name="frameType" pattern="[a-zA-Z0-9 ]*" maxlength="20" [(ngModel)] = "frameCreateModel.frameType" class="form-control">								
+							</div>
+					</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group row">
+						<div class="col-md-4 text-left">
+							<label>Spindle Qty Type</label>
+						</div>
+						<div class="col-md-8">
+							<input type="text" name="spindleQtyTyp" pattern="[a-zA-Z0-9 ]*" maxlength="20" [(ngModel)] = "frameCreateModel.spindleQtyTyp" class="form-control">								
+						</div>
+				</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group row">
+					<div class="col-md-4 text-left">
+						<label>Bobbin Weight</label>
+					</div>
+					<div class="col-md-8">
+						<input type="text" name="bobbinWeight" pattern="[a-zA-Z0-9 ]*" maxlength="25" [(ngModel)] = "frameCreateModel.bobbinWeight" class="form-control">								
+					</div>
+			</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group row">
+				<div class="col-md-4 text-left">
+					<label>Mc Num</label>
+				</div>
+				<div class="col-md-8">
+					<input type="text" name="mcNum" pattern="[a-zA-Z0-9 ]*" maxlength="80" [(ngModel)] = "frameCreateModel.mcNum" class="form-control">								
+				</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group row">
+				<div class="col-md-4 text-left">
+					<label>Frame Vvfd</label>
+				</div>
+				<div class="col-md-8">
+					<input type="text" name="frameVvfd" pattern="[a-zA-Z0-9 ]*" maxlength="3" [(ngModel)] = "frameCreateModel.frameVvfd" class="form-control">								
+				</div>
+		</div>
+	</div>
+	<div class="col-md-12 text-center">
+		<button class="btn btn-primary" [disabled] = "!createFrameForm.form.valid" (click) = "createFramemaster()"> Create</button>
+	</div>
+	</div>
+		</div>
+		<div class="content-heading-box">
+			<h3>Frame's List</h3>
+			<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="frameList"></ag-grid-angular>
+		</div>
+	</form>
+	
+				
+		

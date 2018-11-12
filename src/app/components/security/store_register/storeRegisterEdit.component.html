@@ -1,0 +1,184 @@
+
+	<p *ngIf="errorMsg">&nbsp;</p>
+	<div *ngIf="errorMsg" class="form-group">
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ errorMsg }}
+		</div>
+	</div>
+	<p *ngIf="successMsg">&nbsp;</p>
+	<div *ngIf="successMsg" class="form-group">
+		<div class="alert alert-success alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ successMsg }}
+		</div>
+	</div>
+
+<h2>
+	Store Entry Register
+</h2>
+	<form role="form">
+			<div class="content-heading-box create-section">
+					<h3>Store Entry Register</h3>
+					<div class="form-field-style text-center">
+							<div class="row">
+									<div class="col-md-6">
+											<div class="form-group row">
+												<div class="col-md-4 text-left">
+													<label>Challan No<span class="start">*</span></label>
+												</div>
+												<div class="col-md-8">
+													<input type="text" name="challanNo" pattern="[0-9 ]*" 
+													required maxlength="10" [(ngModel)] = "storeCreateModel.challanNo"  value ="{{allchallanNo.challanNo}}" class="form-control">
+												</div>
+											</div>
+									</div>
+									
+										<div class="col-md-6">
+												<div class="form-group row">
+													<div class="col-md-4 text-left">
+														<label>Challan Date<span class="start">*</span></label>
+													</div>
+													<div class="col-md-8">
+	
+														<my-date-picker name="Mydate" [options]="myDatePickerOptions" [(ngModel)] = "date"></my-date-picker>
+														
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+													<div class="form-group row">
+														
+														<div class="col-md-4 text-left">
+																<label>PO NO <span class="start">*</span></label>
+															</div>
+														<div class="col-md-8">
+																<input type="text" name="poNo" pattern="[a-zA-Z0-9 _ ]*"
+																 required maxlength="25" [disabled] = "!disable"  [(ngModel)] = "storeCreateModel.poNo" 
+																value ="{{allchallanNo.poNo}}">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+														<div class="form-group row">
+															<div class="col-md-4 text-left">
+																<label>Supplier Name <span class="start">*</span></label>
+															</div>
+														
+															 <div class="col-md-8">
+																
+																	<input type="text" name="SupplierName" pattern="[a-zA-Z0-9 _ ]*"
+																	required maxlength="25" [disabled] = "!disable" [(ngModel)] = "storeCreateModel.supplierName" 
+																   value ="{{allchallanNo.supplierName}}">
+																		
+															</div> 
+														</div>
+													</div>
+											</div>
+											<div class="row">
+													<div class="col-md-6">
+															<div class="form-group row">
+																<div class="col-md-4 text-left">
+																	<label>Supplier Code <span class="start">*</span></label>
+																</div>
+																<div class="col-md-8">
+																	
+																		<input type="text" name="SupplierCode" pattern="[a-zA-Z0-9 _ ]*"
+																		required maxlength="25" [disabled] = "!disable" [(ngModel)] = "storeCreateModel.suppCode" 
+																	   value ="{{allchallanNo.suppCode}}">
+																		
+																</div>
+																
+															</div>
+														</div>
+														<div class="col-md-6">
+																<div class="form-group row">
+																	<div class="col-md-4 text-left">
+																		<label>Vehicle No <span class="start">*</span></label>
+																	</div>
+																	<div class="col-md-8">
+																			<input type="text" name="vehicleNo" pattern="[a-zA-Z0-9 - ]*" 
+																			required maxlength="24" [(ngModel)] = "storeCreateModel.vehicleNo" 
+																			value ="{{allchallanNo.vehicleNo}}">
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																	<div class="form-group row">
+																		<div class="col-md-4 text-left">
+																			<label>Driver name<span class="start">*</span></label>
+																		</div>
+																		<div class="col-md-8">
+																				<input type="text" name="driverName"  pattern="[a-zA-Z ]*" 
+																				required maxlength="50" [(ngModel)] = "storeCreateModel.driverName"
+																				 value ="{{allchallanNo.driverName}}">
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6">
+																		<div class="form-group row">
+																			<div class="col-md-4 text-left">
+																				<label>Remarks</label>
+																			</div>
+																			<div class="col-md-8">
+																					<input type="text" name="remarks"  pattern="[a-zA-Z0-9 ]*" 
+																					maxlength="100" [(ngModel)] = "storeCreateModel.remarks" 
+																					value ="{{allchallanNo.remarks}}">
+																			</div>
+																		</div>
+																	</div>
+																
+							</div>
+							<div class="row">
+								<div *ngIf = "allchallanNo.polineitems">
+								<div class="col-sm-12 customs_table" *ngFor ="let details of polineitemsdetails;">
+																	
+									<table class="table">
+										<thead>
+											<tr>
+											
+												<th>ITEM CODE</th>
+												<th>ITEM DESC</th>
+												
+												
+												<th>QUANTITY</th>
+												<th>Received Quantity</th>
+												<th>UOM</th>
+												<th>DEPARTMENT</th>
+												
+												
+											</tr>
+										   </thead>
+										<tbody>
+												<tr *ngFor="let polineitem of details.polineitems;let i = index">
+														<td>{{polineitem.itemId}}</td>
+														<td>{{polineitem.itemDesc}}</td>
+														<td>{{polineitem.quantity}}</td>
+														<td>
+															<input type="number" class="form-control number-control" name="reqQuantity{{i}}" 
+															[(ngModel)] = "polineitem.reqQuantity" value="{{polineitem.reqQuantity}}">
+															
+														</td>
+														<td>{{polineitem.unitId}}</td>
+														<td>{{polineitem.dept}}</td>
+													
+													
+													</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							</div>
+					</div>
+										
+				</div>
+				<div class="row form-field-style createbtn text-center">
+					<button class="btn btn-primary" (click) = "update()">UPDATE</button>
+					<button class="btn btn-primary" routerLink="/Security/storeregister" (click) = "out()" >OUT</button>
+				</div>
+			
+				</form>
+			
+		
+				
+		

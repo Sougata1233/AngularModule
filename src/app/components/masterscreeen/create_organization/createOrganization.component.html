@@ -1,0 +1,129 @@
+<h2>
+	Create Organization
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+
+	<form role="form" #createOrganizationForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Organization</h3>
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<div class="col-md-3">
+									<label>Name<span class="start">*</span></label>
+								</div>
+								<div class="col-md-9">
+									<input type="text" name="orgName" class="form-control" required pattern="[a-zA-Z ]*" maxlength="20" [(ngModel)] = "organizationCreateModel.orgName">
+
+								</div>
+						</div>
+						</div>
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-3">
+											<label>Location</label>
+										</div>
+										<div class="col-md-9">
+											<!-- <input type="text" name="orgLocation" class="form-control" pattern="[a-zA-Z ]*" maxlength="20" [(ngModel)] = "organizationCreateModel.orgLocation"> -->
+											<select class="form-control" name="orgLocation" [(ngModel)] = "organizationCreateModel.locationId">
+												<option value="">--Please Select--</option>
+												<option *ngFor = "let location of locationList;" [value]="location.id">{{location.locationArea}}</option>
+											</select>
+
+										</div>
+								</div>
+						
+						</div>
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-3">
+											<label>Short Code</label>
+										</div>
+										<div class="col-md-9">
+											<input type="text" name="shortCode" class="form-control" pattern="[a-zA-Z ]*" maxlength="10" [(ngModel)] = "organizationCreateModel.shortCode">
+
+
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-3">
+										<label>Type</label>
+									</div>
+									<div class="col-md-9">
+											<select class="form-control" name="orgTyp" [(ngModel)] = "organizationCreateModel.orgTyp" (change)="onmukamChange($event.target.value)">
+													<option value="">--Please Select--</option>
+													<option value="headoffice">Head Office</option>
+													<option value="branch">Branch</option>
+												</select>
+									
+									</div>
+							</div>
+					</div>
+					<!-- <div class="col-md-6" *ngIf="enableDivTwo==false">
+						<div class="form-group row">
+								<div class="col-md-3">
+									<label>Head Office</label>
+								</div>
+								<div class="col-md-9">
+									
+									<input type="text" name="hierarchyId"  value="-1"  class="form-control" [(ngModel)] = "organizationCreateModel.hierarchyId" >
+								</div>
+						</div>
+				</div> -->
+					<div class="col-md-6" *ngIf="enableDiv">
+						<div class="form-group row">
+								<div class="col-md-3">
+									<label>Head Office</label>
+								</div>
+								<div class="col-md-9">
+										<select class="form-control" name="hierarchyId" [(ngModel)] = "organizationCreateModel.hierarchyId" >
+												<option value="">--Please Select--</option>
+												<option *ngFor = "let headorganization of headorganizationList;" [value]="headorganization.id">{{headorganization.orgName}}</option>
+											</select>
+								
+								</div>
+						</div>
+				</div>
+					
+						
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "!createOrganizationForm.form.valid" (click) = "createOrganization()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+
+				
+				<div class="content-heading-box">
+					<h3>Organization's List</h3>
+					
+					<div class="text-center">
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]=" organizationList"></ag-grid-angular>
+					</div>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

@@ -1,0 +1,118 @@
+				<h2><a routerLink="/hrms">HRMS</a> > <a routerLink="/hrms/profile">My Profile</a> > Personal Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "userdata != null && userdata != undefined">
+					<!--<h3>Added Items</h3>-->
+					<div class="row">
+						<div class="col-md-3">
+							<div class="profile-image" title="Click to Change Profile Picture">
+								<input type="file" class="file" title="Profile Picture" name="ProfImage" (change)="onUploadImageChange($event)">
+								<div class="img-hover" *ngIf ="editable" (click)="onBrowseClick($event)"></div>
+								<img class="user-prof-pics" src="assets/images/img-2.png" alt="images" *ngIf="userdata.userImg == '' || userdata.userImg == null || userdata.userImg == undefined">
+								<img class="user-prof-pics" src="{{'data:image/gif;base64,'+userdata.userImg}}" alt="images" *ngIf="userdata.userImg != '' && userdata.userImg != null && userdata.userImg != undefined">
+							</div>
+						</div>
+						<div class="col-md-9 form-field-style">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="row form-group">
+										<div class="col-md-4"><label>First Name<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="First Name" [disabled]="!editable" [(ngModel)]="userdata.firstName"></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Last Name<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="Enter name" [disabled]="!editable" [(ngModel)]="userdata.lastName"></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Address<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="Address" [disabled]="!editable" [(ngModel)]="userdata.permAddr"></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Country</label></div>
+										<div class="col-md-8">
+											<select class="form-control" [disabled]="!editable" [(ngModel)]="userdata.country" (change)="getStatebyCountry($event.target.value)">
+												<option value="">--Please Select--</option>
+												<option *ngFor="let countryeach of allCountry; let i = index" value="{{countryeach.id}}">{{countryeach.countryName}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>City</label></div>
+										<div class="col-md-8">
+											<select class="form-control" [disabled]="!editable" [(ngModel)]="userdata.city">
+												<option value="">--Please Select--</option>
+												<option *ngFor="let eachCity of allCity; let i = index" value="{{eachCity.id}}">{{eachCity.cityName}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Mobile No.<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="Mobile No." [disabled]="!editable" [(ngModel)]="userdata.mobile"></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Father's Name<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="Father's Name" [disabled]="!editable" [(ngModel)]="userdata.fatherName"></div>
+									</div>
+								
+								</div>
+								<div class="col-md-6">
+										<div class="row form-group">
+										<div class="col-md-4"><label>Passport</label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="Passport" [disabled]="!editable" [(ngModel)]="userdata.passport"></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Zip Code<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="Zip Code" [disabled]="!editable" [(ngModel)]="userdata.zip"></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>State</label></div>
+										<div class="col-md-8">
+											<select class="form-control" [disabled]="!editable" [(ngModel)]="userdata.state" (change)="getCityByState($event.target.value)">
+												<option value="">--Please Select--</option>
+												<option *ngFor="let eachState of allState; let i = index" value="{{eachState.id}}">{{eachState.stateName}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Email</label></div>
+										<div class="col-md-8"><input type="email" class="form-control" placeholder="Email" disabled [(ngModel)]="userdata.email"></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Date of birth</label></div>
+										<div class="col-md-8"><my-date-picker name="mydate" [options]="myDatePickerOptions" [disabled]="!editable" [(ngModel)]="userPersonalModel.dateOfBirth"></my-date-picker></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Spouse Name</label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="Spouse Name" [disabled]="!editable" [(ngModel)]="userdata.spouseName"></div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>ID Proof<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" class="form-control" placeholder="ID Proof" [disabled]="!editable" [(ngModel)]="userdata.idproof"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-right"><button class="btn btn-info" (click) = "editDetails()" [disabled]="editable">Edit</button> <button class="btn btn-success" (click) = "saveDetails()" [disabled]="!editable">Save</button></div>
+					</div>
+				</div>
+				
+				
+				
+				
+				<div id="page_loader_service_user" *ngIf="serviceOn"></div>

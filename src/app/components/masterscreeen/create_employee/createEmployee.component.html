@@ -1,0 +1,576 @@
+<h2>Create Employee</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+
+	<form role="form" #createemployeeForm="ngForm" >
+		<div class="content-heading-box">
+					<h3>Create Employee</h3>
+					<div class="row form-field-style">
+							<div class="col-md-6">
+									<div class="form-group row">
+											<div class="col-md-5">
+												<label>Eb No <span class="start">*</span></label>
+											</div>
+											<div class="col-md-7">
+												<input type="text" name="id" required pattern="[a-zA-Z0-9 ]*" maxlength="25" [(ngModel)] = "employeeCreateModel.id" class="form-control">
+											</div>
+									</div>
+							</div>
+							<div class="col-md-6">
+									<div class="form-group row">
+											<div class="col-md-5">
+												<label>Eb ID<span class="start">*</span></label>
+											</div>
+											<div class="col-md-7">
+												<input type="text" name="ebId" required pattern="[0-9 ]*" maxlength="25" [(ngModel)] = "employeeCreateModel.ebId" class="form-control">
+											</div>
+									</div>
+							</div>
+					<div class="col-md-6">
+							<div class="form-group row">
+								<div class="col-md-5">
+									<label>Eb Fixed Id<span class="start">*</span></label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" name="ebFixedId" required pattern="[0-9 ]*" maxlength="25" [(ngModel)] = "employeeCreateModel.ebFixedId" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+								<div class="form-group row">
+								<div class="col-md-5">
+									<label>Employee<span class="start">*</span></label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" name="empName" required pattern="[a-zA-Z0-9 ]*" maxlength="90" [(ngModel)] = "employeeCreateModel.empName" class="form-control">
+								</div>
+							</div>
+						</div>
+			
+						<div class="col-md-6">
+							
+							<div class="form-group row">
+								<div class="col-md-5">
+									<label>Department<span class="start">*</span></label>
+								</div>
+								<div class="col-md-7">
+									<select class="form-control" name="departmentName" [(ngModel)] = "employeeCreateModel.deptId" >
+										<option value="">--Please Select--</option>
+									<option *ngFor = "let department of departmentList;" [value]="department.id">{{department.departmentName}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+								
+								<div class="form-group row">
+									<div class="col-md-5">
+										<label>Occupation Id<span class="start">*</span></label>
+									</div>
+									<div class="col-md-7">
+										<input type="text" name="occuId" required pattern="[0-9 ]*" maxlength="25" [(ngModel)] = "employeeCreateModel.occuId" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+									
+									<div class="form-group row">
+										<div class="col-md-5">
+											<label>Date Of Joining<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+											<my-date-picker name="dateOfJoining" [options]="myDatePickerOptions" [(ngModel)] = "employeeCreateModel.dateOfJoining"></my-date-picker>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+										<div class="form-group row">
+											<div class="col-md-5">
+												<label>Active<span class="start">*</span></label>
+											</div>
+											<div class="col-md-7">
+												<input type="text" name="active" required pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.active" class="form-control">
+											</div>
+										</div>
+									</div>
+						</div>
+						<div class="row form-field-style">
+									<div class="col-md-6">
+											
+											<div class="form-group row">
+												<div class="col-md-5">
+													<label>Date Of Birth</label>
+												</div>
+												<div class="col-md-7">
+													<my-date-picker name="dateOfBirth" [options]="myDatePickerOptions" [(ngModel)] = "employeeCreateModel.dateOfBirth"></my-date-picker>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+												
+												<div class="form-group row">
+													<div class="col-md-5">
+														<label>Gender</label>
+													</div>
+													<div class="col-md-7">
+														<input type="text" name="sex" pattern="[a-zA-Z ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.sex" class="form-control">
+													</div>
+												</div>
+											</div>
+											</div>
+											<div class="row form-field-style">
+											<div class="col-md-6">
+													
+													<div class="form-group row">
+														<div class="col-md-5">
+															<label>Father/Husband</label>
+														</div>
+														<div class="col-md-7">
+															<input type="text" name="fatherHusbandName" pattern="[a-zA-Z0-9 ]*" maxlength="30" [(ngModel)] = "employeeCreateModel.fatherHusbandName" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+														
+														<div class="form-group row">
+															<div class="col-md-5">
+																<label>Religion</label>
+															</div>
+															<div class="col-md-7">
+																<input type="text" name="religion" pattern="[a-zA-Z0-9 ]*" maxlength="3" [(ngModel)] = "employeeCreateModel.religion" class="form-control">
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row form-field-style">
+														<div class="col-md-6">
+															<div class="form-group row">
+																	<div class="col-md-5">
+																		<label>Date Of Pf Joining</label>
+																	</div>
+																	<div class="col-md-7">
+																		<my-date-picker name="dateOfPfJoining" [options]="myDatePickerOptions" [(ngModel)] = "employeeCreateModel.dateOfPfJoining"></my-date-picker>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																	
+																	<div class="form-group row">
+																		<div class="col-md-5">
+																			<label>Date Of In Active</label>
+																		</div>
+																		<div class="col-md-7">
+																			<my-date-picker name="dateOfInactive" [options]="myDatePickerOptions" [(ngModel)] = "employeeCreateModel.dateOfInactive"></my-date-picker>
+																		</div>
+																	</div>
+																</div>
+													</div>
+													<div class="row form-field-style">
+															<div class="col-md-6">
+																	
+																	<div class="form-group row">
+																		<div class="col-md-5">
+																			<label>Cata Id</label>
+																		</div>
+																		<div class="col-md-7">
+																			<input type="text" name="cataId" pattern="[a-zA-Z0-9 ]*" maxlength="2" [(ngModel)] = "employeeCreateModel.cataId" class="form-control">
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6">
+																		
+																		<div class="form-group row">
+																			<div class="col-md-5">
+																				<label>Working Reley</label>
+																			</div>
+																			<div class="col-md-7">
+																				<input type="text" name="workingReley" pattern="[a-zA-Z0-9 ]*" maxlength="2" [(ngModel)] = "employeeCreateModel.workingReley" class="form-control">
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-md-6">
+																			
+																			<div class="form-group row">
+																				<div class="col-md-5">
+																					<label>Quarter</label>
+																				</div>
+																				<div class="col-md-7">
+																					<input type="text" name="quarter" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.quarter" class="form-control">
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-md-6">
+																				
+																				<div class="form-group row">
+																					<div class="col-md-5">
+																						<label>Quarter No</label>
+																					</div>
+																					<div class="col-md-7">
+																						<input type="text" name="quarterNo" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.quarterNo" class="form-control">
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col-md-6">
+																					
+																					<div class="form-group row">
+																						<div class="col-md-5">
+																							<label>Esi Member</label>
+																						</div>
+																						<div class="col-md-7">
+																							<input type="text" name="esiMember" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.esiMember" class="form-control">
+																						</div>
+																					</div>
+																			</div>
+																			<div class="col-md-6">
+																					
+																					<div class="form-group row">
+																						<div class="col-md-5">
+																							<label>Pf Member</label>
+																						</div>
+																						<div class="col-md-7">
+																							<input type="text" name="pfMember" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.pfMember" class="form-control">
+																						</div>
+																					</div>
+																				</div>
+																				<div class="col-md-6">
+																						
+																						<div class="form-group row">
+																							<div class="col-md-5">
+																								<label>Fpf Member</label>
+																							</div>
+																							<div class="col-md-7">
+																								<input type="text" name="fpfMember" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.fpfMember" class="form-control">
+																							</div>
+																						</div>
+																					</div>
+																					<div class="col-md-6">
+																							
+																							<div class="form-group row">
+																								<div class="col-md-5">
+																									<label>Esi No</label>
+																								</div>
+																								<div class="col-md-7">
+																									<input type="text" name="esiNo"pattern="[a-zA-Z0-9 ]*" maxlength="10" [(ngModel)] = "employeeCreateModel.esiNo" class="form-control">
+																								</div>
+																							</div>
+																						</div>
+																						<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Pf No</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="pfNo" pattern="[a-zA-Z0-9 ]*" maxlength="5" [(ngModel)] = "employeeCreateModel.pfNo" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																	
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Fpf No</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="fpffNo" pattern="[a-zA-Z0-9 ]*" maxlength="4" [(ngModel)] = "employeeCreateModel.fpffNo" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Education</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="education" pattern="[a-zA-Z0-9 ]*" maxlength="4" [(ngModel)] = "employeeCreateModel.education" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Education Read</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="educationRead" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.educationRead" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Education Write</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="educationWrite" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.educationWrite" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Prev Employment</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="prevEmployment" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.prevEmployment" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Identical Marks</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="identicalMarks" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.identicalMarks" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Permanent Add1</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="permanentAdd1" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.permanentAdd1" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Permanent Add2</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="permanentAdd2" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.permanentAdd2" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Permanent Add3</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="permanentAdd3" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.permanentAdd3" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Permanent Add4</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="permanentAdd4" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.permanentAdd4" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Local Add1</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="localAdd1" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.localAdd1" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Local Add2</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="localAdd2" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.localAdd2" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Local Add3</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="localAdd3" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.localAdd3" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Local Add4</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="localAdd4" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.localAdd4" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Phone No</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="phoneNo" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.phoneNo" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Mobile No</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="mobileNo" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.mobileNo" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Off Day</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="offday" pattern="[a-zA-Z0-9 ]*" maxlength="9" [(ngModel)] = "employeeCreateModel.offday" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Photo Dir</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="photoDir" pattern="[a-zA-Z0-9 ]*" maxlength="30" [(ngModel)] = "employeeCreateModel.photoDir" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Updated</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="updated" pattern="[a-zA-Z0-9 ]*" maxlength="9" [(ngModel)] = "employeeCreateModel.updated" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>User Id</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="userId" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.userId" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Occu Code</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="occuCode" pattern="[a-zA-Z0-9 ]*" maxlength="6" [(ngModel)] = "employeeCreateModel.occuCode" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Wrk Type</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="wrkType" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.wrkType" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Photofile</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="photofile" pattern="[a-zA-Z0-9 ]*" maxlength="6" [(ngModel)] = "employeeCreateModel.photofile" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Chk Old</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="chkOld" pattern="[a-zA-Z0-9 ]*" maxlength="1" [(ngModel)] = "employeeCreateModel.chkOld" class="form-control">
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-6">
+																								
+																								<div class="form-group row">
+																									<div class="col-md-5">
+																										<label>Old Eb</label>
+																									</div>
+																									<div class="col-md-7">
+																										<input type="text" name="oldEb" pattern="[a-zA-Z0-9 ]*" maxlength="5" [(ngModel)] = "employeeCreateModel.oldEb" class="form-control">
+																									</div>
+																								</div>
+																							</div>	
+									<div class="col-md-12 text-center">
+											<button class="btn btn-primary" [disabled] = "employeeCreateModel.id == '' || employeeCreateModel.ebId == '' || employeeCreateModel.ebFixedId == '' ||  employeeCreateModel.empName == '' || employeeCreateModel.deptId == '' || employeeCreateModel.occuId == '' || employeeCreateModel.dateOfJoining == '' || employeeCreateModel.active == '' || !createemployeeForm.form.valid" (click) = "createEmployeemaster()"> Create</button>
+									</div>
+						
+								
+			</div>
+		</div>
+				<div class="content-heading-box">
+					<h3>Employee's List</h3>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="employeeList"></ag-grid-angular>
+				
+				</div>
+		
+			
+				</form>
+				
+				
+		

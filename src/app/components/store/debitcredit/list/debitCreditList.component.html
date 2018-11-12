@@ -1,0 +1,72 @@
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				Debit / Credit Note
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<!--<div *ngIf = "AllPOData == undefined || AllPOData == '' || AllPOData.length == 0" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						No Indent Created.
+					</div>
+				</div>-->
+				<div class="content-heading-box">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-group">
+								<div class="col col-xs-6">
+									<a routerLink="/store/debitcreditCreate" title="Create New Debit/Credit Note" class="btn btn-primary">Create New</a>
+								</div>
+								<div class="col col-xs-6 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="AllPOData"></ag-grid-angular>
+					
+					<!--<div class="datagrid table-responsive approval">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>DR/CR Type</th>
+									<th>DR/CR Number</th>
+									<th>SR Number</th>
+									<th>PO Number</th>
+									<th>Supplier Code</th>
+									<th>DR/CR Quantity</th>
+									<th>DR/CR Value</th>
+									<th>DR/CR Date</th>
+									<th style="text-align:center">DR/CR Status</th>
+								</tr>
+                            </thead>
+							<tbody >
+                                <tr [routerLink]="['/store/debitcredit/', '1234']">
+									<td>DR</td>
+									<td><a [routerLink]="['/store/debitcredit/', '1234']" title="View Details">1245</a></td>
+									<td>14587</td>
+									<td>221</td>
+									<td>S0098</td>
+									<td>20 KG</td>
+									<td>569</td>
+									<td>23/12/2016</td>
+									<td>
+										
+									</td>
+								</tr>
+                            </tbody>
+						</table>
+					</div>-->
+				</div>
+				

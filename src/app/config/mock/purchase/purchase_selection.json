@@ -1,0 +1,172 @@
+{
+  "poType" : [{
+      "id" : "PO1234567",
+      "name" : "Store Purchase Order"
+  },
+  {
+      "id" : "PO23456789",
+      "name" : "Raw Material Purchase Order"
+  }],
+  "suppliers" : [{
+		"id": "S190",
+        "name": "Shri Krishna Industries",
+        "address1": null,
+        "address2": null,
+        "address3": null,
+        "type": null,
+        "phone1": null,
+        "phone2": null
+  },
+  {
+      "id": "S173",
+        "name": "Shankar Chowdhury",
+        "address1": null,
+        "address2": null,
+        "address3": null,
+        "type": null,
+        "phone1": null,
+        "phone2": null
+  }],
+  "item_group": [{
+			"id": "G0000001",
+			"Name": "Demo Item Group 1",
+			"items": [{
+					"id": "I000001",
+					"Name": "Demo Item Description 1",
+					"indent": [{
+					  "id" : "IND00012478",
+					  "unitPrice": "200",
+					  "GST" : 5
+					},
+					{
+					  "id" : "IND00012479",
+					  "unitPrice": "300",
+					  "GST" : 12
+					}]
+				},
+				{
+					"id": "I000002",
+					"Name": "Demo Item Description 2",
+					"indent": [{
+					  "id" : "IND00012478",
+					  "unitPrice": "400",
+					  "GST" : 5
+					},
+					{
+					  "id" : "IND00012480",
+					  "unitPrice": "500",
+					  "GST" : 28
+					},
+					{
+					  "id" : "IND00012482",
+					  "unitPrice": "600",
+					  "GST" : 12
+					}]
+				}
+			]
+		},
+		{
+			"id": "G0000002",
+			"Name": "Demo Item Group 2",
+			"items": [{
+					"id": "I000011",
+					"Name": "Demo Item Description 1",
+					"indent": [{
+					  "id" : "IND00012478",
+					  "unitPrice": "300",
+					  "GST" : 12
+					},
+					{
+					  "id" : "IND00012480",
+					  "unitPrice": "800",
+					  "GST" : 5
+					},
+					{
+					  "id" : "IND00012482",
+					  "unitPrice": "600",
+					  "GST" : 28
+					}]
+				},
+				{
+					"id": "I000012",
+					"Name": "Demo Item Description 2",
+					"indent": [{
+					  "id" : "IND00012478",
+					  "unitPrice": "150",
+					  "GST" : 5
+					},
+					{
+					  "id" : "IND00012480",
+					  "unitPrice": "200",
+					  "GST" : 28
+					}]
+				}
+			]
+		}
+	],
+	"department": [{
+			"id": "D000001",
+			"name": "Department 1"
+		},
+		{
+			"id": "D000002",
+			"name": "Department 2"
+		},
+		{
+			"id": "D000003",
+			"name": "Department 3"
+		},
+		{
+			"id": "D000004",
+			"name": "Department 4"
+		}
+	],
+	"units": [{
+			"id": "U000001",
+			"name": "Kg"
+		},
+		{
+			"id": "U000002",
+			"name": "Grm"
+		},
+		{
+			"id": "U000003",
+			"name": "Ltr"
+		},
+		{
+			"id": "U000004",
+			"name": "Kltr"
+		}
+	],
+	"quality": [{
+			"id": "QL123456",
+			"name": "D/4"
+		},
+		{
+			"id": "QL678945",
+			"name": "SN/4"
+		},
+		{
+			"id": "QL678947",
+			"name": "D/5"
+		}
+	],
+	"marka": [{
+			"id": "MK123456",
+			"name": "Green"
+		},
+		{
+			"id": "MK678945",
+			"name": "Orange"
+		}
+	],
+	"mukam": [{
+			"id": "MR123456",
+			"name": "Chandan Nagar"
+		},
+		{
+			"id": "MR678945",
+			"name": "Purnia"
+		}
+	]
+}

@@ -1,0 +1,118 @@
+				
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				<a [routerLink]="['/store/srworklist']" title='MR Worklist'>SR Worklist</a>
+				>
+				SR Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div *ngIf = "GRNDtllData == 'notauth'" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						Sorry. You are not authorized to view this page.
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != '' && GRNDtllData != 'notauth'">
+					<h3>SR Header</h3>
+					<div class="row form-field-style">
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>SR Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.goodReceiptDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>PO No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{prefix+"/PO/"+GRNDtllData.storeGoodReceiveHeader.poId}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Store No.<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.storeNo}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Challan No<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.chalanNo}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>PO Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.poDate | date:'mediumDate'}}</span></div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.chalanDate | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label>Supplier<span class="start">*</span></label></div>
+								<div class="col-md-8"><span class="form-control">{{GRNDtllData.storeGoodReceiveHeader.supplierId}}</span></div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != '' && GRNDtllData.storeGrnItemList.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="GRNDtllData.storeGrnItemList"></ag-grid-angular>
+					
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-danger" (click) = "statusChange('4')">Reject</button>
+							<button class="btn btn-success" (click) = "statusChange(stat)">Approve</button>
+						</div>
+					</div>
+				
+				</div>
+				
+				
+				
+				<div class="overlayer" *ngIf="expOpn">
+					<div class="pops">
+						<div class="content-heading-box">
+							<h3>Expiry Date</h3>
+							<my-date-picker name="mydate" [options]="expiryDateOptions" required [(ngModel)] = "grnReceiveModel.exdate"></my-date-picker>
+							<button type="button" class="btn btn-info btn-sm" (click)="setExpVal(expOpnId)">OK</button>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="readingArea" *ngIf = "storeedit != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Select Store</h2></div>
+						<div class="popupcontent">
+						<form #actualQualityForm ="ngForm">
+							<select class="form-control"  name="storeSelection" [(ngModel)] = "grnReceiveModel.SRStoreSelect" required>
+								<option value="">--Please Select--</option>
+								<option *ngFor = "let item of allStores; let i = index;" value="{{i}}">{{item.storeName+" [Store Id : "+item.storeId+"]"}}</option>
+							</select>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeStoreDialog()">CANCEL</button> <button type="button" class="btn btn-sm btn-success" (click)="updateStoreNumber()" [disabled]="!actualQualityForm.form.valid">OK</button></div>
+					</div>
+				</div>

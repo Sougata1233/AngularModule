@@ -1,0 +1,90 @@
+<h2>
+	Create Branch
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+	<form role="form" #createBranchForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Branch</h3>
+					<div class="row form-field-style">
+						
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-5">
+										<label>Bank<span class="start">*</span></label>
+									</div>
+									<div class="col-md-7">
+										<select class="form-control" name="bankId" [(ngModel)] = "branchCreateModel.bankId">
+											<option value="">--Please Select--</option>
+											<option *ngFor = "let bank of bankList;" [value]="bank.id">{{bank.bname}}</option>
+											   
+										</select>
+									</div>
+
+								</div>
+						</div>
+								<div class="col-md-6">
+									<div class="form-group row">
+											<div class="col-md-5">
+												<label>Name<span class="start">*</span></label>
+											</div>
+											<div class="col-md-7">
+												<input type="text" name="brname" required pattern="[a-zA-Z ]*"  maxlength="25" [(ngModel)] = "branchCreateModel.brname" class="form-control">
+											</div>
+										</div>
+								</div>
+							<div class="col-md-6">
+									<div class="form-group row">
+											<div class="col-md-5">
+												<label>Address<span class="start">*</span></label>
+											</div>
+											<div class="col-md-7">
+												<input type="text" name="add" required pattern="[a-zA-Z0-9 /@.,-]*"  maxlength="50" [(ngModel)] = "branchCreateModel.add" class="form-control">
+											</div>
+										</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-5">
+											<label>IFSC<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+											<input type="text" name="ifsc" required pattern="[a-zA-Z0-9 ]*"  maxlength="25" [(ngModel)] = "branchCreateModel.ifsc" class="form-control">
+										</div>
+									</div>
+						</div>
+						
+								
+									<div class="col-md-12 text-center">
+											<button class="btn btn-primary" [disabled] = "!createBranchForm.form.valid" (click) = "createBranchmaster()"> Create</button>
+									</div>
+									
+								</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Branch's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="branchList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

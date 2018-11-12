@@ -1,0 +1,38 @@
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				Store Issue
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<div *ngIf = "allMrIssueList == undefined || allMrIssueList == '' || allMrIssueList.length == 0" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						No Issue Created.
+					</div>
+				</div>
+				<div class="content-heading-box">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-group">
+								<div class="col col-xs-6">
+									<a routerLink="/store/srissuecreate" title="Create New Issue" class="btn btn-primary">Create New</a>
+								</div>
+								<div class="col col-xs-6 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+					</div>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="allMrIssueList"></ag-grid-angular>
+					</div>
+				

@@ -1,0 +1,107 @@
+<h2>
+Create Holiday
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+	<form role="form" #createHolidayForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Holiday</h3>
+					<div class="row form-field-style">
+							<div class="col-md-6">
+									<div class="form-group row">
+										<div class="col-md-5">
+											<label>Area<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+												<select class="form-control" name="area" [(ngModel)] = "holidayCreateModel.locationId">
+														<option value="">--Please Select--</option>
+															
+												<option *ngFor = "let location of locationList;" [value]="location.id">{{location.locationArea}}</option>
+														   
+												</select>
+										</div>
+									</div>
+									
+								</div>
+							
+									<div class="col-md-6">
+											
+											<div class="form-group row">
+												<div class="col-md-5">
+													<label>Type<span class="start">*</span></label>
+												</div>
+												<div class="col-md-7">
+													<input type="text" name="holidayTyp" required pattern="[a-zA-Z ]*" maxlength="25" class="form-control" [(ngModel)] = "holidayCreateModel.holidayTyp" class="form-control" >	
+												</div>
+											</div>
+										</div>
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-5">
+											<label>Year<span class="start">*</span></label>
+										</div>
+										<div class="col-md-7">
+											<input type="text" name="holidayYr" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" maxlength="25" class="form-control" [(ngModel)] = "holidayCreateModel.holidayYr" class="form-control" >
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-5">
+										<label>Date<span class="start">*</span></label>
+									</div>
+									<div class="col-md-7">
+										
+										<my-date-picker name="date" [options]="myDatePickerOptions" required [(ngModel)] = "date"></my-date-picker>
+									</div>
+							</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+							<div class="col-md-5">
+								<label>Description<span class="start">*</span></label>
+							</div>
+							<div class="col-md-7">
+								<textarea type="text" name="description" required pattern="[a-zA-Z][a-zA-Z ]+" maxlength="50" class="form-control" [(ngModel)] = "holidayCreateModel.description"></textarea>
+								
+							</div>
+						</div>
+						
+					</div>
+			
+				
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" (click) = "createHolidaymaster()"> Create</button>
+						</div>
+						
+					</div>
+		
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Location's List</h3>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="holidayList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

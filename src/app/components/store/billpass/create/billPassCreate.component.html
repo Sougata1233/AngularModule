@@ -1,0 +1,109 @@
+				
+				<h2>
+				<a [routerLink]="['/store']" title='Store' >Store</a>
+				>
+				<a [routerLink]="['/store/billpass']" title='Debit / Credit Note ' >Bill Pass </a>
+				>
+				Create</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<form role="form" #supplierDetailsForm ="ngForm">
+				<div class="content-heading-box printableContent">
+					<!--<h3>Added Items</h3>-->
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group row">
+								<div class="col-md-4"><label for="drcrdate">Bill Date</label></div>
+								<div class="col-md-8">
+									<my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "billPassModel.createDate"></my-date-picker>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="supcd">Supplier Code</label></div>
+								<div class="col-md-8">
+									<span class="form-control" *ngIf="billPassModel.GRNType == 'SR'">{{GRNDtllData.storeGoodReceiveHeader.supplierId}}</span>
+									<span class="form-control" *ngIf="billPassModel.GRNType == 'MR'">{{GRNDtllData.materialGoodReceiveHeader.supplierId}}</span>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="supcd">Bill No.</label></div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="billpassno" required [(ngModel)] = "billPassModel.billpassno">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group row">
+								<div class="col-md-4"><label for="grntype">GRN Type</label><span class="start">*</span></div>
+								<div class="col-md-8">
+									<select class="form-control" name="grntype" [(ngModel)] = "billPassModel.GRNType" required>
+										<option value="">--Please Select--</option>
+										<option value="MR">MR</option>
+										<option value="SR">SR</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="drcrtype">DR/CR Type</label><span class="start">*</span></div>
+								<div class="col-md-8">
+									<select class="form-control" name="drcrtype" [(ngModel)] = "billPassModel.DRCRType" required>
+										<option value="">--Please Select--</option>
+										<option value="DR">Debit</option>
+										<option value="DR">Credit</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="supcd">SR/MR Value</label></div>
+								<div class="col-md-8">
+									<span class="form-control">{{totSRMRvalue}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group row" *ngIf="billPassModel.GRNType != ''">
+								<div class="col-md-4"><label for="srno">GRN No.</label><span class="start">*</span></div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="srno" [(ngModel)] = "billPassModel.SRNo" required (blur) = "getGRNDetails($event, billPassModel.GRNType)">
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="pono">PO No.</label></div>
+								<div class="col-md-8">
+									<span class="form-control" *ngIf="billPassModel.GRNType == 'SR'">{{prefix+"/PO/"+GRNDtllData.storeGoodReceiveHeader.poId}}</span>
+									<span class="form-control" *ngIf="billPassModel.GRNType == 'MR'">{{prefix+"/PO/"+GRNDtllData.materialGoodReceiveHeader.poId}}</span>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="GRNDtllData && GRNDtllData != 'undefined' && GRNDtllData != ''">
+								<div class="col-md-4"><label for="pono">Bill Amount</label></div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="pono" required [(ngModel)] = "billPassModel.billammount" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$">
+								</div>
+							</div>
+							
+						</div>
+					</div>	
+				</div>
+				
+				<p>&nbsp;</p>
+					<div class="row nonprintableContent">
+						<div class="col-md-12 text-center">
+							<button  class="btn btn-primary" title="Create" (click) = "createBillpass()" [disabled] = "!supplierDetailsForm.form.valid">Create</button>
+						</div>
+					</div>
+				</form>
+				

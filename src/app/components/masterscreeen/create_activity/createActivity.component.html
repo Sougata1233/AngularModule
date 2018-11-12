@@ -1,0 +1,92 @@
+<h2>
+	<!-- <a href="/payroll" ng-reflect-router-link="/payroll" routerlink="/payroll">Payroll</a>
+	> Create Parameter -->
+	Create Activity
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+	<form role="form" #createActivityForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Activity</h3>
+					<div class="row form-field-style text-center">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>Name<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+											<input type="text" name="activityName" required pattern="[a-zA-Z][a-zA-Z ]+" maxlength="25" [(ngModel)] = "activityCreateModel.activityName" class="form-control">
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-left">
+										<label>Status<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="activityStatus" [(ngModel)] = "activityCreateModel.activityStatus" class="form-control">
+									</div>
+							</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>Start Date<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+									
+										<my-date-picker name="activityStartDate" [options]="myDatePickerOptions" required [(ngModel)] = "date"></my-date-picker>
+								</div>
+						</div>
+				</div>
+				<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>End Date<span class="start">*</span></label>
+								</div>
+								<div class="col-md-8">
+										
+										<my-date-picker name="activityEndDate" [options]="myDatePickerOptions" required [(ngModel)] = "dateo"></my-date-picker>
+		
+								</div>
+						</div>
+				</div>
+			
+
+					
+					
+					
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "activityCreateModel.activityName == '' || activityCreateModel.activityStatus == ''|| !createActivityForm.form.valid" (click) = "createActivitymaster()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Activity's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="activityList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

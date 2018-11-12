@@ -1,0 +1,250 @@
+				<h2>
+				<a [routerLink]="['/jute']" title='Reports'>Reports</a>
+				>
+				<a [routerLink]="['/reports/jute']" title='Jute Reports'>Jute Reports</a>
+				>
+				Receipt Register
+				</h2>
+				<p>&nbsp;</p>
+				
+				<div class="content-heading-box nonprintableContent">
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Select Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "reportModel.reportdate"></my-date-picker>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<button class="btn btn-primary" [disabled] = "!reportModel.reportdate" (click) = "searchReport()">Get Report</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p>&nbsp;</p>
+				<div class="form-group nonprintableContent" *ngIf="reportdata ==''">
+					<div class="alert alert-info alert-dismissable">
+						No report to show.
+					</div>
+				</div>
+				<div class="row form-group printableContent" *ngIf="reportdata !=''">
+					<table class="print-table-show">
+							<tr>
+								<td>
+									{{company}}
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td style="width:40%">
+									Receipt Register For The   :
+								</td>
+								<td style="width:40%">
+									&nbsp;
+								</td>
+								<td>
+									{{reportModel.reportdate.formatted}}
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td>
+									Challan Date
+								</td>
+								<td>
+									Challan Details
+								</td>
+								<td>
+									Packing Type
+								</td>
+								<td>
+									Quality
+								</td>
+								<td>
+									Bales
+								</td>
+								<td>
+									Weight
+								</td>
+								<td>
+									Rate
+								</td>
+								<td>
+									Actual Rate
+								</td>
+								<td>
+									Claim for Quality
+								</td>
+							</tr>
+							<tbody *ngFor = "let receiptgroup of reportdata">
+								<tr>
+									<td *ngIf="receiptgroup.vehicleNo">
+										{{receiptgroup.challanDate}}
+									</td>
+									<td>
+										{{receiptgroup.vehicleNo}}
+									</td>
+									<td>
+										&nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+								</tr>
+								<tr *ngIf="receiptgroup.brokerAddress">
+									<td>
+										&nbsp;
+									</td>
+									<td>
+										{{receiptgroup.brokerAddress}}
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+								</tr>
+								<tr *ngIf="receiptgroup.inDate">
+									<td>
+										&nbsp;
+									</td>
+									<td>
+										{{receiptgroup.inDate}}
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+									<td>
+										 &nbsp;
+									</td>
+								</tr>
+								<tr *ngFor = "let eachlineitem of receiptgroup.juteEntryDtls">
+									<td>
+										
+									</td>
+									<td>
+										
+									</td>
+									<td>
+										 {{eachlineitem.packingType}}
+									</td>
+									<td>
+										 {{eachlineitem.no}}
+									</td>
+									<td>
+										 {{eachlineitem.baleQuantity}}
+									</td>
+									<td>
+										 {{(eachlineitem.packingType=='LOOSE')?eachlineitem.looseQuantity:eachlineitem.actualWeight}}
+									</td>
+									<td>
+										 {{eachlineitem.rate}}
+									</td>
+									<td>
+										 {{eachlineitem.rate - eachlineitem.claimsQuality}}
+									</td>
+									<td>
+										 {{eachlineitem.claimsQuality}}
+									</td>
+								</tr>
+								<tr>
+									<td colspan="9">&nbsp;</td>
+								</tr>
+							</tbody>
+							<tr>
+								<td colspan="9">&nbsp;</td>
+							</tr>
+							<tr>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									
+								</td>
+								<td>
+									Total
+								</td>
+								<td>
+									{{totalbale}}
+								</td>
+								<td>
+									{{totalweight}}
+								</td>
+								<td>
+									{{totrate}}
+								</td>
+								<td>
+									{{totActualrate}}
+								</td>
+								<td>
+									{{totalcfq}}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="9">&nbsp;</td>
+							</tr>
+						</table>
+				</div>
+				<p>&nbsp;</p>
+					<div class="row nonprintableContent" *ngIf="reportdata !=''">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" title="Print Report" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+				
+				
+				

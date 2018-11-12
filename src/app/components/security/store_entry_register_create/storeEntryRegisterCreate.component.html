@@ -1,0 +1,158 @@
+				<h2>
+				<a routerLink="/security/storeentryregister" title="Security">Security</a> > 
+				<a routerLink="/security/storeentryregister" title="Security">Store Entry Register</a> >
+				Create New
+				</h2>
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				<form role="form" #createEntryForm="ngForm">
+				<div class="content-heading-box">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Create Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="createDate" [options]="myDatePickerOptions" required [(ngModel)] = "storeCreateModel.createDate"></my-date-picker>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="challanNo" required maxlength="10" [(ngModel)] = "storeCreateModel.challanNo" class="form-control" pattern="^[0-9]*$">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Vehicle No.<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="vehicleNo" required [(ngModel)] = "storeCreateModel.vehicleNo" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="myOptions.length > 0">
+								<div class="col-md-4"><label for="makerSelection">Supplier <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.supplier" placeholder="Please Select"
+													 [multiple]="false" [(options)]="myOptions" name="supplierSelect" (selected)="generatePO($event)" (deselected)="generatePO($event)" required></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="myPOOptions.length > 0 && storeCreateModel.chaalantype == 'PO'">
+								<div class="col-md-4"><label for="makerSelection">Select PO <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="true" [(ngModel)]="storeCreateModel.po" placeholder="Please Select"
+													 [multiple]="true" [(options)]="myPOOptions" name="poselect" 
+													 (selected)="loadPODetails($event)" (deselected)="loadPODetails($event)" required></ng-select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Create Time<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<input [owlDateTimeTrigger]="time" [owlDateTime]="time" class="form-control custom-height" required>
+									<owl-date-time [pickerType]="'timer'" #time></owl-date-time>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="challanDate" [options]="myDatePickerOptions" required [(ngModel)] = "storeCreateModel.challandate"></my-date-picker>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Driver Name <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" name="driverName" required maxlength="50" [(ngModel)] = "storeCreateModel.driverName" class="form-control">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Challan Type <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<select name="challantype" [(ngModel)] = "storeCreateModel.chaalantype" class="form-control" required (change)="refreshVal($event)">
+									<option value="">--Please Select--</option>
+									<option value="WPO">Without PO</option>
+									<option value="PO">With PO</option>
+								</select>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Remarks</label></div>
+								<div class="col-md-8">
+								<textarea name="challanremarks" [(ngModel)] = "storeCreateModel.remarks" class="form-control"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</form>
+				<form role="form" #addNewItemform="ngForm">
+				<div class="content-heading-box" *ngIf="storeCreateModel.chaalantype == 'WPO'">
+					<h3>Add Line Item</h3>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="row form-group" *ngIf="deptOptions.length > 0">
+								<div class="col-md-4"><label for="makerSelection">Department <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.selectedDept" placeholder="Please Select"
+													 [multiple]="false" [(options)]="deptOptions" name="supplierSelect" (selected)="loadItemgroup($event)" (deselected)="loadItemgroup($event)" required></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="itemOtions.length > 0">
+								<div class="col-md-4"><label for="makerSelection">Item Description <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.selectrdItem" placeholder="Please Select"
+													 [multiple]="false" [(options)]="itemOtions" name="itemDesc" required></ng-select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group" *ngIf="itemgrpoptions.length > 0 && storeCreateModel.selectedDept != ''">
+								<div class="col-md-4"><label for="makerSelection">Item Group <span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.selectrdGroup" placeholder="Please Select"
+													 [multiple]="false" [(options)]="itemgrpoptions" name="itemGrp" (selected)="loadItem($event)" (deselected)="loadItem($event)" required></ng-select>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="allitemData[storeCreateModel.selectrdItem] != undefined">
+								<div class="col-md-4"><label for="makerSelection">Quantity <span class="start">*</span></label></div>
+								<div class="col-md-4">
+								<input type="text" name="reqquan" required [(ngModel)] = "storeCreateModel.reqquan" class="form-control" pattern="^[0-9]*$">
+								</div>
+								<div class="col-md-4" *ngIf="allitemData[storeCreateModel.selectrdItem] != undefined">
+								<span class="form-control">{{allitemData[storeCreateModel.selectrdItem].quantityUnit.name}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+					<div class="col-md-12 text-center">
+						<button class="btn btn-primary" [disabled] = "!addNewItemform.form.valid" (click)="addItemToEntry()">Add Item</button>
+					</div>
+				</div>
+				</div>
+				</form>
+				<div class="content-heading-box" *ngIf="allPOLineItems.length > 0">
+					<h3>Line Items</h3>
+					<div class="row form-group" *ngFor ="let eachPOData of allPOLineItems; let i = index">
+						<p *ngIf="eachPOData.polineitems[0].poId != undefined"><strong>PO No. : {{eachPOData.polineitems[0].poId}}</strong></p>
+						<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="eachPOData.polineitems"></ag-grid-angular>
+					</div>
+				</div>
+				<p>&nbsp;</p>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<button class="btn btn-primary" [disabled] = "allPOLineItems.length == 0 || !createEntryForm.form.valid" (click)="createStoreEntry()">In</button>
+					</div>
+				</div>
+				
+				

@@ -1,0 +1,66 @@
+<h2>
+	<!-- <a href="/payroll" ng-reflect-router-link="/payroll" routerlink="/payroll">Payroll</a>
+	> Create Parameter -->
+	Create Menu
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+
+	<form role="form" #createMenuForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Menu</h3>
+					<div class="row form-field-style text-center">
+						<div class="col-md-6">
+								<div class="form-group row">
+										<div class="col-md-4 text-right">
+											<label>Menu<span class="start">*</span></label>
+										</div>
+										<div class="col-md-8">
+											<input type="text" name="menu" [(ngModel)] = "menuCreateModel.menu" required pattern="[a-zA-Z][a-zA-Z ]+" maxlength="25" class="form-control">
+										</div>
+								</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row">
+									<div class="col-md-4 text-right">
+										<label>Icon Name<span class="start">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input type="text" name="menuIconName" [(ngModel)] = "menuCreateModel.menuIconName" class="form-control">
+									</div>
+							</div>
+					</div>
+				
+					<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "menuCreateModel.menu == '' || menuCreateModel.menuIconName == '' || !createMenuForm.form.valid" (click) = "createMenumaster()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Menu's List</h3>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="menuList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

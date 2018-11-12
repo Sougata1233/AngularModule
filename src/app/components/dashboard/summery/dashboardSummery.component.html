@@ -1,0 +1,66 @@
+<div class="row" *ngIf="serviceLoaded">
+
+	<div class="col col-md-12">
+		
+		 <canvas baseChart width="400" height="100"
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+				<h2 class="text-center">Store and Material Status ({{thisYear}})</h2>
+	</div>
+</div>
+<p>&nbsp;</p>
+<div class="row" *ngIf="serviceLoaded">
+
+	<div class="col col-md-6">
+		<canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+			<h2 class="text-center">Indent Status ({{thisYear}})</h2>
+	</div>
+	<div class="col col-md-6">
+		<canvas baseChart
+            [datasets]="barChartDataPO"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+			<h2 class="text-center">PO Status ({{thisYear}})</h2>
+	</div>
+
+</div>
+
+<p>&nbsp;</p>
+<div class="row" *ngIf="serviceLoaded">
+
+	<div class="col col-md-6">
+		  <canvas baseChart
+              [data]="doughnutChartDataSR"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+			<h2 class="text-center">SR Status ({{thisYear}})</h2>
+	</div>
+	<div class="col col-md-6">
+		 <canvas baseChart
+              [data]="doughnutChartDataMR"
+              [labels]="doughnutChartLabelsMR"
+              [chartType]="doughnutChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+			<h2 class="text-center">MR Status ({{thisYear}})</h2>
+	</div>
+</div>

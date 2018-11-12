@@ -1,0 +1,82 @@
+				<h2><a routerLink="/hrms">HRMS</a> > <a routerLink="/hrms/profile">My Profile</a> > Bank Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				<form role="form" #addbankdetails ="ngForm">
+				<div class="content-heading-box">
+					<!--<h3>Added Items</h3>-->
+					<div class="row">
+						<div class="col-md-12 form-field-style">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="row form-group">
+										<div class="col-md-4"><label>Bank Name<span class="start">*</span></label></div>
+										<div class="col-md-8">
+											<select class="form-control" name="bank" (change)="getAllBranch($event)" [(ngModel)]="userBankModel.bank" required [disabled]="!isNew && !editable">
+												<option value="">--Please Select--</option>
+												<option *ngFor = "let bank of allbankdata; let i = index;" value="{{i}}" >{{bank.bank.bankName}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Account Type{{userBankModel.branch}}<span class="start">*</span></label></div>
+										<div class="col-md-8">
+											<select class="form-control" [(ngModel)]="userBankModel.accountType" required name="actype" [disabled]="!isNew && !editable">
+												<option value="">--Please Select--</option>
+												<option value="CURRENT" >Current</option>
+												<option value="SAVINGS" >Savings</option>
+											</select>
+										</div>
+									</div>
+									<div class="row form-group" *ngIf="allBranchData[userBankModel.branch] != undefined">
+										<div class="col-md-4"><label>IFSC Code<span class="start">*</span></label></div>
+										<div class="col-md-8"><span class="form-control">{{allBranchData[userBankModel.branch].ifscCode}}</span>
+										</div>
+									</div>
+									
+								</div>
+								<div class="col-md-6">
+									<div class="row form-group">
+										<div class="col-md-4"><label>Branch<span class="start">*</span></label></div>
+										<div class="col-md-8">
+											<select class="form-control" [(ngModel)]="userBankModel.branch" required name="branch" [disabled]="!isNew && !editable">
+												<option value="">--Please Select--</option>
+												<option *ngFor = "let branch of allBranchData; let i = index;" value="{{i}}" >{{branch.branchName}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-4"><label>Account Number<span class="start">*</span></label></div>
+										<div class="col-md-8"><input type="text" [(ngModel)]="userBankModel.accountNum" name="acNo" class="form-control" placeholder="Account Number" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" [disabled]="!isNew && !editable"></div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-right">
+							<button class="btn btn-info" (click) = "editDetails()" *ngIf="!isNew && !editable" >Edit</button> <button class="btn btn-success" (click) = "saveDetails()" *ngIf ="editable && !isNew">Save</button>
+							<button class="btn btn-info" (click) = "addBankDetails()" *ngIf="isNew" [disabled]="!addbankdetails.valid">Add</button>
+						</div>
+					</div>
+				</div>
+				</form>
+				
+				
+				
+				
+				
+				

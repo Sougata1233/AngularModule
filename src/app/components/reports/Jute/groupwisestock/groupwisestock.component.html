@@ -1,0 +1,128 @@
+				<h2>
+				<a [routerLink]="['/jute']" title='Reports'>Reports</a>
+				>
+				<a [routerLink]="['/reports/jute']" title='Jute Reports'>Jute Reports</a>
+				>
+				Groupwise Stock Register
+				</h2>
+				<p>&nbsp;</p>
+				
+				<div class="content-heading-box nonprintableContent">
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Select Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "reportModel.reportdate"></my-date-picker>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<button class="btn btn-primary" [disabled] = "!reportModel.reportdate" (click) = "searchReport()">Get Report</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				<p>&nbsp;</p>
+				<div class="form-group nonprintableContent" *ngIf="reportdata ==''">
+					<div class="alert alert-info alert-dismissable">
+						No report to show.
+					</div>
+				</div>
+				<div class="row form-group printableContent" *ngIf="reportdata !=''">
+					<table class="print-table-show">
+							<tr>
+								<td>
+									{{company}}
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td style="width:40%">
+									Groupwise Quality Stock Register For The    :
+								</td>
+								<td style="width:40%">
+									&nbsp;
+								</td>
+								<td>
+									{{reportModel.reportdate.formatted}}
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td>
+									 Quality 
+								</td>
+								<td>
+									Op. Stock  Weight 
+								</td>
+								<td>
+									 Receipt  Weight 
+								</td>
+								<td>
+									 Issue  Weight 
+								</td>
+								<td>
+									 Sale/Ret.  Weight 
+								</td>
+								<td>
+									 Cl. Stock  Weight 
+								</td>
+							</tr>
+							<tr *ngFor = "let item of reportdata; let i = index">
+								<td>
+									{{item.quality}} 
+								</td>
+								<td>
+									{{item.oppenningWt}} 
+								</td>
+								<td>
+									{{item.receiptWt}} 
+								</td>
+								<td>
+									{{item.issueWt}} 
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									{{item.closingWt}} 
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Grand Total</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.oppenningWt}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.receiptWt}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.issueWt}}</strong>
+								</td>
+								<td>
+									&nbsp;
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.closingWt}}</strong>
+								</td>
+							</tr>
+						</table>
+				</div>
+				<p>&nbsp;</p>
+					<div class="row nonprintableContent"*ngIf="reportdata !=''">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" title="Print Report" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+				
+				
+				

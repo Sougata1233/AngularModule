@@ -1,0 +1,78 @@
+<h2>
+	<!-- <a href="/payroll" ng-reflect-router-link="/payroll" routerlink="/payroll">Payroll</a>
+	> Create Parameter -->
+	Create Bank
+</h2>
+
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+
+	<form role="form" #createBankForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Bank</h3>
+					<div class="row form-field-style">
+			
+					<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-5">
+									<label>Name<span class="start">*</span></label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" name="bname" required pattern="[a-zA-Z ]*" maxlength="25" [(ngModel)] = "bankCreateModel.bname" class="form-control">
+								</div>
+							</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group row">
+							<div class="col-md-5">
+								<label> Location<span class="start">*</span></label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" name="location" required pattern="[a-zA-Z ]*" maxlength="25" [(ngModel)] = "bankCreateModel.location" class="form-control">
+							</div>
+						</div>
+			</div>
+			<div class="col-md-6">
+						<div class="form-group row">
+								<div class="col-md-5">
+									<label>Address<span class="start">*</span></label>
+								</div>
+								<div class="col-md-7">
+									<input type="text" name="add" [(ngModel)] = "bankCreateModel.add" required pattern="[a-zA-Z0-9 /.,]*" maxlength="50" class="form-control">
+								</div>
+							</div>
+				</div>
+			
+					
+						<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "!createBankForm.form.valid" (click) = "createBankmaster()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3>Bank's List</h3>
+				
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="bankList"></ag-grid-angular>
+					
+				</div>
+		
+			
+				</form>
+				
+				
+		

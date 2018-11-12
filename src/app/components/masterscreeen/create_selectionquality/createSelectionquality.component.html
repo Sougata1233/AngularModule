@@ -1,0 +1,65 @@
+<h2>
+	<!-- <a href="/payroll" ng-reflect-router-link="/payroll" routerlink="/payroll">Payroll</a>
+	> Create Parameter -->
+	Create Selection quality
+</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+	<form role="form" #createSelectionqualityForm="ngForm" >
+					
+				<div class="content-heading-box">
+					<h3>Create Selection quality</h3>
+					
+						
+					<div class="row form-field-style">
+
+							<div class="col-md-12">
+									
+									<div class="form-group row">
+										<div class="col-md-4 text-right">
+											<label>Quality<span class="start">*</span></label>
+										</div>
+										<div class="col-md-4">
+												<input type="text" name="quality" required pattern="[a-zA-Z0-9 /-][a-zA-Z0-9 /-]+" maxlength="35" [(ngModel)] = "selectionqualityCreateModel.quality" class="form-control">
+											
+										</div>
+									</div>
+								</div>
+			
+								
+					<div class="col-md-12 text-center">
+								<button class="btn btn-primary" [disabled] = "selectionqualityCreateModel.quality == '' || !createSelectionqualityForm.form.valid" (click) = "createSelectionquality()"> Create</button>
+						</div>
+						
+					</div>
+				
+				</div>
+				<div class="content-heading-box">
+					<h3> Selection quality's List</h3>
+					<div class="row form-group">
+						<div class="col col-xs-8">
+							<!-- <a routerLink="/store/indent" title="Create New Indent" class="btn btn-primary">Create New</a> -->
+						</div>
+						<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+					</div>
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="selectionqualityList"></ag-grid-angular>
+					<!-- <button class="btn btn-primary" (click) = "statusChange(1)"> Submit</button> -->
+				</div>
+		
+			
+				</form>
+				
+				
+		

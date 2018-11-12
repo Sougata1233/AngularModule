@@ -1,0 +1,292 @@
+{
+  "biodata":[
+    {
+    "dataType" : "Time in campus",
+    "timeLog" : [{
+	"date" : "26",
+	"day" : "MON",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "10.42"
+	},
+	{
+	"date" : "27",
+	"day" : "TUE",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "6.85"
+	},
+	{
+	"date" : "28",
+	"day" : "WED",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "01",
+	"day" : "THU",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "02",
+	"day" : "FRI",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "03",
+	"day" : "SAT",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "04",
+	"day" : "SUN",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	}]},
+	{
+    "dataType" : "Time on floor",
+    "timeLog" : [{
+	"date" : "26",
+	"day" : "MON",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "9.52"
+	},
+	{
+	"date" : "27",
+	"day" : "TUE",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "5.77"
+	},
+	{
+	"date" : "28",
+	"day" : "WED",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "01",
+	"day" : "THU",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "02",
+	"day" : "FRI",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "03",
+	"day" : "SAT",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "04",
+	"day" : "SUN",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	}]},
+	{
+    "dataType" : "Time outside floor",
+    "timeLog" : [{
+	"date" : "26",
+	"day" : "MON",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "0.90"
+	},
+	{
+	"date" : "27",
+	"day" : "TUE",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "1.08"
+	},
+	{
+	"date" : "28",
+	"day" : "WED",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "01",
+	"day" : "THU",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "02",
+	"day" : "FRI",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "03",
+	"day" : "SAT",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "04",
+	"day" : "SUN",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	}]},
+	{
+    "dataType" : "Total Effort",
+    "timeLog" : [{
+	"date" : "26",
+	"day" : "MON",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "10.00"
+	},
+	{
+	"date" : "27",
+	"day" : "TUE",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "6.85"
+	},
+	{
+	"date" : "28",
+	"day" : "WED",
+	"month" : "02",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "01",
+	"day" : "THU",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "02",
+	"day" : "FRI",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "03",
+	"day" : "SAT",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	},
+	{
+	"date" : "04",
+	"day" : "SUN",
+	"month" : "03",
+	"year" : "2018",
+	"total" : "00.00"
+	}]}
+    ],
+  "allocationdata" : [{
+    "projectId" : "123456789",
+    "type" : "Project",
+    "task" : "Development",
+    "location" : "GTP",
+    "bill" : "Yes",
+    "worklog" : [{
+  "date" : "26",
+	"day" : "MON",
+	"total" : "10.00"
+	},
+	{
+	"date" : "27",
+	"day" : "TUE",
+	"total" : "10.00"
+	},
+	{
+	"date" : "28",
+	"day" : "WED",
+	"total" : "10.00"
+	},
+	{
+	"date" : "01",
+	"day" : "THU",
+	"total" : "10.00"
+	},
+	{
+	"date" : "02",
+	"day" : "FRI",
+	"total" : "10.00"
+	},
+	{
+	"date" : "03",
+	"day" : "SAT",
+	"total" : "0.00"
+	},
+	{
+	"date" : "04",
+	"day" : "SUN",
+	"total" : "10.00"
+	}]
+    },
+    {
+    "projectId" : "234567890",
+    "type" : "Project",
+    "task" : "Development",
+    "location" : "GTP",
+    "bill" : "Yes",
+    "worklog" : [{
+  "date" : "26",
+	"day" : "MON",
+	"total" : "0.00"
+	},
+	{
+	"date" : "27",
+	"day" : "TUE",
+	"total" : "0.00"
+	},
+	{
+	"date" : "28",
+	"day" : "WED",
+	"total" : "0.00"
+	},
+	{
+	"date" : "01",
+	"day" : "THU",
+	"total" : "0.00"
+	},
+	{
+	"date" : "02",
+	"day" : "FRI",
+	"total" : "0.00"
+	},
+	{
+	"date" : "03",
+	"day" : "SAT",
+	"total" : "10.00"
+	},
+	{
+	"date" : "04",
+	"day" : "SUN",
+	"total" : "0.00"
+	}]
+    }]
+}

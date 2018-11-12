@@ -1,0 +1,50 @@
+[
+	{
+		"empId" : "101",
+		"empName" : "Jayanta Mitra",
+		"dept" : "Admin",
+		"fromDate" : 1519582558743,
+		"toDate" : 1519582558743,
+		"totalDays" : 30,
+		"present" : 22,
+		"holyday" : 4,
+		"Leave" : 2,
+		"payloss" : 2
+	},
+	{
+		"empId" : "101",
+		"empName" : "Jayanta Mitra",
+		"dept" : "Admin",
+		"fromDate" : 1519582558743,
+		"toDate" : 1519582558743,
+		"totalDays" : 30,
+		"present" : 22,
+		"holyday" : 4,
+		"Leave" : 2,
+		"payloss" : 2
+	},
+	{
+		"empId" : "101",
+		"empName" : "Jayanta Mitra",
+		"dept" : "Admin",
+		"fromDate" : 1519582558743,
+		"toDate" : 1519582558743,
+		"totalDays" : 30,
+		"present" : 22,
+		"holyday" : 4,
+		"Leave" : 2,
+		"payloss" : 2
+	},
+	{
+		"empId" : "101",
+		"empName" : "Jayanta Mitra",
+		"dept" : "Admin",
+		"fromDate" : 1519582558743,
+		"toDate" : 1519582558743,
+		"totalDays" : 30,
+		"present" : 22,
+		"holyday" : 4,
+		"Leave" : 2,
+		"payloss" : 2
+	}
+]

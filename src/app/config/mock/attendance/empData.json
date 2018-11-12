@@ -1,0 +1,29 @@
+[
+	{
+		"empId" : "5212",
+		"empName" : "Jayanta Mitra",
+		"sift" : "A1",
+		"plannedHour" : "4",
+		"activity" : "spinning",
+		"actualHour" : null,
+		"machine"	:	null
+	},
+	{
+		"empId" : "5213",
+		"empName" : "Debanjan Mitra",
+		"sift" : "B2",
+		"plannedHour" : "4",
+		"activity" : "weaving",
+		"actualHour" : "5",
+		"machine"	:	"spinner2"
+	},
+	{
+		"empId" : "5214",
+		"empName" : "Dhritiman Roy",
+		"sift" : "C",
+		"plannedHour" : "7.5",
+		"activity" : "beaming",
+		"actualHour" : null,
+		"machine"	:	null
+	}
+]

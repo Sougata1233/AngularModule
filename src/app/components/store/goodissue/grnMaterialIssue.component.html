@@ -1,0 +1,158 @@
+				<h2>
+				<a [routerLink]="['/jute/mrindent']" title='Jute'>Jute</a>
+				>
+				<a [routerLink]="['/jute/mrgoodissue']" title='Material Issue'>Material Issue</a>
+				>
+				Create
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box">
+					<h3>Good Issue Header</h3>
+					<div class="row form-field-style">
+					<div class="col-sm-6">
+						<div class="row form-group">
+								<div class="col-md-3"><label>Transaction Type</label></div>
+								<div class="col-md-5">
+									<select class="form-control" name="trantype" [(ngModel)] = "issueModel.tranType" required (change)="tranTypeChange()">
+										<option value="">--Please Select--</option>
+										<option value="i">Issue</option>
+										<option value="l">Loan</option>
+									</select>
+								</div>
+							</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="row form-group" *ngIf="issueModel.tranType == 'l'">
+								<div class="col-md-3"><label for="itemGroup">Loan Unit<span class="start">*</span></label></div>
+								<div class="col-md-5">
+								<input type="text" class="form-control" name="dept" [(ngModel)] = "issueModel.selectedLoanUnit" required> 
+								</div>
+							</div>
+					</div>
+					</div>
+				</div>
+				
+				
+				<!--add item form-->
+				<div class="content-heading-box" *ngIf="issueModel.tranType != ''">
+					<form role="form" #createIssue="ngForm">
+					<h3>Search Options</h3>
+					<div class="row form-field-style">
+						
+						<div class="col-md-6">
+							<div class="form-group row" *ngIf="myOptions.length > 0">
+								<div class="col-md-4"><label for="itemDesc">Item Description<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<ng-select [allowClear]="false" placeholder="Please Select" [multiple]="false" [(options)]="myOptions" [(ngModel)]="issueModel.selectedItem" name="itemDesc" (selected)="generateStock($event)" (removed)="generateStock($event)"></ng-select>
+								</div>
+							</div>
+							<div class="form-group row" >
+								<div class="col-md-4"><label for="itemGroupSelect">Quality<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<select class="form-control"  name="quality" [(ngModel)] = "issueModel.selectedQuality" required (change)="qualityChange()">
+										<option value="">--Please Select--</option>
+										<option *ngFor = "let quality of itemQuality; let i = index;" value="{{i}}" >{{quality.name}}</option>
+									</select>
+								</div>
+							</div>
+
+						</div>
+						
+						
+						<div class="col-md-6" *ngIf="StockUnit != 'undefined' && issueModel.selectedItem != ''">
+						</div>
+						<!-- <div class="col-md-6" *ngIf="StockUnit != 'undefined' && issueModel.selectedQuality != ''"> -->
+							<!-- <div class="row form-group"> -->
+								<!-- <div class="col-md-4"><label for="itemGroup">Stock</label></div> -->
+								<!-- <div class="col-md-8"> -->
+									<!-- <span class="form-control">{{Stock}}</span> -->
+								<!-- </div> -->
+							<!-- </div> -->
+						<!-- </div> -->
+					</div>
+				<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" [disabled] = "issueModel.selectedItem == '' || issueModel.selectedQuality == '' || !createIssue.form.valid || searchResult.length != 0 || itemstackbystoredata.length != 0" (click) = "searchStock()">Search Warehouse</button>
+						</div>
+					</div>
+					</form>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "searchResult.length > 0 && itemstackbystoredata.length == 0">
+					<h3>Warehouse Result</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="searchResult"></ag-grid-angular>
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" [disabled] = "searchSelection.length == 0" (click) = "searchWarehouseStock()">Search Stock</button>
+						</div>
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "itemstackbystoredata.length > 0">
+					<h3>Stock Result</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDefwarehousestock" [gridOptions]="gridOptionsWarehouse" [rowData]="itemstackbystoredata"></ag-grid-angular>
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center"><button class="btn btn-primary" [disabled] = "stockSelection.length == 0" (click) = "addItem()">Add to Issue</button></div>
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "addedItems.length > 0">
+					<h3>Added Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDefaddeditem" [gridOptions]="gridOptionaddeditem" [rowData]="addedItems"></ag-grid-angular>
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center"><button class="btn btn-primary" [disabled] = "addedItems.length == 0" (click) = "createIssue()">Create Issue</button></div>
+					</div>
+				</div>
+				
+				
+				
+				
+				<div class="readingArea" *ngIf = "batchedit != ''">
+					<div class="reading-popup">
+						<div class="popuptitle"><h2>Select Batch Type</h2></div>
+						<div class="popupcontent">
+						<form #actualQualityForm ="ngForm">
+							<select class="form-control"  name="batchtype" [(ngModel)] = "issueModel.selectedBatchType" required>
+								<option value="">--Please Select--</option>
+								<option *ngFor = "let batch of allBatchTypes; let i = index;" value="{{i}}">{{batch.serviceType}}</option>
+							</select>
+						</form>
+						</div>
+						<div class="popupfooter text-right"><button type="button" class="btn btn-sm btn-secondary" (click)="closeBatchDialog()">CANCEL</button> <button type="button" class="btn btn-sm btn-success" (click)="updateBatchItem()" [disabled]="!actualQualityForm.form.valid">OK</button></div>
+					</div>
+				</div>
+		

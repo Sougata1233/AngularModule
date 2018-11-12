@@ -1,0 +1,126 @@
+				<h2>
+				<a [routerLink]="['/purchase']" title='Purchase'>Purchase</a>
+				> 
+				<a [routerLink]="['/purchase/supplier']" title="Supplier Worklist" >Supplier Worklist</a>
+				>
+				Indent Details</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "indentDetailData && indentDetailData !='undefined'">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<div class="col-md-4"><label for="itemGroupSelect">Indent Number<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<span class="form-control">{{prefix+"/Indent/" + indentDetailData.indentHeader.id }}</span>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-4"><label for="itemDesc">Raised By<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<span class="form-control">{{indentDetailData.indentHeader.submitter}}</span>
+								</div>
+							</div>
+							
+
+						</div>
+						
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label>Raised On<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<span class="form-control">{{indentDetailData.indentHeader.createDate  | date:'mediumDate'}}</span>
+								</div>
+							</div>
+
+							<div class="row form-group" *ngIf="supplierList">
+								<div class="col-md-4"><label>Select Supplier<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<div class="input-group col-md-12">
+									<div id="scrollArea" class="clusterize-scroll list-menu">
+										<ul id="contentArea" class="clusterize-content">
+											<li *ngFor = "let supplier of supplierList; let i = index;"><input type="radio" name="supplierSelect" value="{{i}}" [(ngModel)] = "supplierListModel.selectedSupplier" (click)="supplierSelection()">{{supplier.name}}</li>
+										</ul>
+									</div>
+									<!--<select class="form-control" [(ngModel)] = "supplierListModel.selectedSupplier">
+										<option value="">--Please Select--</option>
+										<option *ngFor = "let supplier of supplierList; let i = index;" value="{{i}}">{{supplier.name}}</option>
+									</select>-->
+								</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "indentDetailData && indentDetailData !=undefined && indentDetailData.indentList.length > 0">
+					<h3>Indent Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<form role="form" #supplierDetailsForm ="ngForm">
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="indentDetailData.indentList"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive approval">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>Item Group</th>
+									<th>Item Descrption</th>
+									<th>HSN Code</th>
+									<th>Department</th>
+									<th>Quantity</th>
+									<th>Unit</th>
+									<th>Price/Unit</th>
+									<th>GST</th>
+									<th>Price</th>
+									<th>Tax</th>
+									<th>Payable</th>
+                                </tr>
+                            </thead>
+							<tbody *ngFor = "let eachItem of indentDetailData.indentList; let i = index">
+                                <tr *ngIf="eachItem.status=='1'">
+									<td>{{eachItem.itemGroup.name}}</td>
+									<td>{{eachItem.item.name}}</td>
+									<td>{{eachItem.item.hsnCode}}</td>									
+									<td>{{eachItem.department.name}}</td>
+									<td>{{eachItem.indentQuantity}}</td>
+									<td>{{eachItem.quantityUnit.name}}</td>
+									<td class="text-center">
+										<input type="text" class="form-controll" name="{{'priceVal'+ i}}" [(ngModel)]="eachItem.rate" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$">
+									<td>
+										{{eachItem.item.itemTax.gst + ' %'}}
+									</td>
+									<td><span *ngIf="supplierDetailsForm.form.valid">{{((eachItem.indentQuantity) * eachItem.rate)}}</span></td>
+									<td><span *ngIf="supplierDetailsForm.form.valid">{{((eachItem.indentQuantity * eachItem.rate)* eachItem.item.itemTax.gst)/100}}</span></td>
+									<td><span *ngIf="supplierDetailsForm.form.valid">{{((eachItem.indentQuantity) * eachItem.rate) + ((eachItem.indentQuantity * eachItem.rate)* eachItem.item.itemTax.gst)/100}}</span></td>
+								</tr>
+                            </tbody>
+						</table>
+					</div>-->
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" [disabled] = "supplierListModel.selectedSupplier == '' || !supplierDetailsForm.form.valid" (click) = "mapSuppliertoIndent()">Submit</button>
+						</div>
+					</div>
+					</form>
+				</div>
+				

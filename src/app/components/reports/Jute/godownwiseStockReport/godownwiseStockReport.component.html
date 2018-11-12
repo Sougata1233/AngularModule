@@ -1,0 +1,177 @@
+				<h2>
+				<a [routerLink]="['/jute']" title='Reports'>Reports</a>
+				>
+				<a [routerLink]="['/reports/jute']" title='Jute Reports'>Jute Reports</a>
+				>
+				Godownwise Stock Report
+				</h2>
+				<p>&nbsp;</p>
+				
+				<div class="content-heading-box nonprintableContent">
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="row form-group">
+								<div class="col-md-4"><label for="makerSelection">Select Date<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<my-date-picker name="mydate" [options]="myDatePickerOptions" required [(ngModel)] = "reportModel.reportdate"></my-date-picker>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="row form-group">
+								<button class="btn btn-primary" [disabled] = "!reportModel.reportdate" (click) = "searchReport()">Get Report</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				<p>&nbsp;</p>
+				<div class="form-group nonprintableContent" *ngIf="reportdata ==''">
+					<div class="alert alert-info alert-dismissable">
+						No report to show.
+					</div>
+				</div>
+				<div class="row form-group printableContent" *ngIf="reportdata !=''">
+					<table class="print-table-show">
+							<tr>
+								<td>
+									{{company}}
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align:center;">
+									<strong>REPORT NO - NOT AVAILABLE</strong>
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td>
+									GODOWN WISE STOCK REGISTER AS ON - 
+								</td>
+								<td>
+									{{reportModel.reportdate.formatted}}
+								</td>
+							</tr>
+						</table>
+						<table class="print-table-show">
+							<tr>
+								<td rowspan="2" style="text-align:center;">
+									QUALITY
+								</td>
+								<td style="text-align:center;" colspan="5">
+									CLOSING STOCK
+								</td>
+							</tr>
+							<tr>
+								<td>
+									BALES
+								</td>
+								<td>
+									H/BALES
+								</td>
+								<td>
+									DMS/LOOS
+								</td>
+								<td>
+									P/BALES
+								</td>
+								<td>
+									WEIGHT
+								</td>
+							</tr>
+							<tbody *ngFor = "let eachgodown of reportdata; let i = index">
+							<tr *ngFor = "let item of eachgodown.reportDTO.reportrows; let i = index">
+								<td>
+									{{eachgodown.reportDTO.quality}}
+								</td>
+								<td>
+									{{item.bale}}
+								</td>
+								<td>
+									{{item.hbale}}
+								</td>
+								<td>
+									{{item.loose}}
+								</td>
+								<td>
+									{{item.pbale}}
+								</td>
+								<td>
+									{{item.weight}}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="6">
+								&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<td>
+									GODOWN TOTAL
+								</td>
+								<td>
+									{{eachgodown.reportDTO.godowntotal.bale}}
+								</td>
+								<td>
+									{{eachgodown.reportDTO.godowntotal.hbale}}
+								</td>
+								<td>
+									{{eachgodown.reportDTO.godowntotal.loose}}
+								</td>
+								<td>
+									{{eachgodown.reportDTO.godowntotal.pbale}}
+								</td>
+								<td>
+									{{eachgodown.reportDTO.godowntotal.weight}}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="6">
+								&nbsp;
+								</td>
+							</tr>
+							</tbody>
+							<tr>
+								<td colspan="6">
+								&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>GRAND TOTAL</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.bale}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.hbale}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.loose}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.pbale}}</strong>
+								</td>
+								<td>
+									<strong>{{reportdata[0].grandtotal.weight}}</strong>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="6">
+								&nbsp;
+								</td>
+							</tr>
+						</table>
+				</div>
+				<p>&nbsp;</p>
+					<div class="row nonprintableContent" *ngIf="reportdata !=''">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" title="Print Report" (click) = "print()" ><span class="glyphicon glyphicon-print"></span></button>
+						</div>
+					</div>
+				
+				
+				

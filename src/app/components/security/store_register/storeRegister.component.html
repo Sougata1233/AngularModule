@@ -1,0 +1,381 @@
+<p *ngIf="errorMsg">&nbsp;</p>
+<div *ngIf="errorMsg" class="form-group">
+	<div class="alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		{{ errorMsg }}
+	</div>
+</div>
+<p *ngIf="successMsg">&nbsp;</p>
+<div *ngIf="successMsg" class="form-group">
+	<div class="alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		{{ successMsg }}
+	</div>
+</div>
+
+
+<h2>
+	Store Entry Register
+</h2>
+	<form role="form" #creatStoreentryForm="ngForm">
+		<div class="row"><!-- search-->
+			<div class="col-sm-12 text-right searchbtn">
+				<a href="#" data-toggle="modal" data-target="#myModal" class="search-btn-one"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></a>
+			</div>
+			<div id="myModal" class="modal fade" role="dialog">
+				<div class="modal-dialog search-modal">
+					<div class="row text-right">
+						<button type="button" class="close sh-close btn" data-dismiss="modal">×</button>
+					</div>
+					  <div class="modal-content">
+						<div class="modal-body">
+						<div class="col-md-12">
+							<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>From Date</label>
+								</div>
+								<div class="col-md-8">
+									<my-date-picker name="fromDate" [options]="myDatePickerOptions" required [(ngModel)] = "fromDate"></my-date-picker>
+								</div>
+								
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group row">
+								<div class="col-md-4 text-left">
+									<label>To Date</label>
+								</div>
+								<div class="col-md-8">
+									<my-date-picker name="toDate" [options]="myDatePickerOptions" required [(ngModel)] = "toDate"></my-date-picker>
+								</div>
+							
+							</div>
+						</div>
+						<div class="text-center">
+						<button type="button"  routerLink="/Security/storeregistersearch" class="btn btn-primary" (click) = "search($event,fromDate,toDate)" data-dismiss="modal">Search</button>
+						</div>
+						</div>
+					</div>
+				  </div>
+			</div>
+		</div><!-- search-->
+		<div class="content-heading-box">
+					<h3>Store Entry Register</h3>
+					<div class="form-field-style text-center">
+						<div class="row"><!--current-date-time-->
+							<div class="col-md-6">
+									<div class="form-group row">
+										<div class="col-md-4 text-left">
+											<label>Date</label>
+										</div>
+										<div class="col-md-8">
+											<!-- <div load="startDate()" class="form-control custom-height">
+												{{currentDate}}
+												<i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
+											
+											</div> -->
+											<my-date-picker name="Mydate" [options]="myDatePickerOptions" required [(ngModel)] = "inDate"></my-date-picker>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+										<div class="form-group row">
+											<div class="col-md-4 text-left">
+												<label>Time</label>
+											</div>
+											<div class="col-md-8">
+												<input [owlDateTimeTrigger]="time" [owlDateTime]="time" class="form-control custom-height">
+												<owl-date-time [pickerType]="'timer'" #time></owl-date-time>
+													<!-- <div load="startTime()" class="form-control custom-height">
+														{{time}}
+														<i class="glyphicon glyphicon-dashboard" aria-hidden="true"></i>
+													
+													</div> -->
+												
+													
+											</div>
+										</div>
+									</div>
+						</div><!--current-date-time-->
+						<div class="row">
+							<div class="col-md-6">
+									<div class="form-group row">
+											<div class="col-md-4 text-left">
+												<label>Challan No<span class="start">*</span></label>
+											</div>
+											<div class="col-md-8">
+												<input type="number" name="challanNo" required maxlength="10" [(ngModel)] = "storeCreateModel.challanNo" class="form-control number-control">
+											</div>
+									</div>
+									<div class="form-group row">
+											<div class="col-md-4 text-left">
+												<label>Challan Date<span class="start">*</span></label>
+											</div>
+											<div class="col-md-8">
+												<my-date-picker name="Mydate" [options]="myDatePickerOptions" required [(ngModel)] = "date"></my-date-picker>
+												
+											</div>
+									</div>
+									<div class="form-group row">
+											<div class="col-md-4 text-left">
+												<label>Vehicle No <span class="start">*</span></label>
+											</div>
+											<div class="col-md-8">
+													<input type="text" name="vehicleNo" pattern="[a-zA-Z0-9 - ]*" required maxlength="24" [(ngModel)] = "storeCreateModel.vehicleNo" >
+											</div>
+									</div>
+									<div class="form-group row">
+											<div class="col-md-4 text-left">
+												<label>Driver name<span class="start">*</span></label>
+											</div>
+											<div class="col-md-8">
+													<input type="text" name="driverName"  pattern="[a-zA-Z ]*" required maxlength="50" [(ngModel)] = "storeCreateModel.driverName" >
+											</div>
+										</div>
+							</div>
+
+							<div class="col-md-6">
+									<div class="form-group row">
+											<div class="col-md-3 text-left">
+												<label>Without PO</label>
+												<input type="checkbox" name="po" (change) = "withoutPo($event)" [checked]="check">
+											</div>
+											<div class="col-md-4 text-left">
+													<input type="checkbox" name="poCheckbox" [disabled] = "po" (change) = "supplierbyPono($event)" [checked]="checktwo">
+													<label *ngIf="poNumberinput">Enter PO NO <span class="start">*</span></label>
+													<label *ngIf="supplierByponumber">Select PO NO<span class="start">*</span></label>
+												
+												</div>
+											<div class="col-md-5">
+													<input  *ngIf="poNumberinput" type="text" [disabled] = "po" name="poNo" pattern="[a-zA-Z0-9 _ ]*"
+													 required maxlength="25" [(ngModel)] = "inputPoId" 
+													 (change) = "loadData($event,storeCreateModel.poNo,true)">
+													 <label *ngIf="supplierByponumber">Please Select Supplier First</label>
+													 <div class="list-menu mukam-master height" *ngIf="supplierByponumber">
+														
+													<ul class="all-menus">
+														<li *ngFor = "let approvedpoNumber of approvedpoNumberList;">
+															
+													 <input type="checkbox" [value]="approvedpoNumber.id" (change) = "loadData($event,storeCreateModel.poNo,false)" 
+														>
+																{{approvedpoNumber.id}}
+														 </li>
+													</ul>
+											
+																													
+												</div>
+<!-- 													
+													 <select  *ngIf="supplierByponumber" [disabled] = "po" class="form-control" name="poNo" [(ngModel)] = "storeCreateModel.poNo" (change) = "loadData($event.target.value,storeCreateModel.poNo)">
+														<option value="">--Please Select Supplier First--</option>
+														<option *ngFor = "let approvedpoNumber of approvedpoNumberList;" [value]="approvedpoNumber.id">{{approvedpoNumber.id}}</option>
+														   
+													</select> -->
+											</div>
+									</div>
+									<div class="form-group row">
+											<div class="col-md-4 text-left">
+												<label>Supplier Name <span class="start">*</span></label>
+											</div>
+										
+											 <div class="col-md-8" *ngIf = "myOptions.length > 0">
+												
+
+													<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.supplierName" placeholder="Please Select"
+													 [multiple]="false" [(options)]="myOptions" name="supplierName" 
+													 (selected) = "loadsuppNamePoData($event)" required></ng-select>
+													
+														
+											</div> 
+									</div>
+									<div class="form-group row">
+											<div class="col-md-4 text-left">
+												<label>Supplier Code <span class="start">*</span></label>
+											</div>
+											<div class="col-md-8" *ngIf = "myOptionstwo.length > 0">
+												
+
+													<ng-select [allowClear]="false" [(ngModel)]="storeCreateModel.suppCode"
+													 placeholder="Please Select" [multiple]="false" [(options)]="myOptionstwo"  
+													 name="suppCode" (selected) = "loadpoData($event,storeCreateModel.suppCode)" required></ng-select>
+											</div>
+											
+									</div>
+									<div class="form-group row">
+											<div class="col-md-4 text-left">
+												<label>Remarks</label>
+											</div>
+											<div class="col-md-8">
+													<input type="text" name="remarks"  pattern="[a-zA-Z ]*" maxlength="100" [(ngModel)] = "storeCreateModel.remarks" >
+											</div>
+									</div>
+									
+							</div>
+							
+															
+
+					</div>
+
+					<div class="row" *ngIf="polinedeetails">
+						<div class="col-sm-12">
+								<div class="heading-two three">
+									<h3>Line Items</h3>
+								</div>
+
+						</div>
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-6">
+										<div class="form-group row">
+												<div class="col-md-4 text-left">
+													<label>Department<span class="start">*</span></label>
+												</div>
+												<div class="col-md-8">
+														<select class="form-control" name="dept" [(ngModel)]="polineitemDetails.dept" (change) = "loadItmgrpByDept($event.target.value)">
+																<option [value]="departments.id" *ngFor="let departments of departmentsList">{{departments.name}}</option>
+														</select>	
+													<!-- <input type="text" name="dept" [(ngModel)] = "polineitemDetails.dept" required maxlength="50" class="form-control"> -->
+												</div>
+										</div>
+
+										
+								</div>
+								<div class="col-sm-6">
+										<div class="form-group row">
+												<div class="col-md-4 text-left">
+													<label>Item Groups<span class="start">*</span></label>
+												</div>
+												<div class="col-md-8">
+														<select class="form-control" name="itemId" [(ngModel)]="itemDescitemId" (change) = "loadItemDescByGrpId($event.target.value)">
+																<option value="">--Please Select--</option>
+																<option [value]="itmgrpByDept.id" *ngFor="let itmgrpByDept of itmgrpByDeptList">{{itmgrpByDept.name}}</option>
+														</select>	
+													<!-- <input type="text" name="itemId" [(ngModel)] = "polineitemDetails.itemId" required maxlength="100" class="form-control"> -->
+												</div>
+											</div>
+											
+								</div>
+								<div class="col-sm-6">
+									
+										<div class="form-group row">
+												<div class="col-md-4 text-left">
+													<label>Item Desc<span class="start">*</span></label>
+												</div>
+												<div class="col-md-8">
+														<select class="form-control" name="itemDesc" [(ngModel)]="polineitemDetails.itemDesc">
+																<option value="">--Please Select--</option>
+																<option [value]="ItemDescByGrpId.name" *ngFor="let ItemDescByGrpId of ItemDescByGrpIdList.items">{{ItemDescByGrpId.name}}</option>
+														</select>	
+													<!-- <input type="text" name="itemDesc" [(ngModel)] = "polineitemDetails.itemDesc" required maxlength="200" class="form-control"> -->
+												</div>
+											</div>		
+								</div>
+								<div class="col-sm-6">
+										<div class="form-group row">
+												<div class="col-md-4 text-left">
+													<label>Quantity<span class="start">*</span></label>
+												</div>
+												<div class="col-md-4">
+													<input type="text" name="reqQuantity" [(ngModel)] = "polineitemDetails.reqQuantity" pattern="[0-9 ]*" required maxlength="10" class="form-control">
+												</div>
+												<div class="col-md-4">
+														<select class="form-control" name="unitId" [(ngModel)] = "polineitemDetails.unitId">
+																<option value="">--Please Select--</option>
+															<option *ngFor = "let uom of uomList;" [value]="uom">{{uom}}</option>
+																   
+														</select>
+														
+												</div>
+											</div>
+								</div>
+								
+							</div>
+						</div>
+						<div class="col-md-12 text-center" *ngIf="withOutButton">
+								<button class="btn btn-primary" [disabled] = "!polineitemDetails.dept || !itemDescitemId || !polineitemDetails.itemDesc || !polineitemDetails.unitId" (click) = "addPolineItems()"> Add</button>
+						</div>
+						<div class="col-md-12 text-center" *ngIf="withButton">
+								<button class="btn btn-primary" [disabled] = 
+								"!polineitemDetails.dept || !itemDescitemId || !polineitemDetails.itemDesc || 
+								!polineitemDetails.unitId" (click) = "addwithPolineItems(inputPoId)">Add</button>
+						</div>
+						
+						
+					</div>
+					</div>
+				</div>
+				<div class="content-heading-box" *ngIf ="ponoIds.length != 0">
+					<h3>With Po Line Items</h3>
+					<!-- <div class="text-right" *ngIf="poNumberinput">
+							<button class="btn btn-primary" (click)="addNewLineItems()"> Add New Line Items</button>
+					</div> -->
+					<div class="row form-field-style customs_table">
+						<!-- <div *ngIf="polinedeetails">vjhgjh</div> -->
+							
+							<div *ngFor = "let ponoId of ponoIds">
+									<div class="heading -style">{{ponoId}}</div>
+									<table class="table">
+										<thead>
+												<tr>
+														<!-- <th>ITEM CODE</th> -->
+															<th>ITEM DESC</th>
+															<th>QUANTITY</th>
+															<th>Received Quantity</th>
+															<th>UOM</th>
+															<th>DEPARTMENT</th>
+												</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor ="let ponoallDatas of ponodata[ponoId]; let i = index">
+														<!-- <td>{{ponoallDatas.itemId}}</td> -->
+														<td>{{ponoallDatas.itemDesc}}</td>
+														<td>{{ponoallDatas.quantity}}</td>
+														<td><input type="number" class="form-control number-control" name="reqQuantity{{ponoId}}{{i}}" [(ngModel)] = "ponoallDatas.reqQuantity" [value]="ponoallDatas.reqQuantity"></td>
+														<td>{{ponoallDatas.unitId}}</td>
+														<!-- <td><input type="text" class="form-control" name="dept{{ponoId}}{{i}}" [(ngModel)] = "ponoallDatas.dept" [value]="ponoallDatas.dept"></td> -->
+														<td>{{ponoallDatas.dept}}</td>
+											</tr>								
+										</tbody>
+									</table>
+									</div>
+							</div>
+				</div>
+				<div class="content-heading-box" *ngIf = "polineitemsCreateModel.length != 0">
+						<h3>Without Po Line Items</h3>
+						<div class="row form-field-style customs_table">
+							
+									<table class="table">
+										<thead>
+											<tr>
+													<!-- <th>ITEM CODE</th> -->
+													<th>ITEM DESC</th>
+													<th>DEPARTMENT</th>
+													<th>QUANTITY</th>
+													<th>UOM</th>
+													<th>DELETE</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let polineitemsdata of polineitemsCreateModel; let i= index">
+												<!-- <td>{{polineitemsdata.itemId}}</td> -->
+												<td>{{polineitemsdata.itemDesc}}</td>
+												<td>{{polineitemsdata.deptName}}</td>
+												<td>{{polineitemsdata.reqQuantity}}</td>
+												<td>{{polineitemsdata.unitId}}</td>
+												<td><button class="btn btn-primary" (click) = "polineitemsCreateModel.splice(i, 1)">Delete</button></td>
+												</tr>
+											</tbody>
+										</table>
+							
+						</div>
+				</div>
+				
+				<div class="row form-field-style createbtn text-center">
+						<button class="btn btn-primary" [disabled] = "!date || !storeCreateModel.challanNo" (click) = "createStore()">IN</button>
+				</div>
+		
+			
+				</form>
+		
+				
+		

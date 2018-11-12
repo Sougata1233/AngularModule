@@ -1,0 +1,31 @@
+{
+	"indentId": "IND00214789",
+	"raisedBy": "User Name",
+	"raisedOn": "20/08/2016",
+	"status"  : "submitted",	
+	"reason"  : "",
+	"items": [{
+			"itemGroup": ["G0000001", "Demo Item Group 1"],
+			"item": ["I000002", "Demo Item Description 2"],
+			"department": ["D000002", "Department 2"],
+			"quantity": 20,
+			"unit": ["U000001", "Kg"],
+			"raisedBy": "User name",
+			"stock": "201",
+			"unitPrice": "",
+			"GST" : 0
+		},
+		{
+			"itemGroup": ["G0000002", "Demo Item Group 2"],
+			"item": ["I000003", "Demo Item Description 3"],
+			"department": ["D000001", "Department 1"],
+			"quantity": 21,
+			"unit": ["U000001", "Kg"],
+			"raisedBy": "User name",
+			"stock": "24",
+			"unitPrice": "",
+			"GST" : 0
+		}
+	]
+
+}

@@ -1,0 +1,57 @@
+				<h2>
+				<a [routerLink]="['/purchase']" title='Purchase' >Purchase</a>
+				>
+				Purchase Order Ammendment
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				<div *ngIf = "approvalRequestAllfiltered == undefined || approvalRequestAllfiltered == '' || approvalRequestAllfiltered.length == 0" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						No Pending Request.
+					</div>
+				</div>
+				<div class="content-heading-box" *ngIf = "approvalRequestAllfiltered != undefined && approvalRequestAllfiltered != '' && approvalRequestAllfiltered.length > 0">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					
+					<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="approvalRequestAllfiltered"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive approval">
+                        <table class="table">
+                            <thead>
+                                <tr>
+									<th>PO Number</th>
+									<th>PO Type</th>
+									<th>Raised By</th>
+									<th>Raised On</th>
+								</tr>
+                            </thead>
+							<tbody>
+                                <tr *ngFor = "let request of approvalRequestAllfiltered; let i = index" [routerLink]="['/purchase/amendment/', request.id]">
+									<td><a [routerLink]="['/purchase/amendment/', request.id]" title="View Details">{{request.id}}</a></td>
+									<td>{{request.type}}</td>
+									<td>{{request.submitter}}</td>
+									<td>{{request.createDate | date:'mediumDate'}}</td>
+								</tr>
+                            </tbody>
+						</table>
+					</div>-->
+				</div>
+				

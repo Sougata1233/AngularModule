@@ -1,0 +1,209 @@
+				
+				<h2>
+				<a [routerLink]="['/jute/mrindent']" title='Jute' >Jute</a>
+				> 
+				Jute Indent
+				>
+				<span *ngIf="requestedId && requestedId != undefined">{{requestedId}}</span></h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<form role="form" #createIndentForm="ngForm" *ngIf="indentDetailData != ''">
+				<div class="content-heading-box">
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="form-group row">
+								<div class="col-md-4"><label for="mukamSelect">Mukam<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<select class="form-control" id = "mukamSelect" name="mukamSelect"  [(ngModel)] = "indentCreateModel.mrMukam" (change)="getItems(null,$event)" required id="mukamSelect">
+									<option value="">--Please Select--</option>
+									<option *ngFor = "let mukam of mukams; let i = index;" value="{{i}}">{{mukam.mukamName}}</option>
+								</select>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="indentCreateModel.mrMukam != '' && indentCreateModel.vehicleType != ''">
+								<div class="col-md-4"><label for="vehicleQuantity">Vehicle Quantity<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<input type="text" class="form-control" id="vehicleQuantity" name="vehicleQuantity" [(ngModel)] = "indentCreateModel.vehicleQuantity" pattern="^[1-9]+[0-9]*$" required (blur)="vehicleQuanchange()">
+								</div>
+							</div>
+							
+							<div class="form-group row" *ngIf="indentCreateModel.mrMukam != '' && indentCreateModel.vehicleType != ''">
+								<div class="col-md-4"><label for="mukamSelect">Unit Conversion<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<select class="form-control" name="convTpe" [(ngModel)] = "indentCreateModel.conversiontype" (change)="changecontype()">
+										<option value="LOOSE" >LOOSE</option>
+										<option value="BALE" >BALE</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row" *ngIf="indentCreateModel.mrMukam != ''">
+								<div class="col-md-4"><label for="vehicleType">Vehicle Type<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<select class="form-control" name="vehicleType"  [(ngModel)] = "indentCreateModel.vehicleType" required id="vehicleType" (change)="vehicletypechange()">
+									<option value="">--Please Select--</option>
+									<option *ngFor = "let vehicle of allVehicles; let i = index;" value="{{i}}">{{vehicle.vehicleType}}</option>
+								</select>
+								</div>
+							</div>
+							<div class="form-group row" *ngIf="indentCreateModel.mrMukam != '' && indentCreateModel.vehicleType != ''">
+								<div class="col-md-4"><label for="itemDesc">Indent Quantity<span class="start">*</span></label></div>
+								<div class="col-md-4">
+								<div class="input-group col-md-12">
+									<input type="text" class="form-control" [(ngModel)] = "indentCreateModel.poQuantity" name="poQuantity" (change)="validatePOQuantity($event)"/>
+									<span class="input-group-addon unit">{{Qunits.name}}</span>
+								</div>
+								</div>
+								<div class="col-md-4">
+								<div class="input-group col-md-12">
+									<span class="form-control">{{(indentCreateModel.poQuantity)/10}}</span>
+									<span class="input-group-addon unit">Ton</span>
+								</div>
+								</div>
+							</div>
+							
+							
+							<!-- <div class="form-group row" *ngIf="indentCreateModel.mrMukam != '' && indentCreateModel.selectedQuality != ''"> -->
+								<!-- <div class="col-md-4"><label for="itemDesc">Stock<span class="start">*</span></label></div> -->
+								<!-- <div class="col-md-8"> -->
+								<!-- <span class="form-control">{{itemData.items[indentCreateModel.selectedItem].stock}}</span> -->
+								<!-- </div> -->
+							<!-- </div> -->
+							<div class="form-group row" *ngIf="indentCreateModel.mrMukam != '' && indentCreateModel.vehicleType != '' && indentCreateModel.conversiontype == 'BALE'">
+								<div class="col-md-4"><label for="itemDesc">Converted Quantity<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<div class="input-group col-md-12">
+										<span class="form-control">{{Math.round((indentCreateModel.poQuantity)/ 1.5)}}</span>
+										<span class="input-group-addon unit">BALE</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--add item form-->
+				<div class="content-heading-box" *ngIf="indentCreateModel.mrMukam != '' && indentCreateModel.vehicleType != '' && indentCreateModel.vehicleQuantity > 0">
+					<h3>Add Item</h3>
+					<div class="row form-field-style">
+						<div class="col-md-6">
+							<div class="form-group row" *ngIf="indentCreateModel.mrMukam != ''">
+								<div class="col-md-4"><label for="itemDesc">Jute Type<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<select class="form-control" name="itemDesc" [(ngModel)] = "indentCreateModel.selectedItem" required (change)="getQuality($event)">
+									<option value="">--Please Select--</option>
+									<option *ngFor = "let item of itemData.items; let i = index;" value="{{i}}" >{{item.legacyItemCode + "_" + item.name}}</option>
+								</select>
+								</div>
+							</div>
+							<div class="form-group row"  *ngIf="indentCreateModel.mrMukam != ''">
+								<div class="col-md-4"></div>
+								<div class="col-md-8">
+									<a routerLink="/masterscreen/createitem" title="Create an Item">Create a Jute Type</a>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf="indentCreateModel.selectedQuality != ''">
+								<div class="col-md-4"><label for="itemDesc">Quantity<span class="start">*</span></label></div>
+								<div class="col-md-8">
+								<div class="input-group col-md-12">
+									<input type="text" class="form-control" name="quantity" [(ngModel)] = "indentCreateModel.selectedQuantity" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$"  *ngIf="indentCreateModel.conversiontype =='LOOSE'">
+									<input type="text" class="form-control" name="quantity" [(ngModel)] = "indentCreateModel.selectedQuantity" required pattern="^\s*(?=.*[1-9])\d*(?:\.\d{1,2})?\s*$" *ngIf="indentCreateModel.conversiontype =='BALE'">
+									<span class="input-group-addon unit" *ngIf="indentCreateModel.conversiontype =='LOOSE'">%</span>
+									<span class="input-group-addon unit" *ngIf="indentCreateModel.conversiontype =='BALE'">BALE</span>
+								</div>
+							</div>
+							
+						</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group row" *ngIf="indentCreateModel.selectedItem != ''"> 
+								<div class="col-md-4"><label for="itemGroupSelect">Quality<span class="start">*</span></label></div>
+								<div class="col-md-8">
+									<select class="form-control"  name="quality" [(ngModel)] = "indentCreateModel.selectedQuality" required>
+										<option value="">--Please Select--</option>
+										<option *ngFor = "let quality of itemQuality; let i = index;" value="{{i}}" >{{quality.name}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-primary" *ngIf="(indentCreateModel.conversiontype =='BALE' && indentCreateModel.selectedQuantity <= baleMaxVal && baleMaxVal >= 0 && indentCreateModel.selectedQuantity > 0) || (indentCreateModel.conversiontype =='LOOSE' && indentCreateModel.selectedQuantity <= looseMaxVal && looseMaxVal >= 0 && indentCreateModel.selectedQuantity > 0)" [disabled] = "!createIndentForm.form.valid" (click) = "addItems()">Add Item</button>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				
+				
+				
+				
+				<div class="content-heading-box" *ngIf = "addedItems.length > 0">
+					<h3>Added Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="addedItems"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive">
+                        <table class="table custom-width">
+                            <thead>
+                                <tr>
+									<th>Item Group</th>
+									<th>Item Descrption</th>
+									<th *ngIf = "indentCreateModel.selectedIndentType == 'J'">Quality</th>
+									<th>Department</th>
+									<th>Stock</th>
+									<th>Quantity</th>
+									<th>Unit</th>
+									<th>Raised By</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+							<tbody>
+                                <tr *ngFor = "let itemAdded of addedItems; let i = index">
+									<td>{{itemAdded.itemGroup.name}}</td>
+									<td>{{itemAdded.item.name}}</td>
+									<td *ngIf = "indentCreateModel.selectedIndentType == 'J'">{{itemAdded.quality.name}}</td>
+									<td>{{itemAdded.department.name}}</td>
+									<td>{{itemAdded.stock}}</td>
+									<td>{{itemAdded.indentQuantity}}</td>
+									<td>{{itemAdded.quantityUnit.name}}</td>
+									<td>{{itemAdded.submitter}}</td>
+									<td class="text-center">
+										<button (click)= "deleteItem(i)" class="btn ntn-danger"><span class="glyphicon glyphicon-minus"></span></button>
+									</td>
+                                </tr>
+                            </tbody>
+						</table>
+					</div>-->
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center"><button class="btn btn-primary" *ngIf="(indentCreateModel.conversiontype =='BALE' && baleMaxVal == 0) || (indentCreateModel.conversiontype =='LOOSE' && looseMaxVal == 0)" [disabled] = "addedItems.length == 0" (click) = "createIndent()">Create Indent</button>&nbsp;<button class="btn btn-primary"  [disabled] = "addedItems.length == 0" (click) = "saveIndent()">Save Indent</button></div>
+					</div>
+				</div>
+				
+				</form>
+				
+				
+				
+				

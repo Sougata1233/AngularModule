@@ -1,0 +1,87 @@
+				<h2>
+				<a [routerLink]="['/settings/user']" title='Store'>Settings</a>
+				> 
+				<a [routerLink]="['/settings/usergroup']" title='User Group'>User Group</a>
+				>
+				Details
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>		
+				
+				
+				<div class="content-heading-box" *ngIf = "userMenuData != 'undefined' && userMenuData.length > 0">
+					<div class="row">
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>User Group Id<span class="start">*</span></label>
+								<span class="form-control">{{userMenuData[0].userGroup.id}}</span>
+							</div>
+						</div>
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>User Group Name<span class="start">*</span></label>
+								<span class="form-control">{{userMenuData[0].userGroup.userGroupName}}</span>
+							</div>
+						</div>
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>Status<span class="start">*</span></label>
+								<span class="btn btn-block statusBlck btn-success" *ngIf="userMenuData[0].userGroup.isEnable == '1'">Active</span>
+								<span class="btn btn-block statusBlck btn-danger" *ngIf="userMenuData[0].userGroup.isEnable == '0'">Inactive</span>
+							</div>
+						</div>
+						<div class="col col-sm-3">
+							<div class="form-group">
+								<label>Created On<span class="start">*</span></label>
+								<span class="form-control">{{userMenuData[0].userGroup.fromDate}}</span>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+
+				
+				<div class="content-heading-box" *ngIf = "userMenuData != 'undefined' && userMenuData.length > 0">
+					<h3>Menu Associated with this User Group</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onMenuQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "MenucolumnDef" [gridOptions]="MenuGridOptions" [rowData]="userMenuData"></ag-grid-angular>
+				</div>	
+				
+				<div class="content-heading-box" *ngIf = "selectedallUserData != 'undefined' && selectedallUserData.length > 0">
+					<h3>Users Associated with this User Group</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onUserQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "UsercolumnDef" [gridOptions]="UserGridOptions" [rowData]="selectedallUserData"></ag-grid-angular>
+				</div>
+				
+				
+					
+			
+			
+				
+				
+				
+				
+				
+			
+				

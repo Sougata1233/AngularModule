@@ -1,0 +1,38 @@
+{
+	"poId": "PO00214789",
+	"poType_name": "Store Purchase Order",
+	"poType_id": "PO1234567",
+	"Supplier_id" : "SP1234567",
+	"Supplier_name" : "Demo Supplier One",
+	"po_address" : "Salt Lake,Sector V, Kolkata, West Bengal, India",
+	"raisedBy": "User Name",
+	"raisedOn": "20/08/2016",
+	"status"  : "submitted",	
+	"reason"  : "",
+	"items": [{
+			"itemGroup": ["G0000001", "Demo Item Group 1"],
+			"item": ["I000002", "Demo Item Description 2"],
+			"indent": "IND00012478",
+			"department": ["D000002", "Department 2"],
+			"edited_price" : 190,
+			"quantity": 20,
+			"unit": ["U000001", "Kg"],
+			"stock": "201",
+			"unitPrice": 200,
+			"GST" : 5
+		},
+		{
+			"itemGroup": ["G0000002", "Demo Item Group 2"],
+			"item": ["I000003", "Demo Item Description 3"],
+			"indent": "IND00012479",
+			"department": ["D000004", "Department 4"],
+			"edited_price" : 455,
+			"quantity": 26,
+			"unit": ["U000001", "Kg"],
+			"stock": "14",
+			"unitPrice": 480,
+			"GST" : 12
+		}
+	]
+
+}

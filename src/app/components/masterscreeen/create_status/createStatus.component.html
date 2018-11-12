@@ -1,0 +1,52 @@
+<h2>
+	Create Status
+</h2>
+<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+<form role="form" #createStatusForm="ngForm" >
+	
+<div class="content-heading-box">
+	<h3>Create Status</h3>
+	<div class="row form-field-style text-center">
+		<div class="col-md-12">
+				<div class="form-group row">
+						<div class="col-md-4 text-right">
+							<label>Status Name<span class="start">*</span></label>
+						</div>
+						<div class="col-md-4">
+							<input type="text" name="statusName" required pattern="[a-zA-Z][a-zA-Z ]+" maxlength="25" [(ngModel)] = "statusCreateModel.statusName" class="form-control">
+						</div>
+				</div>
+		</div>
+	
+		<div class="col-md-12 text-center">
+				<button class="btn btn-primary" [disabled] = "statusCreateModel.statusName == '' || !createStatusForm.form.valid" (click) = "createStatus()"> Create</button>
+		</div>
+		
+	</div>
+
+</div>
+<div class="content-heading-box">
+	<h3>Status's List</h3>
+	<ag-grid-angular class="ag-fresh" [gridOptions]="gridOptions" [rowData]="statusList"></ag-grid-angular>
+	
+</div>
+
+
+</form>
+	
+				
+				
+		

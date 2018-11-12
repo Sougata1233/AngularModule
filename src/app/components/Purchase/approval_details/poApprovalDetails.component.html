@@ -1,0 +1,199 @@
+				<h2 *ngIf = "poDetailData && poDetailData !='undefined'">
+				<a [routerLink]="['/purchase']" title='Purchase'  *ngIf="poDetailData.poHeader.type != 'J'">Purchase</a>
+				<a [routerLink]="['/jute/mrindent']" title='Jute' *ngIf="poDetailData.poHeader.type == 'J'">Jute</a>
+				>
+				<a [routerLink]="['/purchase/worklist']" title='Purchase' *ngIf="poDetailData.poHeader.type != 'J'">PO Worklist</a>
+				<a [routerLink]="['/jute/jutePOworklist']" title='Purchase' *ngIf="poDetailData.poHeader.type == 'J'">Jute PO Worklist</a>
+				>
+				Purchase Order Details
+				</h2>
+				
+				<p *ngIf="errorMsg">&nbsp;</p>
+				<div *ngIf="errorMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ errorMsg }}
+					</div>
+				</div>
+				<p *ngIf="successMsg">&nbsp;</p>
+				<div *ngIf="successMsg" class="form-group">
+					<div class="alert alert-danger alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{{ successMsg }}
+					</div>
+				</div>
+				
+				
+				<div *ngIf = "poDetailData == 'notauth'" class="form-group">
+					<div class="alert alert-info alert-dismissable">
+						Sorry. You are not authorized to view this page.
+					</div>
+				</div>
+				
+				<div class="content-heading-box" *ngIf = "poDetailData != 'notauth' && poDetailData && poDetailData !='undefined'">
+					<!--<h3>Added Items</h3>-->
+					<div class="row form-field-style">
+						<div class="col-sm-6">
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Purchase Order Number</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{prefix+"/PO/"+poDetailData.poHeader.id}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Purchase Order Type</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.type}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Broaker</label></div>
+								<div class="col col-sm-8">
+									<!-- <span class="form-control">{{poDetailData.poHeader.supplierId}}</span> -->
+									<span class="form-control" *ngIf = "poDetailData.poHeader.brokerId">{{poDetailData.poHeader.brokerName}} [ {{poDetailData.poHeader.brokerId}} ]</span>
+									<span class="form-control" *ngIf = "!poDetailData.poHeader.brokerId">NA</span>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Supplier</label></div>
+								<div class="col col-sm-8">
+									<!-- <span class="form-control">{{poDetailData.poHeader.supplierId}}</span> -->
+									<span class="form-control" *ngIf = "printableSupplierData != ''">{{printableSupplierData.name}} [ {{printableSupplierData.id}} ]</span>
+									<span class="form-control" *ngIf = "printableSupplierData == ''">{{poDetailData.poHeader.supplierId}}</span>
+								</div>
+							</div>
+							<div class="row form-group" *ngIf = "poDetailData.poHeader.type == 'J'">
+								<div class="col col-sm-4"><label>Mukam</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{printableMukam.mukamName}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Credit Term</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.deliveryAddress}}</span></div>
+							</div>
+							
+							<div class="row form-group" *ngIf = "poDetailData.poHeader.type == 'J'">
+								<div class="col col-sm-4"><label>Vehicle Type</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{printableVehicle.vehicleType}} [{{printableVehicle.weight+"/"+printableVehicle.weight/10}} QUINTAL/TON]</span></div>
+							</div>
+							
+						</div>
+						
+						<div class="col-sm-6">
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Raised By</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.submitter}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Raised On</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.createDate  | date:'mediumDate'}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Purchase Order Value</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.valueWithTax}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Delivery Timeline</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.deliveryTimeline}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Freight Charge</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.frieghtCharge}}</span></div>
+							</div>
+							<div class="row form-group" *ngIf = "poDetailData.poHeader.type == 'J'">
+								<div class="col col-sm-4"><label>Vehicle Quantity</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.vehicleQuantity}}</span></div>
+							</div>
+							<div class="row form-group">
+								<div class="col col-sm-4"><label>Discount</label></div>
+								<div class="col col-sm-8"><span class="form-control">{{poDetailData.poHeader.discount}}</span></div>
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+				
+				
+				<div class="content-heading-box" *ngIf = "poDetailData && poDetailData !='undefined' && poDetailData.poItemList.length > 0">
+					<h3>Indent Items</h3>
+					<div class="row form-group">
+								<div class="col col-xs-8">
+								</div>
+								<div class="col col-xs-4 text-right"><span class="glyphicon glyphicon-search"></span>&nbsp;<input style="width:auto;"type="text" name="searchIndent" (keyup)="onQuickFilterChanged($event)" placeholder="Search"></div>
+							</div>
+					<form role="form" #poapprovalform ="ngForm">
+					<ag-grid-angular class="ag-fresh" [columnDefs] = "columnDef" [gridOptions]="gridOptions" [rowData]="poDetailData.poItemList"></ag-grid-angular>
+					<!--<div class="datagrid table-responsive approval">
+						<table class="table">
+                            <thead>
+                                <tr>
+									<th>Item Group</th>
+									<th>Item Descrption</th>
+									<th>Indent No.</th>
+									<!--<th>Department</th>-->
+									<!--<th>Price/Item</th>
+									<th>Order Price/Item</th>
+									<th>Quantity</th>
+									<th>Unit</th>
+									<th *ngIf = "poDetailData.poHeader.type == 'J'">Quality</th>
+									<!--<th *ngIf = "poDetailData.poHeader.type == 'J'">Marka</th>-->
+									<!--<th>Total Price</th>
+									<th>GST</th>
+									<th>Payable Price</th>
+                                    <!--<th>Delete</th>-->
+                                <!--</tr>
+                            </thead>
+							<tbody>
+                                <tr *ngFor = "let item of poDetailData.poItemList; let i = index">
+									<td>{{item.itemGroup.name}}</td>
+									<td>{{item.item.name}}</td>
+									<td><a [routerLink]="['/store/indent/worklist', item.indent]" title="View Details">{{item.indentId}}</a></td>
+									<!--<td>{{item.department.name}}</td>-->
+									<!--<td>{{item.rate}}</td>
+									<td>{{item.rate}}</td>
+									<td>{{item.poQuantity}}</td>
+									<td>{{item.quantityUnit.name}}</td>
+									<td *ngIf = "poDetailData.poHeader.type == 'J'">{{item.quality.name}}</td>
+									<!--<td *ngIf = "poDetailData.poHeader.type == 'J'">{{item.marka}}</td>-->
+									<!--<td>{{item.rate * item.poQuantity}}</td>
+									<td>{{item.item.itemTax.gst +'%'}}</td>
+									<td>
+										{{((item.poQuantity) * item.rate) + ((item.poQuantity * item.rate)* item.item.itemTax.gst)/100}}
+									</td>
+									<!--<td class="text-center">
+										<button (click)= "deleteItem(i)" class="btn ntn-danger" *ngIf="poDetailData.poItemList.length > 1"><span class="glyphicon glyphicon-minus" ></span></button>
+									</td>-->
+                                <!--</tr>
+                            </tbody>
+							<tfoot>
+								<tr>
+									
+								</tr>
+							</tfoot>
+						</table>
+					</div>-->
+					<p>&nbsp;</p>
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<button class="btn btn-danger" data-toggle="modal" data-target="#rejectionReason">Reject</button>
+							<button class="btn btn-primary" (click) = "statusChange(stat)" [disabled]="!poapprovalform.form.valid">Approve</button>
+						</div>
+					</div>
+					</form>
+				</div>
+				
+				
+				<!-- Modal -->
+				<div class="modal fade" id="rejectionReason" tabindex="-1" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Reason For Rejection</h4>
+							  </div>
+						  <div class="modal-body">
+							<textarea class="form-control"></textarea>
+						  </div>
+						  <div class="modal-footer">
+								<button type="button" class="btn btn-default closeDialog" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary" (click) = "statusChange(4)">Confirm</button>
+						  </div>
+						</div>
+					</div>
+				</div>

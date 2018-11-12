@@ -1,0 +1,255 @@
+<div class="wrapper login" *ngIf="isLogged !== 'true'">
+	<router-outlet></router-outlet>
+</div>
+<div *ngIf="isLogged == 'true'">
+<div id="page_loader_service"></div>
+
+
+
+<div id="higherchyOverlayer" *ngIf="higherchyView && higherchydata != ''">
+
+	<div class="popupDialog">
+		<div class="popupHeader"><h2>My Organization</h2></div>
+		<div class="popupContent">
+			<div class="higherchyheder" *ngIf="higherchydata.groupHead && higherchydata.groupHead != undefined && higherchydata.groupHead != ''">
+				My Group Head
+			</div>
+			<ul *ngIf="higherchydata.groupHead && higherchydata.groupHead != undefined && higherchydata.groupHead != ''">
+				<li>
+					<span class="nodeico"></span>
+					<span class="hovhandler" (click)="toggle($event)">{{higherchydata.groupHead.firstName +" "+ higherchydata.groupHead.lastName}}</span>
+					<div class="userinfohov">
+						<div class="row">
+						<div class="imgAvataar col-md-4">
+							<img src="assets/images/img-2.png" *ngIf="higherchydata.groupHead.userImg == '' || higherchydata.groupHead.userImg == null || higherchydata.groupHead.userImg == undefined">
+							<img src="{{'data:image/gif;base64,'+higherchydata.groupHead.userImg}}" *ngIf="higherchydata.groupHead.userImg != '' && higherchydata.groupHead.userImg != null && higherchydata.groupHead.userImg != undefined">
+						</div>
+						<div class="col-md-8">
+						<h3>{{higherchydata.groupHead.firstName +" "+ higherchydata.groupHead.lastName}}<span>{{higherchydata.groupHead.designation.desig}}</span></h3>
+						<a href="mailto:{{higherchydata.groupHead.email}}">{{higherchydata.groupHead.email}}</a><br/>{{higherchydata.groupHead.mobile}}
+						</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<p *ngIf="higherchydata.groupHead && higherchydata.groupHead != undefined && higherchydata.groupHead != ''">&nbsp;</p>
+			<div class="higherchyheder" *ngIf="higherchydata.orgHeadList[0].orgHead && higherchydata.orgHeadList[0].orgHead != undefined && higherchydata.orgHeadList[0].orgHead != ''">
+				My Organization Head
+			</div>
+			<ul *ngIf="higherchydata.orgHeadList[0].orgHead && higherchydata.orgHeadList[0].orgHead != undefined && higherchydata.orgHeadList[0].orgHead != ''">
+				<li>
+					<span class="nodeico"></span>
+					<span class="hovhandler" (click)="toggle($event)">{{higherchydata.orgHeadList[0].orgHead.firstName +" "+ higherchydata.orgHeadList[0].orgHead.lastName}}</span>
+					<div class="userinfohov">
+						<div class="row">
+						<div class="imgAvataar col-md-4">
+							<img src="assets/images/img-2.png" *ngIf="higherchydata.orgHeadList[0].orgHead.userImg == '' || higherchydata.orgHeadList[0].orgHead.userImg == null || higherchydata.orgHeadList[0].orgHead.userImg == undefined">
+							<img src="{{'data:image/gif;base64,'+higherchydata.orgHeadList[0].orgHead.userImg}}" *ngIf="higherchydata.orgHeadList[0].orgHead.userImg != '' && higherchydata.orgHeadList[0].orgHead.userImg != null && higherchydata.orgHeadList[0].orgHead.userImg != undefined">
+						</div>
+						<div class="col-md-8">
+						<h3>{{higherchydata.orgHeadList[0].orgHead.firstName +" "+ higherchydata.orgHeadList[0].orgHead.lastName}}<span>{{higherchydata.orgHeadList[0].orgHead.designation.desig}}</span></h3>
+						<a href="mailto:{{higherchydata.orgHeadList[0].orgHead.email}}">{{higherchydata.orgHeadList[0].orgHead.email}}</a><br/>{{higherchydata.orgHeadList[0].orgHead.mobile}}
+						</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="higherchyheder" *ngIf="higherchydata.orgHeadList[0].hrManager[0].hrManager && higherchydata.orgHeadList[0].hrManager[0].hrManager != undefined && higherchydata.orgHeadList[0].hrManager[0].hrManager != ''">
+				---- My HR Manager
+			</div>
+			<ul *ngIf="higherchydata.orgHeadList[0].hrManager[0].hrManager && higherchydata.orgHeadList[0].hrManager[0].hrManager != undefined && higherchydata.orgHeadList[0].hrManager[0].hrManager != ''">
+				<li>
+					<span class="nodeico" style="left:25px;"></span>
+					<span class="hovhandler" style="padding-left:45px;" (click)="toggle($event)">{{higherchydata.orgHeadList[0].hrManager[0].hrManager.firstName +" "+ higherchydata.orgHeadList[0].hrManager[0].hrManager.lastName}}</span>
+					<div class="userinfohov">
+						<div class="row">
+						<div class="imgAvataar col-md-4">
+							<img src="assets/images/img-2.png" *ngIf="higherchydata.orgHeadList[0].hrManager[0].hrManager.userImg == '' || higherchydata.orgHeadList[0].hrManager[0].hrManager.userImg == null || higherchydata.orgHeadList[0].hrManager[0].hrManager.userImg == undefined">
+							<img src="{{'data:image/gif;base64,'+higherchydata.orgHeadList[0].hrManager[0].hrManager.userImg}}" *ngIf="higherchydata.orgHeadList[0].hrManager[0].hrManager.userImg != '' && higherchydata.orgHeadList[0].hrManager[0].hrManager.userImg != null && higherchydata.orgHeadList[0].hrManager[0].hrManager.userImg != undefined">
+						</div>
+						<div class="col-md-8">
+						<h3>{{higherchydata.orgHeadList[0].hrManager[0].hrManager.firstName +" "+ higherchydata.orgHeadList[0].hrManager[0].hrManager.lastName}}<span>{{higherchydata.orgHeadList[0].hrManager[0].hrManager.designation.desig}}</span></h3>
+						<a href="mailto:{{higherchydata.orgHeadList[0].hrManager[0].hrManager.email}}">{{higherchydata.orgHeadList[0].hrManager[0].hrManager.email}}</a><br/>{{higherchydata.orgHeadList[0].hrManager[0].hrManager.mobile}}
+						</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="higherchyheder" *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor != undefined && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor != ''">
+				-------- My Primary Supervisor
+			</div>
+			<ul *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor != undefined && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor != ''">
+				<li>
+					<span class="nodeico" style="left:45px;"></span>
+					<span class="hovhandler" style="padding-left:65px;" (click)="toggle($event)">{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.firstName +" "+ higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.lastName}}</span>
+					<div class="userinfohov">
+						<div class="row">
+						<div class="imgAvataar col-md-4">
+							<img src="assets/images/img-2.png" *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.userImg == '' || higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.userImg == null || higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.userImg == undefined">
+							<img src="{{'data:image/gif;base64,'+higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.userImg}}" *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.userImg != '' && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.userImg != null && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.userImg != undefined">
+						</div>
+						<div class="col-md-8">
+						<h3>{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.firstName +" "+ higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.lastName}}<span>{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.designation.desig}}</span></h3>
+						<a href="mailto:{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.email}}">{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.email}}</a><br/>{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor.mobile}}
+						</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="higherchyheder" *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor != undefined && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].priSupervisor != ''">
+				------------ My Project Supervisor
+			</div>
+			<ul *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor != undefined && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor != ''">
+				<li>
+					<span class="nodeico" style="left:65px;"></span>
+					<span class="hovhandler" style="padding-left:85px;" (click)="toggle($event)">{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.firstName +" "+ higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.lastName}}</span>
+					<div class="userinfohov">
+						<div class="row">
+						<div class="imgAvataar col-md-4">
+							<img src="assets/images/img-2.png" *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.userImg == '' || higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.userImg == null || higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.userImg == undefined">
+							<img src="{{'data:image/gif;base64,'+higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.userImg}}" *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.userImg != '' && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.userImg != null && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.userImg != undefined">
+						</div>
+						<div class="col-md-8">
+						<h3>{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.firstName +" "+ higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.lastName}}<span>{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.designation.desig}}</span></h3>
+						<a href="mailto:{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.email}}">{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.email}}</a><br/>{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].prjSupervisor.mobile}}
+						</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="higherchyheder" *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user != undefined && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user != ''">
+				---------------- My Profile
+			</div>
+			<ul *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user != undefined && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user != ''">
+				<li>
+					<span class="nodeico" style="left:65px;"></span>
+					<span class="hovhandler" style="padding-left:105px;" (click)="toggle($event)">{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.firstName +" "+ higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.lastName}}</span>
+					<div class="userinfohov">
+						<div class="row">
+						<div class="imgAvataar col-md-4">
+							<img src="assets/images/img-2.png" *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.userImg == '' || higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.userImg == null || higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.userImg == undefined">
+							<img src="{{'data:image/gif;base64,'+higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.userImg}}" *ngIf="higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.userImg != '' && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.userImg != null && higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.userImg != undefined">
+						</div>
+						<div class="col-md-8">
+						<h3>{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.firstName +" "+ higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.lastName}}<span>{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.designation.desig}}</span></h3>
+						<a href="mailto:{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.email}}">{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.email}}</a><br/>{{higherchydata.orgHeadList[0].hrManager[0].priSuperviser[0].prjSupervisor[0].user[0].user.mobile}}
+						</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="popupFooter text-right"><button class="btn btn-info" (click)="closeHigherchy()">OK</button></div> 
+	</div>
+
+</div>
+
+
+
+<div class="troubleshootingtrigger">
+	<div class="troubleheader {{troubleactivateclass}}" (click)="toggleTrouble()">Need Help?</div>
+	<div class="troublecontent" *ngIf="troubleOpen">
+		<form role="form" #troubleform="ngForm">
+		<div class="row form-group">
+			<div class="col-md-12">
+				<label for="itemGroupSelect">Name<span class="start">*</span></label>
+			</div>
+			<div class="col-md-12">
+				<span class="form-control">{{troubleshootmodel.sendername}}</span>
+			</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-12">
+				<label for="itemGroupSelect">Email Id<span class="start">*</span></label>
+			</div>
+			<div class="col-md-12">
+				<input type="email" class="form-control" name="senderemail" [(ngModel)] = "troubleshootmodel.senderemail" required pattern= '^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'>
+			</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-12">
+				<label for="itemGroupSelect">Contact No.<span class="start">*</span></label>
+			</div>
+			<div class="col-md-12">
+				<input type="text" tabindex="5" class="form-control" name="sendercontact" [(ngModel)] = "troubleshootmodel.sendercontact" required pattern = "^(\+\d{1,3}[- ]?)?\d{10}$">
+			</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-12">
+				<label for="itemGroupSelect">Subject<span class="start">*</span></label>
+			</div>
+			<div class="col-md-12">
+				<input type="text" class="form-control" name="sendersubject" [(ngModel)] = "troubleshootmodel.sendersubject" required>
+			</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-12">
+				<label for="itemGroupSelect">Description<span class="start">*</span></label>
+			</div>
+			<div class="col-md-12">
+				<textarea class="form-control" name="sendermsg" [(ngModel)] = "troubleshootmodel.sendermsg" required></textarea>
+			</div>
+		</div>
+		<div class="row form-group">
+			<div class="col-md-12 text-right">
+				<button class="btn btn-primary" [disabled]="!troubleform.form.valid" (click)="sendEmail()">Send</button>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
+<!--start of header-->
+		<header>
+			<!--start of header navigation-->
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<!-- start of navigation header and mobile nav handler -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" routerLink="/home/dashboard"><img src="assets/images/logo.png" align="img"></a>
+					</div>
+					<!--end of navigation header and mobile nav handler-->
+					
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<app-main-nav-panel></app-main-nav-panel>
+						<!-- start of right navigation -->
+						<ul class="nav navbar-nav navbar-right">
+							<li class="user-avatar visible-sm-block visible-md-block visible-lg-block">
+								<img src="assets/images/img-2.png" *ngIf="userImage == '' || userImage == null || userImage == undefined">
+								<img src="{{'data:image/gif;base64,'+userImage}}" *ngIf="userImage != '' && userImage != null && userImage != undefined">
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="visible-lg-inline visible-sm-inline visible-xs-inline">Welcome {{loggedInUserFirstName +' '+loggedInUserLastName}}</span> <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a routerLink="/hrms/profile" title="My Profile"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+									<li  *ngIf="higherchydata != ''"><a href="javascript:void(0)" title="My Organization" (click)="openHigherchy()"><span class="glyphicon glyphicon-user"></span> My Organization</a></li>
+									<li><a routerLink="/settings/user" title="Settings" *ngIf="mainMenu.indexOf('Settings') > -1"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+									<li><a href="javascript:void(0)" title="Logout" (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+								</ul>
+							</li>
+						</ul>
+						<!-- end of right navigation -->
+					</div>
+				</div>
+			</nav>
+			<!--end of header navigation-->
+		</header>
+		<!--end of header-->
+		<!--start of content area-->
+		<section class="content-area">
+			
+			<app-sub-nav-panel></app-sub-nav-panel>
+			<div class="main-content-area">
+				<router-outlet></router-outlet>
+			</div>
+		</section>
+		<!--end of content area-->
+		<footer>
+			<h6>Copyright 2018, njm.vowjute.com  All Rights Reserved.</h6>
+		</footer>
+  </div>     
